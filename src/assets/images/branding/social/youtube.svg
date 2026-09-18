@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 24 24"
+     width="24"
+     height="24"
+     role="img"
+     aria-labelledby="youtube-title">
+  <title id="youtube-title">YouTube</title>
+  <rect x="2" y="5" width="20" height="14" rx="4" fill="#FF0000"/>
+  <path d="M10 8.5L16 12L10 15.5V8.5Z" fill="#FFFFFF"/>
+</svg>

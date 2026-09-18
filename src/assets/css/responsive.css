@@ -1,0 +1,106 @@
+/* =========================================================
+   Divine River Church Website
+   Version 1 - Responsive Rules
+   Mobile-first
+   ========================================================= */
+
+
+/* ---------- Larger Phones / Small Tablets ---------- */
+
+@media (min-width: 640px) {
+
+    .container {
+        width: min(
+            calc(100% - (var(--space-5) * 2)),
+            var(--container-width)
+        );
+    }
+
+    .grid--cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .site-header__live {
+        display: inline-flex;
+    }
+
+    .site-footer__grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* ---------- Tablets ---------- */
+
+@media (min-width: 768px) {
+
+    .section {
+        padding-block: var(--space-8);
+    }
+
+}
+
+
+/* ---------- Laptop / Desktop ---------- */
+
+@media (min-width: 1024px) {
+
+    .grid--cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .site-header__inner {
+        grid-template-columns:
+            auto
+            1fr
+            auto;
+    }
+
+    .site-nav {
+        display: block;
+
+        grid-column: auto;
+
+        padding-bottom: 0;
+    }
+
+    .site-nav__list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: var(--space-1);
+    }
+
+    .site-nav__link {
+        padding:
+            var(--space-2)
+            var(--space-3);
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+
+    .site-footer__grid {
+        grid-template-columns:
+            1.4fr
+            1fr
+            1fr
+            1fr;
+    }
+
+}
+
+
+/* ---------- Large Desktop ---------- */
+
+@media (min-width: 1280px) {
+
+    .section {
+        padding-block: var(--space-9);
+    }
+
+}

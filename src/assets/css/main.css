@@ -1,0 +1,2860 @@
+/* =========================================================
+   Divine River Church Website
+   Version 1 - Core Design System + Common Site Shell
+   ========================================================= */
+
+
+/* =========================================================
+   STAGE 6 - DESIGN SYSTEM FOUNDATION
+   ========================================================= */
+
+
+/* ---------- Design Tokens ---------- */
+
+:root {
+    /* Brand colours */
+    --brand-blue: #374994;
+    --brand-red: #902f3a;
+    --brand-yellow: #f4ed39;
+    --brand-white: #ffffff;
+    --brand-black: #161617;
+
+    /* Light theme */
+    --color-bg: #ffffff;
+    --color-surface: #f7f7f8;
+    --color-surface-alt: #eeeef2;
+    --color-text: #161617;
+    --color-text-muted: #5f626b;
+    --color-border: #d9dbe2;
+
+    --color-primary: #374994;
+    --color-primary-hover: #2d3b7b;
+    --color-primary-text: #ffffff;
+
+    --color-secondary: #902f3a;
+    --color-highlight: #f4ed39;
+
+    --color-link: #374994;
+    --color-focus: #374994;
+
+    /* Typography */
+    --font-family-base:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    --font-size-4xl: 2.5rem;
+    --font-size-5xl: 3.25rem;
+
+    /* Spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+    --space-9: 6rem;
+
+    /* Layout */
+    --container-width: 1200px;
+
+    /* Radius */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1.25rem;
+    --radius-pill: 999px;
+
+    /* Motion */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+}
+
+
+/* ---------- Dark Theme ---------- */
+
+html[data-theme="dark"] {
+    --color-bg: #161617;
+    --color-surface: #202024;
+    --color-surface-alt: #29292f;
+    --color-text: #f7f7f8;
+    --color-text-muted: #b9bbc4;
+    --color-border: #3c3d44;
+
+    --color-primary: #8fa1ee;
+    --color-primary-hover: #a7b5f4;
+    --color-primary-text: #161617;
+
+    --color-secondary: #d17a84;
+    --color-highlight: #f4ed39;
+
+    --color-link: #a9b7f5;
+    --color-focus: #f4ed39;
+}
+
+
+/* ---------- Reset / Base ---------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+
+    transition:
+        background-color var(--transition-normal),
+        color var(--transition-normal);
+}
+
+img,
+picture,
+video,
+iframe {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+/* ---------- Typography ---------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    color: var(--color-text);
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: clamp(
+        2.25rem,
+        7vw,
+        var(--font-size-5xl)
+    );
+}
+
+h2 {
+    font-size: clamp(
+        1.75rem,
+        5vw,
+        var(--font-size-4xl)
+    );
+}
+
+h3 {
+    font-size: var(--font-size-2xl);
+}
+
+h4 {
+    font-size: var(--font-size-xl);
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+}
+
+a {
+    color: var(--color-link);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+}
+
+a:hover {
+    text-decoration-thickness: 0.12em;
+}
+
+
+/* ---------- Accessibility ---------- */
+
+:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+}
+
+
+/* ---------- Skip Link ---------- */
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: var(--space-4);
+
+    z-index: 9999;
+
+    padding: var(--space-3) var(--space-4);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: var(--space-4);
+}
+
+
+/* ---------- Container ---------- */
+
+.container {
+    width: min(
+        calc(100% - (var(--space-4) * 2)),
+        var(--container-width)
+    );
+
+    margin-inline: auto;
+}
+
+
+/* ---------- Sections ---------- */
+
+.section {
+    padding-block: var(--space-7);
+}
+
+.section--surface {
+    background: var(--color-surface);
+}
+
+.section--alternate {
+    background: var(--color-surface-alt);
+}
+
+
+/* ---------- Buttons ---------- */
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+
+    min-height: 44px;
+
+    padding: 0.75rem 1.25rem;
+
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+
+    font-weight: 700;
+    line-height: 1;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.button:hover {
+    transform: translateY(-1px);
+}
+
+.button--primary {
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+}
+
+.button--primary:hover {
+    background: var(--color-primary-hover);
+}
+
+.button--secondary {
+    background: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.button--secondary:hover {
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+}
+
+
+/* ---------- Cards ---------- */
+
+.card {
+    overflow: hidden;
+
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.card__content {
+    padding: var(--space-5);
+}
+
+.card__title {
+    margin-bottom: var(--space-3);
+}
+
+.card__meta {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+
+/* ---------- Generic Grid ---------- */
+
+.grid {
+    display: grid;
+    gap: var(--space-5);
+}
+
+.grid--cards {
+    grid-template-columns: 1fr;
+}
+
+
+/* ---------- Utilities ---------- */
+
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.visually-hidden {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+/* ---------- Reduced Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+}
+
+
+/* =========================================================
+   STAGE 8 - COMMON SITE SHELL
+   ========================================================= */
+
+
+/* ---------- Main ---------- */
+
+.site-main {
+    min-height: 60vh;
+}
+
+
+/* ---------- Header ---------- */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+
+    transition:
+        background-color var(--transition-normal),
+        border-color var(--transition-normal);
+}
+
+.site-header__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--space-4);
+
+    min-height: 120px;
+}
+
+
+/* ---------- Brand ---------- */
+
+.site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    width: fit-content;
+
+    color: var(--color-text);
+
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.site-brand:hover {
+    color: var(--color-primary);
+}
+
+.site-brand__logo {
+    width: auto;
+    max-height: 96px;
+}
+
+.site-brand__name {
+    font-size: var(--font-size-lg);
+}
+
+
+/* ---------- Header Actions ---------- */
+
+.site-header__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+}
+
+.site-header__live {
+    display: none;
+}
+
+
+/* ---------- Icon Buttons ---------- */
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    padding: 0;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+    color: var(--color-text);
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.icon-button:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+
+/* ---------- Theme Toggle ---------- */
+
+.theme-toggle__icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+
+/* ---------- Mobile Navigation Toggle ---------- */
+
+.nav-toggle__icon {
+    display: grid;
+    gap: 4px;
+
+    width: 20px;
+}
+
+.nav-toggle__icon span {
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    border-radius: var(--radius-pill);
+
+    background: currentColor;
+}
+
+
+/* ---------- Navigation ---------- */
+
+.site-nav {
+    display: none;
+
+    grid-column: 1 / -1;
+
+    padding-bottom: var(--space-4);
+}
+
+.site-nav[data-open="true"] {
+    display: block;
+}
+
+.site-nav__list {
+    display: grid;
+    gap: var(--space-1);
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.site-nav__item {
+    margin: 0;
+}
+
+.site-nav__link {
+    display: block;
+
+    padding: var(--space-3) var(--space-4);
+
+    border-radius: var(--radius-md);
+
+    color: var(--color-text);
+
+    font-weight: 600;
+    text-decoration: none;
+
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.site-nav__link:hover {
+    background: var(--color-surface);
+    color: var(--color-primary);
+}
+
+.site-nav__link.is-active,
+.site-nav__link[aria-current="page"] {
+    background: var(--color-surface);
+    color: var(--color-primary);
+}
+
+
+/* ---------- Basic Page Shell ---------- */
+
+.page-shell {
+    padding-block: var(--space-7);
+}
+
+.page-shell__header {
+    max-width: 760px;
+}
+
+.page-shell__title {
+    margin-bottom: var(--space-3);
+}
+
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+    margin-top: var(--space-8);
+    padding-top: var(--space-7);
+
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+
+    transition:
+        background-color var(--transition-normal),
+        border-color var(--transition-normal);
+}
+
+.site-footer__grid {
+    display: grid;
+    gap: var(--space-6);
+}
+
+.site-footer__section {
+    min-width: 0;
+}
+
+.site-footer__brand {
+    margin-bottom: var(--space-3);
+
+    font-size: var(--font-size-xl);
+}
+
+.site-footer__heading {
+    margin-bottom: var(--space-3);
+
+    font-size: var(--font-size-base);
+}
+
+.site-footer__text {
+    max-width: 36rem;
+
+    color: var(--color-text-muted);
+}
+
+.site-footer__links,
+.site-footer__services {
+    display: grid;
+    gap: var(--space-2);
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.site-footer__links a {
+    color: var(--color-text-muted);
+}
+
+.site-footer__links a:hover {
+    color: var(--color-primary);
+}
+
+.site-footer__services li {
+    display: grid;
+    gap: var(--space-1);
+}
+
+.site-footer__services strong {
+    color: var(--color-text);
+}
+
+.site-footer__services span {
+    color: var(--color-text-muted);
+}
+
+.site-footer__bottom {
+    margin-top: var(--space-7);
+    padding-block: var(--space-5);
+
+    border-top: 1px solid var(--color-border);
+
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.site-footer__bottom p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   STAGE 9.1 - HOME PAGE
+   ========================================================= */
+
+
+/* ---------- Hero ---------- */
+
+.home-hero {
+    display: flex;
+    align-items: center;
+
+    min-height: clamp(420px, 58vh, 640px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-surface),
+            var(--color-bg)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.home-hero__inner {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+}
+
+.home-hero__content {
+    max-width: 760px;
+
+    padding-block: var(--space-8);
+}
+
+.home-hero__eyebrow {
+    margin-bottom: var(--space-3);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.home-hero__title {
+    max-width: 700px;
+
+    margin-bottom: var(--space-6);
+}
+
+.home-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+
+/* ---------- Home Sections ---------- */
+
+.home-section__header {
+    max-width: 700px;
+
+    margin-bottom: var(--space-6);
+}
+
+.home-section__header h2 {
+    margin-bottom: 0;
+}
+
+.home-section__eyebrow {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.home-section__heading-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: var(--space-4);
+
+    margin-bottom: var(--space-6);
+}
+
+.home-section__heading-row .home-section__header {
+    margin-bottom: 0;
+}
+
+.home-section__link {
+    font-weight: 700;
+}
+
+
+/* ---------- Vision ---------- */
+
+.vision-block {
+    max-width: 900px;
+
+    padding: var(--space-6);
+
+    border-left: 5px solid var(--color-primary);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+
+    background: var(--color-surface);
+}
+
+.vision-block__text {
+    margin: 0;
+
+    font-size: clamp(
+        var(--font-size-xl),
+        3vw,
+        var(--font-size-3xl)
+    );
+
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.vision-block__reference {
+    margin-top: var(--space-4);
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-weight: 700;
+}
+
+
+/* ---------- Shared Home Card Grid ---------- */
+
+.home-card-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 240px), 1fr)
+        );
+
+    gap: var(--space-5);
+}
+
+.home-card-grid--services {
+    max-width: 900px;
+}
+
+
+/* ---------- Sunday Service Cards ---------- */
+
+.home-service-card__time {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+}
+
+
+/* ---------- Sermon / Live Split ---------- */
+
+.home-split {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 320px), 1fr)
+        );
+
+    gap: var(--space-6);
+}
+
+.home-feature-card {
+    max-width: 640px;
+}
+
+.home-live-card {
+    padding: var(--space-6);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+}
+
+.home-live-card h2 {
+    margin-bottom: var(--space-4);
+}
+
+
+/* ---------- Empty States ---------- */
+
+.home-empty-state {
+    max-width: 700px;
+
+    padding: var(--space-5);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    color: var(--color-text-muted);
+}
+
+.home-empty-state p:last-child {
+    margin-bottom: 0;
+}
+
+.home-empty-state .button {
+    margin-top: var(--space-2);
+}
+
+
+/* ---------- Programme Preview ---------- */
+
+.home-programme-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 220px), 1fr)
+        );
+
+    gap: var(--space-4);
+}
+
+.home-programme-card {
+    padding: var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-bg);
+}
+
+.home-programme-card__day {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.home-programme-card__name {
+    margin-bottom: var(--space-3);
+
+    font-size: var(--font-size-xl);
+}
+
+.home-programme-card__time {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+
+/* ---------- Home CTA ---------- */
+
+.home-cta,
+.home-visit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-6);
+
+    padding: var(--space-6);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.home-cta__text {
+    max-width: 680px;
+
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- Social Links ---------- */
+
+.home-social-links {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: var(--space-3);
+}
+
+.home-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-2);
+
+    min-height: 52px;
+
+    padding: var(--space-3) var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+
+    background: var(--color-surface);
+
+    color: var(--color-text);
+
+    font-weight: 700;
+    text-decoration: none;
+
+    transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.home-social-link:hover {
+    border-color: var(--color-primary);
+
+    background: var(--color-bg);
+    color: var(--color-primary);
+
+    transform: translateY(-1px);
+}
+
+.home-social-link__icon {
+    display: block;
+
+    width: 24px;
+    height: 24px;
+
+    flex: 0 0 24px;
+
+    object-fit: contain;
+}
+
+.home-social-link__label {
+    line-height: 1;
+}
+
+
+/* =========================================================
+   STAGE 9.2 - ABOUT PAGE
+   ========================================================= */
+
+
+/* ---------- About Hero ---------- */
+
+.about-hero {
+    display: flex;
+    align-items: center;
+
+    min-height: clamp(280px, 38vh, 420px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-surface),
+            var(--color-bg)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.about-hero__content {
+    max-width: 760px;
+
+    padding-block: var(--space-8);
+}
+
+.about-hero__eyebrow {
+    margin-bottom: var(--space-3);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.about-hero__title {
+    margin-bottom: 0;
+}
+
+
+/* ---------- About Sections ---------- */
+
+.about-section__header {
+    max-width: 700px;
+
+    margin-bottom: var(--space-6);
+}
+
+.about-section__header h2 {
+    margin-bottom: 0;
+}
+
+.about-section__eyebrow {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/* ---------- Vision ---------- */
+
+.about-vision {
+    max-width: 900px;
+
+    padding: var(--space-6);
+
+    border-left: 5px solid var(--color-primary);
+    border-radius:
+        0
+        var(--radius-lg)
+        var(--radius-lg)
+        0;
+
+    background: var(--color-surface);
+}
+
+.about-vision__text {
+    margin: 0;
+
+    font-size: clamp(
+        var(--font-size-xl),
+        3vw,
+        var(--font-size-3xl)
+    );
+
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.about-vision__reference {
+    margin-top: var(--space-4);
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-weight: 700;
+}
+
+
+/* ---------- Leadership Grid ---------- */
+
+.about-leadership-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 260px), 1fr)
+        );
+
+    gap: var(--space-5);
+}
+
+
+/* ---------- Pastor Card ---------- */
+
+.about-pastor-card {
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-bg);
+
+    transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.about-pastor-card:hover {
+    border-color: var(--color-primary);
+
+    transform: translateY(-2px);
+}
+
+.about-pastor-card__content {
+    display: grid;
+    gap: var(--space-5);
+
+    padding: var(--space-5);
+}
+
+.about-pastor-card__identity {
+    display: flex;
+    align-items: center;
+
+    gap: var(--space-4);
+}
+
+
+/* ---------- Pastor Placeholder ---------- */
+
+.about-pastor-card__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    flex: 0 0 64px;
+
+    border-radius: 50%;
+
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+}
+
+
+/* ---------- Pastor Name / Title ---------- */
+
+.about-pastor-card__name {
+    margin-bottom: 0;
+
+    font-size: var(--font-size-xl);
+}
+
+.about-pastor-card__title {
+    margin-top: var(--space-1);
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+}
+
+
+/* ---------- Pastor Contact ---------- */
+
+.about-pastor-card__contact {
+    padding-top: var(--space-4);
+
+    border-top: 1px solid var(--color-border);
+}
+
+.about-pastor-card__contact-label {
+    margin-bottom: var(--space-1);
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.about-pastor-card__phone {
+    display: inline-block;
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.about-pastor-card__phone:hover {
+    text-decoration: underline;
+
+    text-decoration-thickness: 0.1em;
+    text-underline-offset: 0.2em;
+}
+
+
+/* ---------- Empty State ---------- */
+
+.about-empty-state {
+    max-width: 700px;
+
+    padding: var(--space-5);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    color: var(--color-text-muted);
+}
+
+.about-empty-state p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   STAGE 9.3 - PROGRAMMES PAGE
+   ========================================================= */
+
+
+/* ---------- Programmes Hero ---------- */
+
+.programmes-hero {
+    display: flex;
+    align-items: center;
+
+    min-height: clamp(280px, 38vh, 420px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-surface),
+            var(--color-bg)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.programmes-hero__content {
+    max-width: 760px;
+
+    padding-block: var(--space-8);
+}
+
+.programmes-hero__title {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Section Header ---------- */
+
+.programmes-section__header {
+    max-width: 760px;
+
+    margin-bottom: var(--space-6);
+}
+
+.programmes-section__header h2 {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Weekly Programme ---------- */
+
+.programmes-week {
+    display: grid;
+
+    gap: var(--space-6);
+}
+
+
+/* ---------- Day Group ---------- */
+
+.programme-day {
+    display: grid;
+
+    grid-template-columns:
+        minmax(120px, 180px)
+        minmax(0, 1fr);
+
+    gap: var(--space-5);
+
+    padding-bottom: var(--space-6);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.programme-day:last-child {
+    padding-bottom: 0;
+
+    border-bottom: 0;
+}
+
+.programme-day__header {
+    min-width: 0;
+}
+
+.programme-day__title {
+    position: sticky;
+    top: 140px;
+
+    margin-bottom: 0;
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-xl);
+}
+
+
+/* ---------- Day Programme Items ---------- */
+
+.programme-day__items {
+    display: grid;
+
+    gap: var(--space-3);
+}
+
+
+/* ---------- Programme Card ---------- */
+
+.programme-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.programme-card:hover {
+    border-color: var(--color-primary);
+
+    transform: translateY(-1px);
+}
+
+.programme-card__content {
+    padding: var(--space-5);
+}
+
+.programme-card__main {
+    display: grid;
+
+    gap: var(--space-2);
+}
+
+.programme-card__name {
+    margin-bottom: 0;
+
+    font-size: var(--font-size-xl);
+}
+
+.programme-card__time {
+    margin-bottom: 0;
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+}
+
+.programme-card__venue {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+
+/* ---------- Sunday Service Summary ---------- */
+
+.programmes-services__grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 260px), 1fr)
+        );
+
+    gap: var(--space-5);
+
+    max-width: 900px;
+}
+
+.programme-service-card {
+    padding: var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-bg);
+}
+
+.programme-service-card__name {
+    margin-bottom: var(--space-3);
+
+    font-size: var(--font-size-xl);
+}
+
+.programme-service-card__time {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+}
+
+.programme-service-card__venue {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+}
+
+
+/* ---------- Empty State ---------- */
+
+.programmes-empty-state {
+    max-width: 700px;
+
+    padding: var(--space-5);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    color: var(--color-text-muted);
+}
+
+.programmes-empty-state p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Programmes Responsive ---------- */
+
+@media (max-width: 767px) {
+
+    .programme-day {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-3);
+    }
+
+    .programme-day__title {
+        position: static;
+
+        padding-bottom: var(--space-2);
+    }
+
+}
+
+
+/* =========================================================
+   STAGE 9.4 - MINISTRIES PAGE
+   ========================================================= */
+
+
+/* ---------- Ministries Hero ---------- */
+
+.ministries-hero {
+    display: flex;
+    align-items: center;
+
+    min-height: clamp(280px, 38vh, 420px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-surface),
+            var(--color-bg)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.ministries-hero__content {
+    max-width: 760px;
+
+    padding-block: var(--space-8);
+}
+
+.ministries-hero__title {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Section Header ---------- */
+
+.ministries-section__header {
+    max-width: 760px;
+
+    margin-bottom: var(--space-7);
+}
+
+.ministries-section__header h2 {
+    margin-bottom: var(--space-3);
+}
+
+.ministries-section__intro {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-lg);
+}
+
+
+/* ---------- Ministries Grid ---------- */
+
+.ministries-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 280px), 1fr)
+        );
+
+    gap: var(--space-5);
+}
+
+
+/* ---------- Ministry Card ---------- */
+
+.ministry-card {
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.ministry-card:hover {
+    border-color: var(--color-primary);
+
+    transform: translateY(-2px);
+}
+
+
+/* ---------- Optional Ministry Image ---------- */
+
+.ministry-card__media {
+    overflow: hidden;
+
+    aspect-ratio: 16 / 9;
+
+    background: var(--color-surface-alt);
+}
+
+.ministry-card__image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* ---------- Ministry Content ---------- */
+
+.ministry-card__content {
+    display: grid;
+
+    gap: var(--space-4);
+
+    padding: var(--space-5);
+}
+
+.ministry-card__name {
+    margin-bottom: 0;
+
+    font-size: var(--font-size-xl);
+}
+
+.ministry-card__description {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- Optional Ministry Details ---------- */
+
+.ministry-card__detail {
+    display: grid;
+
+    gap: var(--space-1);
+
+    padding-top: var(--space-3);
+
+    border-top: 1px solid var(--color-border);
+
+    color: var(--color-text-muted);
+}
+
+.ministry-card__label {
+    color: var(--color-text);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+
+/* ---------- Empty State ---------- */
+
+.ministries-empty-state {
+    max-width: 700px;
+
+    padding: var(--space-5);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    color: var(--color-text-muted);
+}
+
+.ministries-empty-state p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   STAGE 9.5 - SERMONS PAGE
+   ========================================================= */
+
+
+/* ---------- Sermons Hero ---------- */
+
+.sermons-hero {
+    display: flex;
+    align-items: center;
+
+    min-height: clamp(280px, 38vh, 420px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-surface),
+            var(--color-bg)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sermons-hero__content {
+    max-width: 760px;
+
+    padding-block: var(--space-8);
+}
+
+.sermons-hero__title {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Section Header ---------- */
+
+.sermons-section__header {
+    max-width: 760px;
+
+    margin-bottom: var(--space-6);
+}
+
+.sermons-section__header h2 {
+    margin-bottom: var(--space-3);
+}
+
+.sermons-section__header p {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-lg);
+}
+
+
+/* ---------- Live Section ---------- */
+
+.sermons-live {
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-6);
+
+    padding: var(--space-6);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+}
+
+.sermons-live__content {
+    display: flex;
+    align-items: flex-start;
+
+    gap: var(--space-5);
+
+    max-width: 760px;
+}
+
+.sermons-live__icon {
+    width: 56px;
+    height: 56px;
+
+    flex: 0 0 56px;
+
+    object-fit: contain;
+}
+
+.sermons-live h2 {
+    margin-bottom: var(--space-3);
+}
+
+.sermons-live__text {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- Buttons with Platform Icons ---------- */
+
+.sermons-button {
+    gap: var(--space-3);
+}
+
+.sermons-button__icon {
+    width: 24px;
+    height: 24px;
+
+    flex: 0 0 24px;
+
+    object-fit: contain;
+}
+
+
+/* ---------- Platform Grid ---------- */
+
+.sermons-platform-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 300px), 1fr)
+        );
+
+    gap: var(--space-5);
+
+    max-width: 900px;
+}
+
+
+/* ---------- Platform Card ---------- */
+
+.sermons-platform-card {
+    display: flex;
+    align-items: flex-start;
+
+    gap: var(--space-5);
+
+    padding: var(--space-6);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    text-decoration: none;
+
+    transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.sermons-platform-card:hover {
+    border-color: var(--color-primary);
+
+    transform: translateY(-2px);
+}
+
+.sermons-platform-card__icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 56px;
+    height: 56px;
+
+    flex: 0 0 56px;
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+.sermons-platform-card__icon {
+    width: 32px;
+    height: 32px;
+
+    object-fit: contain;
+}
+
+.sermons-platform-card__content {
+    min-width: 0;
+}
+
+.sermons-platform-card__content h3 {
+    margin-bottom: var(--space-2);
+
+    font-size: var(--font-size-xl);
+}
+
+.sermons-platform-card__content p {
+    margin-bottom: var(--space-4);
+
+    color: var(--color-text-muted);
+}
+
+.sermons-platform-card__action {
+    color: var(--color-primary);
+
+    font-weight: 800;
+}
+
+
+/* ---------- Sermon Library ---------- */
+
+.sermons-library {
+    max-width: 1000px;
+}
+
+.sermons-library > h2 {
+    margin-bottom: var(--space-6);
+}
+
+.sermons-library__grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 280px), 1fr)
+        );
+
+    gap: var(--space-5);
+}
+
+
+/* ---------- Empty State ---------- */
+
+.sermons-empty-state {
+    max-width: 700px;
+
+    padding: var(--space-5);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    color: var(--color-text-muted);
+}
+
+.sermons-empty-state p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Sermons Responsive ---------- */
+
+@media (max-width: 639px) {
+
+    .sermons-live {
+        align-items: stretch;
+    }
+
+    .sermons-live__content {
+        flex-direction: column;
+    }
+
+    .sermons-platform-card {
+        flex-direction: column;
+    }
+
+}
+
+
+/* =========================================================
+   STAGE 9.6 - CONTACT PAGE
+   ========================================================= */
+
+
+/* ---------- Contact Hero ---------- */
+
+.contact-hero {
+    display: flex;
+    align-items: center;
+
+    min-height: clamp(280px, 38vh, 420px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-surface),
+            var(--color-bg)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.contact-hero__content {
+    max-width: 760px;
+
+    padding-block: var(--space-8);
+}
+
+.contact-hero__title {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Section Header ---------- */
+
+.contact-section__header {
+    max-width: 760px;
+
+    margin-bottom: var(--space-6);
+}
+
+.contact-section__header h2 {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Location ---------- */
+
+.contact-location {
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-6);
+
+    padding: var(--space-6);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+}
+
+.contact-location__content {
+    max-width: 700px;
+}
+
+.contact-location__content h3 {
+    margin-bottom: var(--space-3);
+
+    font-size: var(--font-size-2xl);
+}
+
+.contact-location__text,
+.contact-location__address,
+.contact-location__landmark {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- Optional Map ---------- */
+
+.contact-map {
+    overflow: hidden;
+
+    margin-top: var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+}
+
+.contact-map__frame {
+    width: 100%;
+    min-height: 420px;
+
+    border: 0;
+}
+
+
+/* ---------- Sunday Services ---------- */
+
+.contact-services-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 260px), 1fr)
+        );
+
+    gap: var(--space-5);
+
+    max-width: 900px;
+}
+
+.contact-service-card {
+    padding: var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-bg);
+}
+
+.contact-service-card__name {
+    margin-bottom: var(--space-3);
+
+    font-size: var(--font-size-xl);
+}
+
+.contact-service-card__time {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+}
+
+.contact-service-card__venue {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+
+/* ---------- Direct Contact Methods ---------- */
+
+.contact-methods {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 240px), 1fr)
+        );
+
+    gap: var(--space-5);
+
+    max-width: 1000px;
+}
+
+.contact-method {
+    padding: var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+}
+
+.contact-method__label {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.contact-method__value {
+    color: var(--color-primary);
+
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.contact-method__value:hover {
+    text-decoration: underline;
+
+    text-decoration-thickness: 0.1em;
+    text-underline-offset: 0.2em;
+}
+
+
+/* ---------- Contact Empty State ---------- */
+
+.contact-empty-state {
+    max-width: 700px;
+
+    padding: var(--space-5);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    color: var(--color-text-muted);
+}
+
+.contact-empty-state p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Social Links ---------- */
+
+.contact-social-links {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: var(--space-3);
+}
+
+.contact-social-link {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-2);
+
+    min-height: 52px;
+
+    padding: var(--space-3) var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+
+    background: var(--color-bg);
+
+    color: var(--color-text);
+
+    font-weight: 700;
+    text-decoration: none;
+
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.contact-social-link:hover {
+    border-color: var(--color-primary);
+
+    background: var(--color-surface);
+    color: var(--color-primary);
+
+    transform: translateY(-1px);
+}
+
+.contact-social-link__icon {
+    display: block;
+
+    width: 24px;
+    height: 24px;
+
+    flex: 0 0 24px;
+
+    object-fit: contain;
+}
+
+.contact-social-link__label {
+    line-height: 1;
+}
+
+
+/* ---------- Contact Responsive ---------- */
+
+@media (max-width: 639px) {
+
+    .contact-location {
+        align-items: stretch;
+    }
+
+    .contact-location .button {
+        width: 100%;
+    }
+
+    .contact-map__frame {
+        min-height: 320px;
+    }
+
+}
+
+
+/* =========================================================
+   STAGE 9.7 - EVENTS PAGE
+   ========================================================= */
+
+
+/* ---------- Events Hero ---------- */
+
+.events-hero {
+    display: flex;
+    align-items: center;
+
+    min-height: clamp(280px, 38vh, 420px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-surface),
+            var(--color-bg)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.events-hero__content {
+    max-width: 760px;
+
+    padding-block: var(--space-8);
+}
+
+.events-hero__title {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Section Header ---------- */
+
+.events-section__header {
+    max-width: 760px;
+
+    margin-bottom: var(--space-6);
+}
+
+.events-section__header h2 {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Events Grid ---------- */
+
+.events-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 300px), 1fr)
+        );
+
+    gap: var(--space-5);
+}
+
+
+/* ---------- Event Card ---------- */
+
+.event-card {
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.event-card:hover {
+    border-color: var(--color-primary);
+
+    transform: translateY(-2px);
+}
+
+
+/* ---------- Event Image ---------- */
+
+.event-card__media {
+    overflow: hidden;
+
+    aspect-ratio: 16 / 9;
+
+    background: var(--color-surface-alt);
+}
+
+.event-card__image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* ---------- Event Content ---------- */
+
+.event-card__content {
+    display: grid;
+
+    gap: var(--space-4);
+
+    padding: var(--space-5);
+}
+
+.event-card__date {
+    margin-bottom: 0;
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.event-card__name {
+    margin-bottom: 0;
+
+    font-size: var(--font-size-2xl);
+}
+
+.event-card__description {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+}
+
+
+/* ---------- Event Details ---------- */
+
+.event-card__detail {
+    display: grid;
+
+    gap: var(--space-1);
+
+    padding-top: var(--space-3);
+
+    border-top: 1px solid var(--color-border);
+
+    color: var(--color-text-muted);
+}
+
+.event-card__label {
+    color: var(--color-text);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.event-card__actions {
+    padding-top: var(--space-2);
+}
+
+
+/* ---------- Coming Soon Empty State ---------- */
+
+.events-coming-soon {
+    max-width: 760px;
+
+    margin-inline: auto;
+
+    padding:
+        clamp(var(--space-6), 6vw, var(--space-9))
+        var(--space-6);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    text-align: center;
+}
+
+
+/* ---------- Decorative Symbol ---------- */
+
+.events-coming-soon__symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    width: 64px;
+    height: 64px;
+
+    margin-inline: auto;
+    margin-bottom: var(--space-5);
+
+    border-radius: 50%;
+
+    background: var(--color-primary);
+}
+
+.events-coming-soon__symbol span {
+    display: block;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--color-primary-text);
+}
+
+
+/* ---------- Coming Soon Content ---------- */
+
+.events-coming-soon__eyebrow {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.events-coming-soon__title {
+    margin-bottom: var(--space-4);
+}
+
+.events-coming-soon__text {
+    max-width: 600px;
+
+    margin-inline: auto;
+    margin-bottom: var(--space-6);
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-lg);
+}
+
+
+/* ---------- Empty State Actions ---------- */
+
+.events-coming-soon__actions {
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: var(--space-3);
+}
+
+
+/* ---------- Events Responsive ---------- */
+
+@media (max-width: 639px) {
+
+    .events-coming-soon__actions {
+        flex-direction: column;
+    }
+
+    .events-coming-soon__actions .button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   STAGE 9.8 - GIVE PAGE
+   ========================================================= */
+
+
+/* ---------- Give Hero ---------- */
+
+.give-hero {
+    display: flex;
+    align-items: center;
+
+    min-height: clamp(280px, 38vh, 420px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-surface),
+            var(--color-bg)
+        );
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.give-hero__content {
+    max-width: 760px;
+
+    padding-block: var(--space-8);
+}
+
+.give-hero__title {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Give Section Header ---------- */
+
+.give-section__header {
+    max-width: 760px;
+
+    margin-bottom: var(--space-6);
+}
+
+.give-section__header h2 {
+    margin-bottom: var(--space-3);
+}
+
+.give-section__intro {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-lg);
+}
+
+
+/* ---------- Giving Methods ---------- */
+
+.give-methods {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(min(100%, 280px), 1fr)
+        );
+
+    gap: var(--space-5);
+}
+
+
+/* ---------- Giving Method Card ---------- */
+
+.give-method-card {
+    padding: var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+}
+
+.give-method-card__name {
+    margin-bottom: var(--space-3);
+
+    font-size: var(--font-size-xl);
+}
+
+.give-method-card__description {
+    margin-bottom: var(--space-4);
+
+    color: var(--color-text-muted);
+}
+
+.give-method-card__details {
+    padding-top: var(--space-4);
+
+    border-top: 1px solid var(--color-border);
+}
+
+
+/* ---------- Giving Enquiries ---------- */
+
+.give-enquiry {
+    max-width: 760px;
+
+    margin-top: var(--space-7);
+
+    padding: var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+}
+
+.give-enquiry h2 {
+    margin-bottom: var(--space-3);
+}
+
+.give-enquiry p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Coming Soon Empty State ---------- */
+
+.give-coming-soon {
+    max-width: 760px;
+
+    margin-inline: auto;
+
+    padding:
+        clamp(var(--space-6), 6vw, var(--space-9))
+        var(--space-6);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    text-align: center;
+}
+
+
+/* ---------- Give Symbol ---------- */
+
+.give-coming-soon__symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    margin-inline: auto;
+    margin-bottom: var(--space-5);
+
+    border-radius: 50%;
+
+    background: var(--color-primary);
+}
+
+.give-coming-soon__symbol-mark {
+    color: var(--color-primary-text);
+
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+
+/* ---------- Coming Soon Content ---------- */
+
+.give-coming-soon__eyebrow {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.give-coming-soon__title {
+    margin-bottom: var(--space-4);
+}
+
+.give-coming-soon__text {
+    max-width: 600px;
+
+    margin-inline: auto;
+    margin-bottom: var(--space-6);
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-lg);
+}
+
+
+/* ---------- Verification Notice ---------- */
+
+.give-coming-soon__notice {
+    max-width: 600px;
+
+    margin-inline: auto;
+    margin-bottom: var(--space-6);
+
+    padding: var(--space-4);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-bg);
+
+    text-align: left;
+}
+
+.give-coming-soon__notice strong {
+    display: block;
+
+    margin-bottom: var(--space-2);
+
+    color: var(--color-text);
+}
+
+.give-coming-soon__notice p {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+}
+
+
+/* ---------- Empty State Actions ---------- */
+
+.give-coming-soon__actions {
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: var(--space-3);
+}
+
+
+/* ---------- Give Responsive ---------- */
+
+@media (max-width: 639px) {
+
+    .give-coming-soon__actions {
+        flex-direction: column;
+    }
+
+    .give-coming-soon__actions .button {
+        width: 100%;
+    }
+
+}

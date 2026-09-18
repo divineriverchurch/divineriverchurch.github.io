@@ -1,0 +1,142 @@
+<footer class="site-footer">
+
+    <div class="container">
+
+        <div class="site-footer__grid">
+
+
+            <section class="site-footer__section">
+
+                <h2 class="site-footer__brand">
+                    {{ site.name }}
+                </h2>
+
+                {% if site.description %}
+                    <p class="site-footer__text">
+                        {{ site.description }}
+                    </p>
+                {% endif %}
+
+            </section>
+
+
+            <section class="site-footer__section">
+
+                <h2 class="site-footer__heading">
+                    Quick Links
+                </h2>
+
+                <ul class="site-footer__links">
+
+                    {% for item in navigation %}
+
+                        <li>
+                            <a href="{{ item.url }}">
+                                {{ item.name }}
+                            </a>
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </section>
+
+
+            {% if service_times %}
+
+                <section class="site-footer__section">
+
+                    <h2 class="site-footer__heading">
+                        Sunday Services
+                    </h2>
+
+                    <ul class="site-footer__services">
+
+                        {% for service in service_times %}
+
+                            <li>
+
+                                <strong>
+                                    {{ service.name }}
+                                </strong>
+
+                                <span>
+                                    {{ service.display_time }}
+                                </span>
+
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </section>
+
+            {% endif %}
+
+
+            {% if social_links or location.directions_url %}
+
+                <section class="site-footer__section">
+
+                    <h2 class="site-footer__heading">
+                        Connect
+                    </h2>
+
+                    <ul class="site-footer__links">
+
+                        {% for social in social_links %}
+
+                            <li>
+
+                                <a
+                                    href="{{ social.url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {{ social.label }}
+                                </a>
+
+                            </li>
+
+                        {% endfor %}
+
+
+                        {% if location.directions_url %}
+
+                            <li>
+
+                                <a
+                                    href="{{ location.directions_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Get Directions
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                </section>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <div class="site-footer__bottom">
+
+            <p>
+                &copy; {{ site.name }}.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>

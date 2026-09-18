@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =======================================================
+     Stage 9.4 - Ministries Page
+     ======================================================= -->
+
+
+<!-- Page Introduction -->
+<section class="ministries-hero">
+    <div class="container">
+
+        <div class="ministries-hero__content">
+
+            <h1 class="ministries-hero__title">
+                Ministries
+            </h1>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Ministries -->
+<section class="section ministries-section">
+    <div class="container">
+
+        <div class="ministries-section__header">
+
+            <h2>
+                Our Ministries
+            </h2>
+
+            <p class="ministries-section__intro">
+                These ministries are currently part of Divine River Church.
+            </p>
+
+        </div>
+
+
+        {% if ministries %}
+
+        <div class="ministries-grid">
+
+            {% for ministry in ministries %}
+
+            <article class="ministry-card">
+
+                {% if ministry.image %}
+
+                <div class="ministry-card__media">
+
+                    <img
+                        class="ministry-card__image"
+                        src="/{{ ministry.image }}"
+                        alt="{{ ministry.name }}"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                {% endif %}
+
+
+                <div class="ministry-card__content">
+
+                    <h3 class="ministry-card__name">
+                        {{ ministry.name }}
+                    </h3>
+
+
+                    {% if ministry.description %}
+
+                    <p class="ministry-card__description">
+                        {{ ministry.description }}
+                    </p>
+
+                    {% endif %}
+
+
+                    {% if ministry.leader %}
+
+                    <div class="ministry-card__detail">
+
+                        <span class="ministry-card__label">
+                            Leader
+                        </span>
+
+                        <span>
+                            {{ ministry.leader }}
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if ministry.schedule %}
+
+                    <div class="ministry-card__detail">
+
+                        <span class="ministry-card__label">
+                            Schedule
+                        </span>
+
+                        <span>
+                            {{ ministry.schedule }}
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if ministry.contact %}
+
+                    <div class="ministry-card__detail">
+
+                        <span class="ministry-card__label">
+                            Contact
+                        </span>
+
+                        <span>
+                            {{ ministry.contact }}
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <div class="ministries-empty-state">
+
+            <p>
+                Ministry information will be published here when available.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+
+{% endblock %}

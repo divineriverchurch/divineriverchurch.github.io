@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        {% if page_name %}
+            {{ page_name }} | {{ site.name }}
+        {% else %}
+            {{ site.name }}
+        {% endif %}
+    </title>
+
+    {% if site.description %}
+    <meta
+        name="description"
+        content="{{ site.description }}"
+    >
+    {% endif %}
+
+    <script>
+        (function () {
+            try {
+                const storedTheme = localStorage.getItem("drc-theme");
+
+                let theme;
+
+                if (
+                    storedTheme === "light" ||
+                    storedTheme === "dark"
+                ) {
+                    theme = storedTheme;
+                } else {
+                    theme = window.matchMedia(
+                        "(prefers-color-scheme: dark)"
+                    ).matches
+                        ? "dark"
+                        : "light";
+                }
+
+                document.documentElement.dataset.theme = theme;
+            } catch (error) {
+                document.documentElement.dataset.theme = "light";
+            }
+        })();
+    </script>
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/main.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/responsive.css"
+    >
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+
+    <a
+        class="skip-link"
+        href="#main-content"
+    >
+        Skip to main content
+    </a>
+
+    {% include "header.html" %}
+
+    <main
+        id="main-content"
+        class="site-main"
+        tabindex="-1"
+    >
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "footer.html" %}
+
+    <script
+        src="/assets/js/main.js"
+        defer
+    ></script>
+
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

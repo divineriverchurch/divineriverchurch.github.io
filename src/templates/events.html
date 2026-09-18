@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =======================================================
+     Stage 9.7 - Events Page
+     ======================================================= -->
+
+
+<!-- Page Introduction -->
+<section class="events-hero">
+    <div class="container">
+
+        <div class="events-hero__content">
+
+            <h1 class="events-hero__title">
+                Events
+            </h1>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Events -->
+<section class="section events-section">
+    <div class="container">
+
+        {% if events %}
+
+        <div class="events-section__header">
+
+            <h2>
+                Upcoming Events
+            </h2>
+
+        </div>
+
+
+        <div class="events-grid">
+
+            {% for event in events %}
+
+            <article class="event-card">
+
+                {% if event.image %}
+
+                <div class="event-card__media">
+
+                    <img
+                        class="event-card__image"
+                        src="/{{ event.image }}"
+                        alt="{{ event.name }}"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                {% endif %}
+
+
+                <div class="event-card__content">
+
+                    {% if event.date %}
+
+                    <p class="event-card__date">
+                        {{ event.date }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <h2 class="event-card__name">
+                        {{ event.name }}
+                    </h2>
+
+
+                    {% if event.description %}
+
+                    <p class="event-card__description">
+                        {{ event.description }}
+                    </p>
+
+                    {% endif %}
+
+
+                    {% if event.time %}
+
+                    <div class="event-card__detail">
+
+                        <span class="event-card__label">
+                            Time
+                        </span>
+
+                        <span>
+                            {{ event.time }}
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if event.venue %}
+
+                    <div class="event-card__detail">
+
+                        <span class="event-card__label">
+                            Venue
+                        </span>
+
+                        <span>
+                            {{ event.venue }}
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if event.url %}
+
+                    <div class="event-card__actions">
+
+                        <a
+                            class="button button--secondary"
+                            href="{{ event.url }}"
+                        >
+                            Event Details
+                        </a>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <!-- Empty State -->
+        <div class="events-coming-soon">
+
+            <div class="events-coming-soon__symbol" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+
+            <p class="events-coming-soon__eyebrow">
+                Stay Connected
+            </p>
+
+            <h2 class="events-coming-soon__title">
+                What's Coming Up
+            </h2>
+
+            <p class="events-coming-soon__text">
+                New church events and special programmes will be shared here
+                as they are announced. Please check back soon for upcoming
+                dates and details.
+            </p>
+
+
+            <div class="events-coming-soon__actions">
+
+                <a
+                    class="button button--primary"
+                    href="/programmes/"
+                >
+                    View Weekly Programme
+                </a>
+
+                <a
+                    class="button button--secondary"
+                    href="/contact/"
+                >
+                    Contact Us
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+
+{% endblock %}

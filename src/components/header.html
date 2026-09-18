@@ -1,0 +1,128 @@
+<header
+    class="site-header"
+    data-site-header
+>
+
+    <div class="container site-header__inner">
+
+        <a
+            class="site-brand"
+            href="/"
+            aria-label="{{ site.name }} home"
+        >
+
+            {% if site.logo %}
+                <img
+                    class="site-brand__logo"
+                    src="/{{ site.logo }}"
+                    alt="{{ site.name }}"
+                >
+            {% else %}
+                <span class="site-brand__name">
+                    {{ site.name }}
+                </span>
+            {% endif %}
+
+        </a>
+
+
+        <nav
+            id="primary-navigation"
+            class="site-nav"
+            aria-label="Primary navigation"
+            data-navigation
+            data-open="false"
+        >
+
+            <ul class="site-nav__list">
+
+                {% for item in navigation %}
+
+                    <li class="site-nav__item">
+
+                        <a
+                            class="site-nav__link{% if item.slug == current_page %} is-active{% endif %}"
+                            href="{{ item.url }}"
+                            {% if item.slug == current_page %}
+                                aria-current="page"
+                            {% endif %}
+                        >
+                            {{ item.name }}
+                        </a>
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </nav>
+
+
+        <div class="site-header__actions">
+
+            {% if livestream.published and livestream.youtube_live_url %}
+
+                <a
+                    class="button button--primary site-header__live"
+                    href="{{ livestream.youtube_live_url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {{ livestream.button_label or "Watch Live" }}
+                </a>
+
+            {% endif %}
+
+
+            <button
+                class="icon-button theme-toggle"
+                type="button"
+                data-theme-toggle
+                aria-label="Switch colour theme"
+                title="Switch colour theme"
+            >
+
+                <span
+                    class="theme-toggle__icon"
+                    data-theme-icon
+                    aria-hidden="true"
+                >
+                    ◐
+                </span>
+
+                <span class="visually-hidden">
+                    Switch colour theme
+                </span>
+
+            </button>
+
+
+            <button
+                class="icon-button nav-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="primary-navigation"
+                data-nav-toggle
+            >
+
+                <span
+                    class="nav-toggle__icon"
+                    aria-hidden="true"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+
+                <span class="visually-hidden">
+                    Open navigation
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>

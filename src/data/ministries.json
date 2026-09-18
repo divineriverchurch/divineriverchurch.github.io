@@ -1,0 +1,81 @@
+{
+  "ministries": [
+    {
+      "id": "intercessor-ministry",
+      "name": "Intercessor Ministry",
+      "description": null,
+      "leader": null,
+      "schedule": null,
+      "contact": null,
+      "image": null,
+      "published": true,
+      "sort_order": 1
+    },
+    {
+      "id": "ushering-ministry",
+      "name": "Ushering Ministry",
+      "description": null,
+      "leader": null,
+      "schedule": null,
+      "contact": null,
+      "image": null,
+      "published": true,
+      "sort_order": 2
+    },
+    {
+      "id": "choir-ministry",
+      "name": "Choir Ministry",
+      "description": null,
+      "leader": null,
+      "schedule": null,
+      "contact": null,
+      "image": null,
+      "published": true,
+      "sort_order": 3
+    },
+    {
+      "id": "technical-ministry",
+      "name": "Technical Ministry",
+      "description": null,
+      "leader": null,
+      "schedule": null,
+      "contact": null,
+      "image": null,
+      "published": true,
+      "sort_order": 4
+    },
+    {
+      "id": "pastor-ministry",
+      "name": "Pastor Ministry",
+      "description": null,
+      "leader": null,
+      "schedule": null,
+      "contact": null,
+      "image": null,
+      "published": true,
+      "sort_order": 5
+    },
+    {
+      "id": "deacon-ministry",
+      "name": "Deacon Ministry",
+      "description": null,
+      "leader": null,
+      "schedule": null,
+      "contact": null,
+      "image": null,
+      "published": true,
+      "sort_order": 6
+    },
+    {
+      "id": "sunday-school-ministry",
+      "name": "Sunday School Ministry",
+      "description": null,
+      "leader": null,
+      "schedule": null,
+      "contact": null,
+      "image": null,
+      "published": true,
+      "sort_order": 7
+    }
+  ]
+}

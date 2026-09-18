@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =======================================================
+     Stage 9.3 - Programmes Page
+     ======================================================= -->
+
+
+<!-- Page Introduction -->
+<section class="programmes-hero">
+    <div class="container">
+
+        <div class="programmes-hero__content">
+
+            <h1 class="programmes-hero__title">
+                Programmes
+            </h1>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Weekly Programme -->
+<section class="section programmes-section">
+    <div class="container">
+
+        <div class="programmes-section__header">
+
+            <h2>
+                Weekly Church Programme
+            </h2>
+
+        </div>
+
+
+        {% if programmes %}
+
+        {% set day_order = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ] %}
+
+
+        <div class="programmes-week">
+
+            {% for day in day_order %}
+
+                {% set day_programmes =
+                    programmes
+                    | selectattr("day", "equalto", day)
+                    | list
+                %}
+
+                {% if day_programmes %}
+
+                <section class="programme-day">
+
+                    <div class="programme-day__header">
+
+                        <h3 class="programme-day__title">
+                            {{ day }}
+                        </h3>
+
+                    </div>
+
+
+                    <div class="programme-day__items">
+
+                        {% for programme in day_programmes %}
+
+                        <article class="programme-card">
+
+                            <div class="programme-card__content">
+
+                                <div class="programme-card__main">
+
+                                    <h4 class="programme-card__name">
+                                        {{ programme.name }}
+                                    </h4>
+
+
+                                    {% if programme.display_time %}
+
+                                    <p class="programme-card__time">
+                                        {{ programme.display_time }}
+                                    </p>
+
+                                    {% elif programme.start_time and programme.end_time %}
+
+                                    <p class="programme-card__time">
+                                        {{ programme.start_time }}
+                                        –
+                                        {{ programme.end_time }}
+                                    </p>
+
+                                    {% endif %}
+
+
+                                    {% if programme.venue %}
+
+                                    <p class="programme-card__venue">
+                                        {{ programme.venue }}
+                                    </p>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                </section>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <div class="programmes-empty-state">
+
+            <p>
+                Weekly programme information will be published here when available.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+
+<!-- Sunday Services -->
+{% if service_times %}
+<section class="section section--surface programmes-services">
+    <div class="container">
+
+        <div class="programmes-section__header">
+
+            <h2>
+                Sunday Services
+            </h2>
+
+        </div>
+
+
+        <div class="programmes-services__grid">
+
+            {% for service in service_times %}
+
+            <article class="programme-service-card">
+
+                <h3 class="programme-service-card__name">
+                    {{ service.name }}
+                </h3>
+
+                {% if service.display_time %}
+                <p class="programme-service-card__time">
+                    {{ service.display_time }}
+                </p>
+                {% endif %}
+
+                {% if service.venue %}
+                <p class="programme-service-card__venue">
+                    {{ service.venue }}
+                </p>
+                {% endif %}
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+
+{% endblock %}

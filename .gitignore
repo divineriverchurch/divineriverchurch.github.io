@@ -1,0 +1,26 @@
+# Python virtual environment
+ch1/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+
+# Generated website
+dist/
+
+# Environment/secrets
+.env
+.env.*
+
+# Operating system
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+
+# VS Code local settings
+.vscode/

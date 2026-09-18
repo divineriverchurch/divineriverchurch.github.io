@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =======================================================
+     Stage 9.2 - About Page
+     ======================================================= -->
+
+
+<!-- Page Introduction -->
+<section class="about-hero">
+    <div class="container">
+
+        <div class="about-hero__content">
+
+            <h1 class="about-hero__title">
+                About the Ch
+            </h1>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Vision -->
+{% if site.vision %}
+<section class="section about-section">
+    <div class="container">
+
+        <div class="about-section__header">
+
+            <h2>
+                Our Vision
+            </h2>
+
+        </div>
+
+        <div class="about-vision">
+
+            <blockquote class="about-vision__text">
+                {{ site.vision }}
+            </blockquote>
+
+            {% if site.vision_reference %}
+            <p class="about-vision__reference">
+                {{ site.vision_reference }}
+            </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+
+<!-- Leadership -->
+<section class="section section--surface about-section">
+    <div class="container">
+
+        <div class="about-section__header">
+
+            <p class="about-section__eyebrow">
+                Leadership
+            </p>
+
+            <h2>
+                Our Pastors
+            </h2>
+
+        </div>
+
+        {% if leadership %}
+
+        <div class="about-leadership-grid">
+
+            {% for pastor in leadership %}
+
+            <article class="about-pastor-card">
+
+                <div class="about-pastor-card__content">
+
+                    <div class="about-pastor-card__identity">
+
+                        <div
+                            class="about-pastor-card__placeholder"
+                            aria-hidden="true"
+                        >
+                            {{ pastor.name[0] }}
+                        </div>
+
+                        <div>
+
+                            <h3 class="about-pastor-card__name">
+                                {{ pastor.name }}
+                            </h3>
+
+                            {% if pastor.title %}
+                            <p class="about-pastor-card__title">
+                                {{ pastor.title }}
+                            </p>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    {% if pastor.mobile %}
+
+                    <div class="about-pastor-card__contact">
+
+                        <p class="about-pastor-card__contact-label">
+                            Mobile
+                        </p>
+
+                        <a
+                            class="about-pastor-card__phone"
+                            href="tel:{{ pastor.mobile | replace(' ', '') }}"
+                            aria-label="Call {{ pastor.name }} on {{ pastor.mobile }}"
+                        >
+                            {{ pastor.mobile }}
+                        </a>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="about-empty-state">
+
+            <p>
+                Leadership information will be published here when available.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+
+{% endblock %}

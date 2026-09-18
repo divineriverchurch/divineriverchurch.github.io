@@ -1,0 +1,139 @@
+{
+  "site": {
+    "name": "Divine River Church",
+    "logo": "assets/images/branding/divine-river-church-logo.png",
+    "tagline": null,
+    "description": null,
+    "welcome_message": null,
+    "vision": "To Bring people back to God, Disciple and equip them for the Ministry",
+    "vision_reference": "Mathew 28:19 - 20",
+    "mission": null,
+    "history": null,
+    "values": [],
+    "base_url": null
+  },
+  "leadership": [
+    {
+      "id": "pr-pasteur-kavuma",
+      "name": "Pr Pasteur Kavuma",
+      "title": null,
+      "mobile": "+256 754 275036",
+      "whatsapp": false,
+      "biography": null,
+      "image": null,
+      "published": true,
+      "sort_order": 1
+    },
+    {
+      "id": "pr-noah-mubiru",
+      "name": "Pr Noah Mubiru",
+      "title": null,
+      "mobile": "+256 782 576969",
+      "whatsapp": null,
+      "biography": null,
+      "image": null,
+      "published": true,
+      "sort_order": 2
+    },
+    {
+      "id": "pr-lamech-sebbuunza",
+      "name": "Pr Lamech Sebbuunza",
+      "title": null,
+      "mobile": "+256 773 213404",
+      "whatsapp": null,
+      "biography": null,
+      "image": null,
+      "published": true,
+      "sort_order": 3
+    },
+    {
+      "id": "pr-anthony-mubiru",
+      "name": "Pr Anthony Mubiru",
+      "title": null,
+      "mobile": "+256 757 255619",
+      "whatsapp": null,
+      "biography": null,
+      "image": null,
+      "published": true,
+      "sort_order": 4
+    }
+  ],
+  "branches": [],
+  "contact": {
+    "phone": null,
+    "whatsapp": null,
+    "email": null,
+    "address": null,
+    "postal_address": null,
+    "general_enquiry": null,
+    "prayer_contact": null
+  },
+  "service_times": [
+    {
+      "id": "sunday-first-service",
+      "name": "First Sunday Service",
+      "day": "Sunday",
+      "start_time": "08:00",
+      "end_time": "10:00",
+      "display_time": "8 am to 10:00 am",
+      "venue": "Church",
+      "published": true,
+      "sort_order": 1
+    },
+    {
+      "id": "sunday-second-service",
+      "name": "Second Sunday Service",
+      "day": "Sunday",
+      "start_time": "10:30",
+      "end_time": "13:00",
+      "display_time": "10:30 am to 1:00 pm",
+      "venue": "Church",
+      "published": true,
+      "sort_order": 2
+    }
+  ],
+  "location": {
+    "address": null,
+    "google_maps_url": "https://maps.app.goo.gl/1zDh24Ci9dNc55Hf6",
+    "directions_url": "https://maps.app.goo.gl/1zDh24Ci9dNc55Hf6",
+    "embed_url": null,
+    "landmark": null
+  },
+  "social_links": [
+    {
+      "platform": "youtube",
+      "name": "YouTube",
+      "url": "https://www.youtube.com/@divineriverchurch",
+      "published": true,
+      "sort_order": 1
+    },
+    {
+      "platform": "facebook",
+      "name": "Facebook",
+      "url": "https://www.facebook.com/Divine-River-Church-Ministries",
+      "published": true,
+      "sort_order": 2
+    },
+    {
+      "platform": "instagram",
+      "name": "Instagram",
+      "url": "https://www.instagram.com/divineriverchurchministries/",
+      "published": true,
+      "sort_order": 3
+    }
+  ],
+  "livestream": {
+    "youtube_channel_url": "https://www.youtube.com/@divineriverchurch",
+    "youtube_live_url": "https://www.youtube.com/@divineriverchurch/streams",
+    "youtube_videos_url": "https://www.youtube.com/@divineriverchurch/videos",
+    "facebook_sermons_url": "https://www.facebook.com/divineriverchurchministries/",
+    "button_label": "Watch Live",
+    "offline_message": null,
+    "published": true
+  },
+  "giving": {
+    "introduction": null,
+    "methods": [],
+    "enquiry_contact": null
+  }
+}

@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =======================================================
+     Stage 9.8 - Give Page
+     ======================================================= -->
+
+
+<!-- Page Introduction -->
+<section class="give-hero">
+    <div class="container">
+
+        <div class="give-hero__content">
+
+            <h1 class="give-hero__title">
+                Give
+            </h1>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Giving Information -->
+<section class="section give-section">
+    <div class="container">
+
+        {% if giving.introduction or giving.methods %}
+
+        <div class="give-section__header">
+
+            <h2>
+                Giving Information
+            </h2>
+
+            {% if giving.introduction %}
+
+            <p class="give-section__intro">
+                {{ giving.introduction }}
+            </p>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if giving.methods %}
+
+        <div class="give-methods">
+
+            {% for method in giving.methods %}
+
+            <article class="give-method-card">
+
+                {% if method.name %}
+
+                <h3 class="give-method-card__name">
+                    {{ method.name }}
+                </h3>
+
+                {% endif %}
+
+
+                {% if method.description %}
+
+                <p class="give-method-card__description">
+                    {{ method.description }}
+                </p>
+
+                {% endif %}
+
+
+                {% if method.details %}
+
+                <div class="give-method-card__details">
+                    {{ method.details }}
+                </div>
+
+                {% endif %}
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        {% if giving.enquiry_contact %}
+
+        <div class="give-enquiry">
+
+            <h2>
+                Giving Enquiries
+            </h2>
+
+            <p>
+                {{ giving.enquiry_contact }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        {% else %}
+
+        <!-- Empty State -->
+        <div class="give-coming-soon">
+
+            <div class="give-coming-soon__symbol" aria-hidden="true">
+
+                <span class="give-coming-soon__symbol-mark">
+                    +
+                </span>
+
+            </div>
+
+
+            <p class="give-coming-soon__eyebrow">
+                Giving
+            </p>
+
+            <h2 class="give-coming-soon__title">
+                Giving Details Coming Soon
+            </h2>
+
+            <p class="give-coming-soon__text">
+                Verified giving methods and instructions will be published here
+                once they are confirmed. Please check back soon for updated
+                information.
+            </p>
+
+
+            <div class="give-coming-soon__notice">
+
+                <strong>
+                    Please note
+                </strong>
+
+                <p>
+                    Only giving information officially confirmed by Divine River
+                    Church will be published on this page.
+                </p>
+
+            </div>
+
+
+            <div class="give-coming-soon__actions">
+
+                <a
+                    class="button button--primary"
+                    href="/"
+                >
+                    Return Home
+                </a>
+
+                <a
+                    class="button button--secondary"
+                    href="/contact/"
+                >
+                    Contact Us
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+
+{% endblock %}

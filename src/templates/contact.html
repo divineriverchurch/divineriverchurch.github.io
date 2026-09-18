@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =======================================================
+     Stage 9.6 - Contact Page
+     ======================================================= -->
+
+
+<!-- Page Introduction -->
+<section class="contact-hero">
+    <div class="container">
+
+        <div class="contact-hero__content">
+
+            <h1 class="contact-hero__title">
+                Contact
+            </h1>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Visit / Location -->
+<section class="section contact-section">
+    <div class="container">
+
+        <div class="contact-section__header">
+
+            <h2>
+                Visit Us
+            </h2>
+
+        </div>
+
+
+        <div class="contact-location">
+
+            <div class="contact-location__content">
+
+                <h3>
+                    Divine River Church
+                </h3>
+
+                {% if location.address %}
+
+                <p class="contact-location__address">
+                    {{ location.address }}
+                </p>
+
+                {% else %}
+
+                <p class="contact-location__text">
+                    Use Google Maps to find the church location and get directions.
+                </p>
+
+                {% endif %}
+
+
+                {% if location.landmark %}
+
+                <p class="contact-location__landmark">
+                    {{ location.landmark }}
+                </p>
+
+                {% endif %}
+
+            </div>
+
+
+            {% if location.directions_url %}
+
+            <a
+                class="button button--primary"
+                href="{{ location.directions_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Get directions to Divine River Church using Google Maps"
+            >
+                Get Directions
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if location.embed_url %}
+
+        <div class="contact-map">
+
+            <iframe
+                class="contact-map__frame"
+                src="{{ location.embed_url }}"
+                title="Divine River Church location"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+            ></iframe>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+
+<!-- Sunday Services -->
+{% if service_times %}
+<section class="section section--surface contact-section">
+    <div class="container">
+
+        <div class="contact-section__header">
+
+            <h2>
+                Sunday Services
+            </h2>
+
+        </div>
+
+
+        <div class="contact-services-grid">
+
+            {% for service in service_times %}
+
+            <article class="contact-service-card">
+
+                <h3 class="contact-service-card__name">
+                    {{ service.name }}
+                </h3>
+
+                {% if service.display_time %}
+
+                <p class="contact-service-card__time">
+                    {{ service.display_time }}
+                </p>
+
+                {% endif %}
+
+                {% if service.venue %}
+
+                <p class="contact-service-card__venue">
+                    {{ service.venue }}
+                </p>
+
+                {% endif %}
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+
+<!-- Direct Contact -->
+<section class="section contact-section">
+    <div class="container">
+
+        <div class="contact-section__header">
+
+            <h2>
+                Contact the Church
+            </h2>
+
+        </div>
+
+
+        {% if contact.phone or contact.whatsapp or contact.email %}
+
+        <div class="contact-methods">
+
+
+            {% if contact.phone %}
+
+            <div class="contact-method">
+
+                <p class="contact-method__label">
+                    Telephone
+                </p>
+
+                <a
+                    class="contact-method__value"
+                    href="tel:{{ contact.phone | replace(' ', '') }}"
+                >
+                    {{ contact.phone }}
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if contact.whatsapp %}
+
+            <div class="contact-method">
+
+                <p class="contact-method__label">
+                    WhatsApp
+                </p>
+
+                <a
+                    class="contact-method__value"
+                    href="https://wa.me/{{ contact.whatsapp | replace(' ', '') | replace('+', '') }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {{ contact.whatsapp }}
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if contact.email %}
+
+            <div class="contact-method">
+
+                <p class="contact-method__label">
+                    Email
+                </p>
+
+                <a
+                    class="contact-method__value"
+                    href="mailto:{{ contact.email }}"
+                >
+                    {{ contact.email }}
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+        {% else %}
+
+        <div class="contact-empty-state">
+
+            <p>
+                Official church telephone, WhatsApp and email details will be
+                published here when they are available.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+
+<!-- Social Links -->
+{% if social_links %}
+<section class="section section--surface contact-section">
+    <div class="container">
+
+        <div class="contact-section__header">
+
+            <h2>
+                Follow Us
+            </h2>
+
+        </div>
+
+
+        <div class="contact-social-links">
+
+            {% for social in social_links %}
+
+                {% set social_platform = social.platform | lower %}
+
+                <a
+                    class="contact-social-link"
+                    href="{{ social.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Divine River Church on {{ social.name }}"
+                >
+
+                    {% if social_platform == "youtube" %}
+
+                    <img
+                        class="contact-social-link__icon"
+                        src="/assets/images/branding/social/youtube.svg"
+                        alt=""
+                        aria-hidden="true"
+                    >
+
+                    {% elif social_platform == "facebook" %}
+
+                    <img
+                        class="contact-social-link__icon"
+                        src="/assets/images/branding/social/facebook.svg"
+                        alt=""
+                        aria-hidden="true"
+                    >
+
+                    {% elif social_platform == "instagram" %}
+
+                    <img
+                        class="contact-social-link__icon"
+                        src="/assets/images/branding/social/instagram.svg"
+                        alt=""
+                        aria-hidden="true"
+                    >
+
+                    {% endif %}
+
+
+                    <span class="contact-social-link__label">
+                        {{ social.name }}
+                    </span>
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+
+{% endblock %}
