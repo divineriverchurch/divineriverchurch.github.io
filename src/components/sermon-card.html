@@ -1,0 +1,163 @@
+{% set audio = sermon_item.get("audio", {}) %}
+{% set has_audio = audio.get("available") and audio.get("url") %}
+{% set card_id = sermon_item.id | replace(" ", "-") %}
+
+<article
+    class="sermon-card"
+    data-sermon-card
+>
+
+    <div class="sermon-card__stage">
+
+        <!-- Thumbnail / main card trigger -->
+        <button
+            class="sermon-card__media"
+            type="button"
+            data-sermon-card-trigger
+            aria-expanded="false"
+            aria-controls="sermon-options-{{ card_id }}"
+        >
+
+            {% if sermon_item.thumbnail %}
+
+            <img
+                class="sermon-card__thumbnail"
+                src="{{ sermon_item.thumbnail }}"
+                alt=""
+                loading="lazy"
+            >
+
+            {% endif %}
+
+
+            <!-- Default title -->
+            <span class="sermon-card__title-overlay">
+                {{ sermon_item.title }}
+            </span>
+
+
+            <!-- Closed-card hover overlay -->
+            <span
+                class="sermon-card__view-overlay"
+                aria-hidden="true"
+            >
+
+                <span class="sermon-card__view-text">
+                    View Options
+                </span>
+
+            </span>
+
+        </button>
+
+
+        <!--
+            Action panel.
+
+            This remains inside the thumbnail space instead
+            of expanding underneath the card.
+        -->
+        <div
+            class="sermon-card__options"
+            id="sermon-options-{{ card_id }}"
+            data-sermon-card-options
+            hidden
+        >
+
+            <div class="sermon-card__panel-title">
+                {{ sermon_item.title }}
+            </div>
+
+
+            <div class="sermon-card__actions">
+
+                {% if sermon_item.youtube_url %}
+
+                <a
+                    class="
+                        button
+                        button--primary
+                        sermon-card__action
+                        sermon-card__youtube-action
+                    "
+                    href="{{ sermon_item.youtube_url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    YouTube
+                </a>
+
+                {% endif %}
+
+
+                {% if has_audio %}
+
+                <button
+                    class="
+                        button
+                        button--secondary
+                        sermon-card__action
+                        sermon-card__listen-action
+                    "
+                    type="button"
+                    data-sermon-audio-trigger
+                    aria-expanded="false"
+                    aria-controls="sermon-audio-{{ card_id }}"
+                >
+                    Listen
+                </button>
+
+
+                <a
+                    class="
+                        button
+                        button--secondary
+                        sermon-card__action
+                        sermon-card__download-action
+                    "
+                    href="{{ audio.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                >
+                    Download Audio
+                </a>
+
+                {% endif %}
+
+
+                {% if has_audio %}
+
+                <div
+                    class="sermon-card__audio"
+                    id="sermon-audio-{{ card_id }}"
+                    data-sermon-audio
+                    hidden
+                >
+
+                    <audio
+                        class="sermon-card__audio-player"
+                        controls
+                        preload="none"
+                    >
+
+                        <source
+                            src="{{ audio.url }}"
+                            type="audio/mpeg"
+                        >
+
+                        Your browser does not support audio playback.
+
+                    </audio>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</article>

@@ -2,37 +2,24 @@
 
 {% block content %}
 
+
 <!-- =======================================================
-     Stage 9.8 - Give Page
+     Prototype 2 - Give Page
      ======================================================= -->
 
 
-<!-- Page Introduction -->
-<section class="give-hero">
-    <div class="container">
+<!-- =======================================================
+     Giving Introduction
+     ======================================================= -->
 
-        <div class="give-hero__content">
-
-            <h1 class="give-hero__title">
-                Give
-            </h1>
-
-        </div>
-
-    </div>
-</section>
-
-
-<!-- Giving Information -->
 <section class="section give-section">
-    <div class="container">
 
-        {% if giving.introduction or giving.methods %}
+    <div class="container">
 
         <div class="give-section__header">
 
             <h2>
-                Giving Information
+                Giving to Divine River Church
             </h2>
 
             {% if giving.introduction %}
@@ -46,52 +33,166 @@
         </div>
 
 
-        {% if giving.methods %}
-
-        <div class="give-methods">
-
-            {% for method in giving.methods %}
-
-            <article class="give-method-card">
-
-                {% if method.name %}
-
-                <h3 class="give-method-card__name">
-                    {{ method.name }}
-                </h3>
-
-                {% endif %}
+        {% set published_methods =
+            giving.methods
+            | selectattr("published", "equalto", true)
+            | list
+        %}
 
 
-                {% if method.description %}
+        {% if published_methods %}
 
-                <p class="give-method-card__description">
-                    {{ method.description }}
-                </p>
+        <!-- ===================================================
+             Ways to Give
+             =================================================== -->
 
-                {% endif %}
+        <div class="give-methods-section">
+
+            <div class="give-section__header">
+
+                <h2>
+                    Ways to Give
+                </h2>
+
+            </div>
 
 
-                {% if method.details %}
+            <div class="give-methods">
 
-                <div class="give-method-card__details">
-                    {{ method.details }}
-                </div>
+                {% for method in published_methods %}
 
-                {% endif %}
+                <article class="give-method-card">
 
-            </article>
+                    <div class="give-method-card__header">
 
-            {% endfor %}
+                        <h3 class="give-method-card__name">
+                            {{ method.name }}
+                        </h3>
+
+                    </div>
+
+
+                    <!-- Payment Details -->
+
+                    <div class="give-method-card__details">
+
+                        {% if method.merchant_code %}
+
+                        <div class="give-payment-detail">
+
+                            <span class="give-payment-detail__label">
+                                Merchant Code
+                            </span>
+
+                            <strong class="give-payment-detail__value give-payment-detail__value--code">
+                                {{ method.merchant_code }}
+                            </strong>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if method.recipient %}
+
+                        <div class="give-payment-detail">
+
+                            <span class="give-payment-detail__label">
+                                Recipient
+                            </span>
+
+                            <strong class="give-payment-detail__value">
+                                {{ method.recipient }}
+                            </strong>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Instructions -->
+
+                    {% if method.instructions %}
+
+                    <div class="give-method-card__instructions">
+
+                        <h4>
+                            How to Give
+                        </h4>
+
+                        <ol class="give-instructions">
+
+                            {% for instruction in method.instructions %}
+
+                            <li>
+                                {{ instruction }}
+                            </li>
+
+                            {% endfor %}
+
+                        </ol>
+
+                    </div>
+
+                    {% endif %}
+
+                </article>
+
+                {% endfor %}
+
+            </div>
 
         </div>
+
+
+        <!-- ===================================================
+             Payment Safety
+             =================================================== -->
+
+        {% if giving.safety %}
+
+        <section class="give-safety">
+
+            <div class="give-section__header">
+
+                <h2>
+                    Payment Safety
+                </h2>
+
+            </div>
+
+
+            <div class="give-safety__content">
+
+                <ul class="give-safety__list">
+
+                    {% for item in giving.safety %}
+
+                    <li>
+                        {{ item }}
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </section>
 
         {% endif %}
 
 
+        <!-- ===================================================
+             Giving Enquiries
+             Only displayed once an official contact is supplied.
+             =================================================== -->
+
         {% if giving.enquiry_contact %}
 
-        <div class="give-enquiry">
+        <section class="give-enquiry">
 
             <h2>
                 Giving Enquiries
@@ -101,17 +202,23 @@
                 {{ giving.enquiry_contact }}
             </p>
 
-        </div>
+        </section>
 
         {% endif %}
 
 
         {% else %}
 
-        <!-- Empty State -->
+        <!-- ===================================================
+             Fallback - No approved giving method
+             =================================================== -->
+
         <div class="give-coming-soon">
 
-            <div class="give-coming-soon__symbol" aria-hidden="true">
+            <div
+                class="give-coming-soon__symbol"
+                aria-hidden="true"
+            >
 
                 <span class="give-coming-soon__symbol-mark">
                     +
@@ -129,49 +236,16 @@
             </h2>
 
             <p class="give-coming-soon__text">
-                Verified giving methods and instructions will be published here
-                once they are confirmed. Please check back soon for updated
-                information.
+                Verified giving methods and instructions will be
+                published here once they are confirmed.
             </p>
-
-
-            <div class="give-coming-soon__notice">
-
-                <strong>
-                    Please note
-                </strong>
-
-                <p>
-                    Only giving information officially confirmed by Divine River
-                    Church will be published on this page.
-                </p>
-
-            </div>
-
-
-            <div class="give-coming-soon__actions">
-
-                <a
-                    class="button button--primary"
-                    href="/"
-                >
-                    Return Home
-                </a>
-
-                <a
-                    class="button button--secondary"
-                    href="/contact/"
-                >
-                    Contact Us
-                </a>
-
-            </div>
 
         </div>
 
         {% endif %}
 
     </div>
+
 </section>
 
 

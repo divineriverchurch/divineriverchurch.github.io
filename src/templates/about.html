@@ -2,130 +2,193 @@
 
 {% block content %}
 
+
 <!-- =======================================================
-     Stage 9.2 - About Page
+     Prototype 2 - About Page
      ======================================================= -->
 
 
-<!-- Page Introduction -->
+<!-- About Hero -->
 <section class="about-hero">
+
     <div class="container">
 
         <div class="about-hero__content">
 
             <h1 class="about-hero__title">
-                About the Ch
+                About Divine River Church
             </h1>
 
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Vision -->
-{% if site.vision %}
+<!-- Vision and Mission -->
 <section class="section about-section">
+
     <div class="container">
 
-        <div class="about-section__header">
+        <div class="about-principles-grid">
 
-            <h2>
-                Our Vision
-            </h2>
 
-        </div>
+            <!-- Vision -->
+            <article class="about-statement-card">
 
-        <div class="about-vision">
+                <p class="about-section__eyebrow">
+                    Our Vision
+                </p>
 
-            <blockquote class="about-vision__text">
-                {{ site.vision }}
-            </blockquote>
+                <p class="about-statement-card__text">
+                    {{ site.vision }}
+                </p>
 
-            {% if site.vision_reference %}
-            <p class="about-vision__reference">
-                {{ site.vision_reference }}
-            </p>
-            {% endif %}
+                {% if site.vision_reference %}
+
+                <p class="about-statement-card__reference">
+                    {{ site.vision_reference }}
+                </p>
+
+                {% endif %}
+
+            </article>
+
+
+            <!-- Mission -->
+            <article class="about-statement-card">
+
+                <p class="about-section__eyebrow">
+                    Our Mission
+                </p>
+
+                <p class="about-statement-card__text">
+                    {{ site.mission }}
+                </p>
+
+            </article>
+
 
         </div>
 
     </div>
+
 </section>
-{% endif %}
 
 
-<!-- Leadership -->
+<!-- History -->
 <section class="section section--surface about-section">
+
     <div class="container">
 
         <div class="about-section__header">
 
             <p class="about-section__eyebrow">
-                Leadership
+                Our Story
             </p>
 
             <h2>
-                Our Pastors
+                History of the Church
             </h2>
 
         </div>
 
-        {% if leadership %}
 
-        <div class="about-leadership-grid">
+        <div class="about-history">
 
-            {% for pastor in leadership %}
+            <p>
+                {{ site.history }}
+            </p>
 
-            <article class="about-pastor-card">
+        </div>
 
-                <div class="about-pastor-card__content">
+    </div>
 
-                    <div class="about-pastor-card__identity">
-
-                        <div
-                            class="about-pastor-card__placeholder"
-                            aria-hidden="true"
-                        >
-                            {{ pastor.name[0] }}
-                        </div>
-
-                        <div>
-
-                            <h3 class="about-pastor-card__name">
-                                {{ pastor.name }}
-                            </h3>
-
-                            {% if pastor.title %}
-                            <p class="about-pastor-card__title">
-                                {{ pastor.title }}
-                            </p>
-                            {% endif %}
-
-                        </div>
-
-                    </div>
+</section>
 
 
-                    {% if pastor.mobile %}
+<!-- Our Belief -->
+<section class="section about-section">
 
-                    <div class="about-pastor-card__contact">
+    <div class="container">
 
-                        <p class="about-pastor-card__contact-label">
-                            Mobile
-                        </p>
+        <div class="about-section__header">
 
-                        <a
-                            class="about-pastor-card__phone"
-                            href="tel:{{ pastor.mobile | replace(' ', '') }}"
-                            aria-label="Call {{ pastor.name }} on {{ pastor.mobile }}"
-                        >
-                            {{ pastor.mobile }}
-                        </a>
+            <p class="about-section__eyebrow">
+                Faith
+            </p>
 
-                    </div>
+            <h2>
+                Our Belief
+            </h2>
 
-                    {% endif %}
+        </div>
+
+
+        {% if site.belief %}
+
+        <div class="about-belief">
+
+            <p>
+                {{ site.belief }}
+            </p>
+
+        </div>
+
+        {% else %}
+
+        <div class="about-belief-placeholder">
+
+            <p>
+                The church’s approved statement of faith will be
+                published here once the wording is confirmed.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- Our Teams -->
+<section class="section section--surface about-section">
+
+    <div class="container">
+
+        <div class="about-section__header">
+
+            <p class="about-section__eyebrow">
+                Serving Together
+            </p>
+
+            <h2>
+                Our Teams
+            </h2>
+
+        </div>
+
+
+        {% if teams %}
+
+        <div class="about-teams-grid">
+
+            {% for team in teams %}
+
+            <article class="about-team-card">
+
+                <div class="about-team-card__content">
+
+                    <h3 class="about-team-card__name">
+                        {{ team.name }}
+                    </h3>
+
+                    <p class="about-team-card__description">
+                        {{ team.description }}
+                    </p>
 
                 </div>
 
@@ -135,19 +198,10 @@
 
         </div>
 
-        {% else %}
-
-        <div class="about-empty-state">
-
-            <p>
-                Leadership information will be published here when available.
-            </p>
-
-        </div>
-
         {% endif %}
 
     </div>
+
 </section>
 
 

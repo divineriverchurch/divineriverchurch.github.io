@@ -3,38 +3,39 @@
 {% block content %}
 
 <!-- =======================================================
-     Stage 9.1 - Home Page
+     Prototype 2 - Home Page
      ======================================================= -->
 
 
-<!-- Hero -->
+<!-- =======================================================
+     Hero
+     ======================================================= -->
+
 <section class="home-hero">
+
     <div class="container home-hero__inner">
 
         <div class="home-hero__content">
-
-            <p class="home-hero__eyebrow">
-                {{ site.name }}
-            </p>
 
             <h1 class="home-hero__title">
                 {{ site.name }}
             </h1>
 
+            {% if site.description %}
+
+            <p class="home-hero__location">
+                {{ site.description }}
+            </p>
+
+            {% endif %}
+
             <div class="home-hero__actions">
 
                 <a
                     class="button button--primary"
-                    href="/programmes/"
-                >
-                    View Weekly Programme
-                </a>
-
-                <a
-                    class="button button--secondary"
                     href="/contact/"
                 >
-                    Plan Your Visit
+                    Contact
                 </a>
 
             </div>
@@ -42,43 +43,80 @@
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Vision -->
-{% if site.vision %}
+<!-- =======================================================
+     Vision + Mission
+     ======================================================= -->
+
 <section class="section home-section">
+
     <div class="container">
 
-        <div class="home-section__header">
+        <div class="home-principles-grid">
 
-            <p class="home-section__eyebrow">
-                Our Vision
-            </p>
 
-        </div>
+            <!-- Vision -->
 
-        <div class="vision-block">
+            {% if site.vision %}
 
-            <blockquote class="vision-block__text">
-                {{ site.vision }}
-            </blockquote>
+            <article class="home-principle-card">
 
-            {% if site.vision_reference %}
-            <p class="vision-block__reference">
-                {{ site.vision_reference }}
-            </p>
+                <p class="home-section__eyebrow">
+                    Our Vision
+                </p>
+
+                <p class="home-principle-card__text">
+                    {{ site.vision }}
+                </p>
+
+                {% if site.vision_reference %}
+
+                <p class="home-principle-card__reference">
+                    {{ site.vision_reference }}
+                </p>
+
+                {% endif %}
+
+            </article>
+
             {% endif %}
+
+
+            <!-- Mission -->
+
+            {% if site.mission %}
+
+            <article class="home-principle-card">
+
+                <p class="home-section__eyebrow">
+                    Our Mission
+                </p>
+
+                <p class="home-principle-card__text">
+                    {{ site.mission }}
+                </p>
+
+            </article>
+
+            {% endif %}
+
 
         </div>
 
     </div>
+
 </section>
-{% endif %}
 
 
-<!-- Sunday Services -->
+<!-- =======================================================
+     Worship With Us
+     ======================================================= -->
+
 <section class="section section--surface home-section">
+
     <div class="container">
 
         <div class="home-section__header">
@@ -93,33 +131,34 @@
 
         </div>
 
+
         {% if service_times %}
 
-        <div class="home-card-grid home-card-grid--services">
+        <div class="home-services-grid">
 
             {% for service in service_times %}
 
-            <article class="card home-service-card">
+            <article class="home-service-card">
 
-                <div class="card__content">
+                <h3 class="home-service-card__name">
+                    {{ service.name }}
+                </h3>
 
-                    <h3 class="card__title">
-                        {{ service.name }}
-                    </h3>
+                {% if service.display_time %}
 
-                    {% if service.display_time %}
-                    <p class="home-service-card__time">
-                        {{ service.display_time }}
-                    </p>
-                    {% endif %}
+                <p class="home-service-card__time">
+                    {{ service.display_time }}
+                </p>
 
-                    {% if service.venue %}
-                    <p class="card__meta">
-                        {{ service.venue }}
-                    </p>
-                    {% endif %}
+                {% endif %}
 
-                </div>
+                {% if service.venue %}
+
+                <p class="home-service-card__venue">
+                    {{ service.venue }}
+                </p>
+
+                {% endif %}
 
             </article>
 
@@ -132,7 +171,8 @@
         <div class="home-empty-state">
 
             <p>
-                Sunday service information will be published here when available.
+                Sunday service information will be published here
+                when available.
             </p>
 
         </div>
@@ -140,90 +180,75 @@
         {% endif %}
 
     </div>
+
 </section>
 
 
-<!-- Latest Sermon / YouTube -->
+<!-- =======================================================
+     Sermons + Live
+     ======================================================= -->
+
 <section class="section home-section">
+
     <div class="container">
 
-        <div class="home-split">
+        <div class="home-media-grid">
 
-            <div>
 
-                <div class="home-section__header">
+            <!-- Sermons -->
 
-                    <p class="home-section__eyebrow">
-                        Sermons
-                    </p>
+            <article class="home-media-card">
 
-                    <h2>
-                        Watch and Listen
-                    </h2>
+                <p class="home-section__eyebrow">
+                    Sermons
+                </p>
 
-                </div>
+                <h2>
+                    Watch and Listen
+                </h2>
 
                 {% if sermons %}
 
                     {% set latest_sermon = sermons[0] %}
 
-                    <article class="card home-feature-card">
+                    <div class="home-media-card__content">
 
-                        <div class="card__content">
+                        <h3>
+                            {{ latest_sermon.title }}
+                        </h3>
 
-                            <h3 class="card__title">
-                                {{ latest_sermon.title }}
-                            </h3>
+                        {% if latest_sermon.date %}
 
-                            {% if latest_sermon.speaker %}
-                            <p class="card__meta">
-                                {{ latest_sermon.speaker }}
-                            </p>
-                            {% endif %}
-
-                            {% if latest_sermon.youtube_url %}
-                            <a
-                                class="button button--primary"
-                                href="{{ latest_sermon.youtube_url }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Watch Sermon
-                            </a>
-                            {% endif %}
-
-                        </div>
-
-                    </article>
-
-                {% else %}
-
-                    <div class="home-empty-state">
-
-                        <p>
-                            Individual sermon listings will appear here when they are available.
+                        <p class="home-media-card__meta">
+                            {{ latest_sermon.date }}
                         </p>
 
-                        {% if livestream.youtube_channel_url %}
-                        <a
-                            class="button button--primary"
-                            href="{{ livestream.youtube_channel_url }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Visit Our YouTube Channel
-                        </a>
                         {% endif %}
 
                     </div>
 
+                {% else %}
+
+                <p class="home-media-card__text">
+                    Watch sermon videos and explore available
+                    audio from Divine River Church.
+                </p>
+
                 {% endif %}
 
-            </div>
+                <a
+                    class="button button--primary"
+                    href="/sermons/"
+                >
+                    Explore Sermons
+                </a>
+
+            </article>
 
 
             <!-- Watch Live -->
-            <aside class="home-live-card">
+
+            <article class="home-media-card">
 
                 <p class="home-section__eyebrow">
                     Live
@@ -233,12 +258,12 @@
                     Watch Live
                 </h2>
 
-                {% if livestream.youtube_live_url %}
-
-                <p>
-                    Follow Divine River Church services and broadcasts through our
-                    official YouTube channel.
+                <p class="home-media-card__text">
+                    Follow Divine River Church services and
+                    broadcasts through our official YouTube channel.
                 </p>
+
+                {% if livestream.youtube_live_url %}
 
                 <a
                     class="button button--primary"
@@ -249,24 +274,24 @@
                     {{ livestream.button_label or "Watch Live" }}
                 </a>
 
-                {% else %}
-
-                <p>
-                    Live-stream information will be published here when available.
-                </p>
-
                 {% endif %}
 
-            </aside>
+            </article>
+
 
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Upcoming Events -->
+<!-- =======================================================
+     What's Happening
+     ======================================================= -->
+
 <section class="section section--surface home-section">
+
     <div class="container">
 
         <div class="home-section__heading-row">
@@ -292,6 +317,7 @@
 
         </div>
 
+
         {% if events %}
 
         <div class="home-card-grid">
@@ -307,15 +333,19 @@
                     </h3>
 
                     {% if event.date %}
+
                     <p class="card__meta">
                         {{ event.date }}
                     </p>
+
                     {% endif %}
 
                     {% if event.description %}
+
                     <p>
                         {{ event.description }}
                     </p>
+
                     {% endif %}
 
                 </div>
@@ -331,7 +361,8 @@
         <div class="home-empty-state">
 
             <p>
-                Upcoming events will appear here when they are published.
+                Upcoming events will appear here when they
+                are published.
             </p>
 
         </div>
@@ -339,210 +370,51 @@
         {% endif %}
 
     </div>
+
 </section>
 
 
-<!-- Ministries Preview -->
+<!-- =======================================================
+     Give + Visit
+     ======================================================= -->
+
 <section class="section home-section">
+
     <div class="container">
 
-        <div class="home-section__heading-row">
-
-            <div class="home-section__header">
-
-                <p class="home-section__eyebrow">
-                    Serve and Grow
-                </p>
-
-                <h2>
-                    Ministries
-                </h2>
-
-            </div>
-
-            <a
-                class="home-section__link"
-                href="/ministries/"
-            >
-                View Ministries
-            </a>
-
-        </div>
-
-        {% if ministries %}
-
-        <div class="home-card-grid">
-
-            {% for ministry in ministries[:3] %}
-
-            <article class="card">
-
-                <div class="card__content">
-
-                    <h3 class="card__title">
-                        {{ ministry.name }}
-                    </h3>
-
-                    {% if ministry.description %}
-                    <p>
-                        {{ ministry.description }}
-                    </p>
-                    {% endif %}
-
-                </div>
-
-            </article>
-
-            {% endfor %}
-
-        </div>
-
-        {% else %}
-
-        <div class="home-empty-state">
-
-            <p>
-                Ministry information is being prepared and will be published when
-                the details are complete.
-            </p>
-
-            <a
-                href="/ministries/"
-                class="button button--secondary"
-            >
-                Ministries
-            </a>
-
-        </div>
-
-        {% endif %}
-
-    </div>
-</section>
+        <div class="home-action-grid">
 
 
-<!-- Weekly Programmes Preview -->
-<section class="section section--surface home-section">
-    <div class="container">
+            <!-- Give -->
 
-        <div class="home-section__heading-row">
-
-            <div class="home-section__header">
-
-                <p class="home-section__eyebrow">
-                    Weekly Schedule
-                </p>
-
-                <h2>
-                    Church Programmes
-                </h2>
-
-            </div>
-
-            <a
-                class="home-section__link"
-                href="/programmes/"
-            >
-                View Full Programme
-            </a>
-
-        </div>
-
-        {% if programmes %}
-
-        <div class="home-programme-grid">
-
-            {% for programme in programmes[:4] %}
-
-            <article class="home-programme-card">
-
-                <p class="home-programme-card__day">
-                    {{ programme.day }}
-                </p>
-
-                <h3 class="home-programme-card__name">
-                    {{ programme.name }}
-                </h3>
-
-                {% if programme.display_time %}
-
-                <p class="home-programme-card__time">
-                    {{ programme.display_time }}
-                </p>
-
-                {% elif programme.start_time and programme.end_time %}
-
-                <p class="home-programme-card__time">
-                    {{ programme.start_time }} – {{ programme.end_time }}
-                </p>
-
-                {% endif %}
-
-            </article>
-
-            {% endfor %}
-
-        </div>
-
-        {% else %}
-
-        <div class="home-empty-state">
-
-            <p>
-                Weekly programme information will appear here when available.
-            </p>
-
-        </div>
-
-        {% endif %}
-
-    </div>
-</section>
-
-
-<!-- Give CTA -->
-<section class="section home-section">
-    <div class="container">
-
-        <div class="home-cta">
-
-            <div>
+            <article class="home-action-card">
 
                 <p class="home-section__eyebrow">
                     Give
                 </p>
 
                 <h2>
-                    Giving Information
+                    Giving
                 </h2>
 
-                <p class="home-cta__text">
-                    Approved church giving information will be published on the
-                    Give page when available.
+                <p class="home-action-card__text">
+                    Church giving information will be available
+                    through the Give page.
                 </p>
 
-            </div>
+                <a
+                    class="button button--secondary"
+                    href="/give/"
+                >
+                    Give
+                </a>
 
-            <a
-                class="button button--secondary"
-                href="/give/"
-            >
-                Go to Give
-            </a>
-
-        </div>
-
-    </div>
-</section>
+            </article>
 
 
-<!-- Visit / Directions -->
-<section class="section section--surface home-section">
-    <div class="container">
+            <!-- Visit -->
 
-        <div class="home-visit">
-
-            <div>
+            <article class="home-action-card">
 
                 <p class="home-section__eyebrow">
                     Visit
@@ -552,44 +424,41 @@
                     Visit Divine River Church
                 </h2>
 
-                {% if location.address %}
-
-                <p>
-                    {{ location.address }}
+                <p class="home-action-card__text">
+                    {{ site.description }}
                 </p>
 
-                {% else %}
+                {% if location.directions_url %}
 
-                <p>
-                    Use Google Maps for the church location and directions.
-                </p>
+                <a
+                    class="button button--primary"
+                    href="{{ location.directions_url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Get Directions
+                </a>
 
                 {% endif %}
 
-            </div>
+            </article>
 
-            {% if location.directions_url %}
-
-            <a
-                class="button button--primary"
-                href="{{ location.directions_url }}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Get Directions
-            </a>
-
-            {% endif %}
 
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Social Links -->
+<!-- =======================================================
+     Connect
+     ======================================================= -->
+
 {% if social_links %}
-<section class="section home-section">
+
+<section class="section section--surface home-section">
+
     <div class="container">
 
         <div class="home-section__header">
@@ -599,7 +468,7 @@
             </p>
 
             <h2>
-                Follow US
+                Follow Us
             </h2>
 
         </div>
@@ -659,7 +528,9 @@
         </div>
 
     </div>
+
 </section>
+
 {% endif %}
 
 
