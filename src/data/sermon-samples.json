@@ -1,0 +1,64 @@
+{
+  "samples": [
+    {
+      "id": "sample-fathers-celebrations",
+      "title": "Fathers Celebrations",
+      "youtube_id": "AQlk1882KCw",
+      "youtube_url": "https://youtu.be/AQlk1882KCw",
+      "thumbnail": "/assets/images/sermons/samples/fathers-celebrations.jpg",
+      "audio": {
+        "available": true,
+        "archive_provider": "internet_archive",
+        "archive_item": "drc-prototype-2-audio-samples",
+        "filename": "fathers-celebrations.mp3",
+        "url": "https://archive.org/download/drc-prototype-2-audio-samples/fathers-celebrations.mp3"
+      },
+      "published": true
+    },
+    {
+      "id": "sample-lydia-women-conference-25",
+      "title": "Lydia Muwanguzi | Series from Women Conference 25",
+      "youtube_id": "TrNyJCXoCa0",
+      "youtube_url": "https://youtu.be/TrNyJCXoCa0",
+      "thumbnail": "/assets/images/sermons/samples/lydia-women-conference-25.jpg",
+      "audio": {
+        "available": true,
+        "archive_provider": "internet_archive",
+        "archive_item": "drc-prototype-2-audio-samples",
+        "filename": "lydia-muwanguzi-series-from-women-conference-25.mp3",
+        "url": "https://archive.org/download/drc-prototype-2-audio-samples/lydia-muwanguzi-series-from-women-conference-25.mp3"
+      },
+      "published": true
+    },
+    {
+      "id": "sample-music-ministry",
+      "title": "Music Ministry",
+      "youtube_id": "uPUAE-8RgVI",
+      "youtube_url": "https://youtu.be/uPUAE-8RgVI",
+      "thumbnail": "/assets/images/sermons/samples/music-ministry.jpg",
+      "audio": {
+        "available": true,
+        "archive_provider": "internet_archive",
+        "archive_item": "drc-prototype-2-audio-samples",
+        "filename": "music-ministry.mp3",
+        "url": "https://archive.org/download/drc-prototype-2-audio-samples/music-ministry.mp3"
+      },
+      "published": true
+    },
+    {
+      "id": "sample-sunday-school-celebrations",
+      "title": "Sunday School Celebrations | Raising Children in God’s Love",
+      "youtube_id": "0rqaX4uR10U",
+      "youtube_url": "https://youtu.be/0rqaX4uR10U",
+      "thumbnail": "/assets/images/sermons/samples/sunday-school-celebrations.jpg",
+      "audio": {
+        "available": true,
+        "archive_provider": "internet_archive",
+        "archive_item": "drc-prototype-2-audio-samples",
+        "filename": "sunday-school-celebrations-raising-children-in-gods-love.mp3",
+        "url": "https://archive.org/download/drc-prototype-2-audio-samples/sunday-school-celebrations-raising-children-in-gods-love.mp3"
+      },
+      "published": true
+    }
+  ]
+}

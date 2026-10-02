@@ -1062,6 +1062,7 @@ a:hover {
 
 /* =========================================================
    STAGE 9.2 - ABOUT PAGE
+   PROTOTYPE 2
    ========================================================= */
 
 
@@ -1083,40 +1084,32 @@ a:hover {
     border-bottom: 1px solid var(--color-border);
 }
 
+
 .about-hero__content {
     max-width: 760px;
 
     padding-block: var(--space-8);
 }
 
-.about-hero__eyebrow {
-    margin-bottom: var(--space-3);
-
-    color: var(--color-primary);
-
-    font-size: var(--font-size-sm);
-    font-weight: 800;
-
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
 
 .about-hero__title {
     margin-bottom: 0;
 }
 
 
-/* ---------- About Sections ---------- */
+/* ---------- Section Headers ---------- */
 
 .about-section__header {
-    max-width: 700px;
+    max-width: 760px;
 
     margin-bottom: var(--space-6);
 }
 
+
 .about-section__header h2 {
     margin-bottom: 0;
 }
+
 
 .about-section__eyebrow {
     margin-bottom: var(--space-2);
@@ -1131,37 +1124,46 @@ a:hover {
 }
 
 
-/* ---------- Vision ---------- */
+/* ---------- Vision + Mission ---------- */
 
-.about-vision {
-    max-width: 900px;
+.about-principles-grid {
+    display: grid;
 
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: var(--space-5);
+
+    max-width: 1100px;
+}
+
+
+.about-statement-card {
     padding: var(--space-6);
 
-    border-left: 5px solid var(--color-primary);
-    border-radius:
-        0
-        var(--radius-lg)
-        var(--radius-lg)
-        0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
 
     background: var(--color-surface);
 }
 
-.about-vision__text {
-    margin: 0;
 
-    font-size: clamp(
-        var(--font-size-xl),
-        3vw,
-        var(--font-size-3xl)
-    );
+.about-statement-card__text {
+    margin-bottom: 0;
+
+    font-size:
+        clamp(
+            var(--font-size-xl),
+            2.5vw,
+            var(--font-size-3xl)
+        );
 
     font-weight: 700;
     line-height: 1.4;
 }
 
-.about-vision__reference {
+
+.about-statement-card__reference {
     margin-top: var(--space-4);
     margin-bottom: 0;
 
@@ -1171,25 +1173,79 @@ a:hover {
 }
 
 
-/* ---------- Leadership Grid ---------- */
+/* ---------- History ---------- */
 
-.about-leadership-grid {
+.about-history {
+    max-width: 900px;
+}
+
+
+.about-history p {
+    margin-bottom: 0;
+
+    color: var(--color-text);
+
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+}
+
+
+/* ---------- Belief ---------- */
+
+.about-belief {
+    max-width: 900px;
+
+    padding: var(--space-5);
+
+    border-left: 5px solid var(--color-primary);
+
+    background: var(--color-surface);
+}
+
+
+.about-belief p {
+    margin-bottom: 0;
+}
+
+
+.about-belief-placeholder {
+    max-width: 760px;
+
+    padding: var(--space-5);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    color: var(--color-text-muted);
+}
+
+
+.about-belief-placeholder p {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Teams Grid ---------- */
+
+.about-teams-grid {
     display: grid;
 
     grid-template-columns:
         repeat(
-            auto-fit,
-            minmax(min(100%, 260px), 1fr)
+            3,
+            minmax(0, 1fr)
         );
 
     gap: var(--space-5);
 }
 
 
-/* ---------- Pastor Card ---------- */
+/* ---------- Team Card ---------- */
 
-.about-pastor-card {
-    overflow: hidden;
+.about-team-card {
+    min-width: 0;
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
@@ -1198,124 +1254,66 @@ a:hover {
 
     transition:
         border-color var(--transition-fast),
-        transform var(--transition-fast);
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
-.about-pastor-card:hover {
+
+.about-team-card:hover {
     border-color: var(--color-primary);
 
     transform: translateY(-2px);
+
+    box-shadow:
+        0 0.4rem 1rem rgba(0, 0, 0, 0.06);
 }
 
-.about-pastor-card__content {
-    display: grid;
-    gap: var(--space-5);
 
+.about-team-card__content {
     padding: var(--space-5);
 }
 
-.about-pastor-card__identity {
-    display: flex;
-    align-items: center;
 
-    gap: var(--space-4);
-}
-
-
-/* ---------- Pastor Placeholder ---------- */
-
-.about-pastor-card__placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 64px;
-    height: 64px;
-
-    flex: 0 0 64px;
-
-    border-radius: 50%;
-
-    background: var(--color-primary);
-    color: var(--color-primary-text);
-
-    font-size: var(--font-size-2xl);
-    font-weight: 800;
-}
-
-
-/* ---------- Pastor Name / Title ---------- */
-
-.about-pastor-card__name {
-    margin-bottom: 0;
+.about-team-card__name {
+    margin-bottom: var(--space-3);
 
     font-size: var(--font-size-xl);
 }
 
-.about-pastor-card__title {
-    margin-top: var(--space-1);
+
+.about-team-card__description {
     margin-bottom: 0;
 
     color: var(--color-text-muted);
-
-    font-size: var(--font-size-sm);
 }
 
 
-/* ---------- Pastor Contact ---------- */
+/* ---------- Tablet ---------- */
 
-.about-pastor-card__contact {
-    padding-top: var(--space-4);
+@media (max-width: 900px) {
 
-    border-top: 1px solid var(--color-border);
-}
+    .about-teams-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
 
-.about-pastor-card__contact-label {
-    margin-bottom: var(--space-1);
-
-    color: var(--color-text-muted);
-
-    font-size: var(--font-size-sm);
-    font-weight: 700;
-
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-
-.about-pastor-card__phone {
-    display: inline-block;
-
-    color: var(--color-primary);
-
-    font-size: var(--font-size-lg);
-    font-weight: 700;
-
-    text-decoration: none;
-}
-
-.about-pastor-card__phone:hover {
-    text-decoration: underline;
-
-    text-decoration-thickness: 0.1em;
-    text-underline-offset: 0.2em;
 }
 
 
-/* ---------- Empty State ---------- */
+/* ---------- Mobile ---------- */
 
-.about-empty-state {
-    max-width: 700px;
+@media (max-width: 620px) {
 
-    padding: var(--space-5);
+    .about-principles-grid,
+    .about-teams-grid {
+        grid-template-columns: 1fr;
+    }
 
-    border: 1px dashed var(--color-border);
-    border-radius: var(--radius-lg);
 
-    color: var(--color-text-muted);
-}
+    .about-statement-card {
+        padding: var(--space-5);
+    }
 
-.about-empty-state p:last-child {
-    margin-bottom: 0;
 }
 
 
@@ -2006,6 +2004,484 @@ a:hover {
 
     .sermons-platform-card {
         flex-direction: column;
+    }
+
+}
+
+/* ==========================================================
+   PROTOTYPE 2 - SERMON MEDIA CARDS
+   ========================================================== */
+
+
+/* ---------- Gallery ---------- */
+
+.sermons-library__grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: var(--space-5);
+}
+
+
+/* Prototype 2 sample gallery */
+
+.sermons-library__grid--samples {
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    max-width: 1000px;
+}
+
+
+/* ---------- Card ---------- */
+
+.sermon-card {
+    min-width: 0;
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+
+    box-shadow:
+        0 0.35rem 1rem rgba(0, 0, 0, 0.06);
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.sermon-card.is-open {
+    border-color: var(--color-primary);
+
+    box-shadow:
+        0 0.5rem 1.25rem rgba(0, 0, 0, 0.09);
+}
+
+
+/* ---------- Media stage ---------- */
+
+.sermon-card__stage {
+    position: relative;
+
+    overflow: hidden;
+
+    aspect-ratio: 16 / 9;
+
+    background: var(--brand-black);
+}
+
+
+/* ---------- Thumbnail trigger ---------- */
+
+.sermon-card__media {
+    position: absolute;
+    inset: 0;
+
+    z-index: 1;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+    border: 0;
+
+    overflow: hidden;
+
+    background: var(--brand-black);
+    color: #ffffff;
+
+    cursor: pointer;
+
+    text-align: left;
+}
+
+
+/* ---------- Thumbnail ---------- */
+
+.sermon-card__thumbnail {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        filter var(--transition-normal),
+        transform var(--transition-normal);
+}
+
+
+/* ---------- Default title overlay ---------- */
+
+.sermon-card__title-overlay {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 2;
+
+    padding:
+        2.75rem
+        var(--space-4)
+        var(--space-3);
+
+    color: #ffffff;
+
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    line-height: 1.35;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.88),
+            rgba(0, 0, 0, 0)
+        );
+
+    transition:
+        opacity var(--transition-fast);
+}
+
+
+/* ---------- View Options ---------- */
+
+.sermon-card__view-overlay {
+    position: absolute;
+    inset: 0;
+
+    z-index: 3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    opacity: 0;
+
+    transition:
+        opacity var(--transition-normal);
+}
+
+
+.sermon-card__view-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        var(--space-3)
+        var(--space-5);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.75);
+
+    border-radius: var(--radius-pill);
+
+    background: rgba(0, 0, 0, 0.48);
+
+    color: #ffffff;
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    backdrop-filter: blur(5px);
+}
+
+
+/* ---------- Closed-card hover ---------- */
+
+/*
+ * Hover only affects CLOSED cards.
+ *
+ * Hovering another card never closes the
+ * currently active card.
+ */
+
+.sermon-card:not(.is-open)
+.sermon-card__media:hover
+.sermon-card__thumbnail,
+
+.sermon-card:not(.is-open)
+.sermon-card__media:focus-visible
+.sermon-card__thumbnail {
+    filter:
+        blur(2px)
+        brightness(0.62);
+
+    transform: scale(1.02);
+}
+
+
+.sermon-card:not(.is-open)
+.sermon-card__media:hover
+.sermon-card__view-overlay,
+
+.sermon-card:not(.is-open)
+.sermon-card__media:focus-visible
+.sermon-card__view-overlay {
+    opacity: 1;
+}
+
+
+.sermon-card:not(.is-open)
+.sermon-card__media:hover
+.sermon-card__title-overlay,
+
+.sermon-card:not(.is-open)
+.sermon-card__media:focus-visible
+.sermon-card__title-overlay {
+    opacity: 0.35;
+}
+
+
+/* ---------- Keyboard focus ---------- */
+
+.sermon-card__media:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: -3px;
+}
+
+
+/* ---------- Open-card image ---------- */
+
+.sermon-card.is-open
+.sermon-card__thumbnail {
+    filter: brightness(0.55);
+
+    transform: scale(1.01);
+}
+
+
+.sermon-card.is-open
+.sermon-card__view-overlay {
+    opacity: 0;
+}
+
+
+.sermon-card.is-open
+.sermon-card__title-overlay {
+    opacity: 0;
+}
+
+
+/* ---------- In-thumbnail action panel ---------- */
+
+.sermon-card__options {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 5;
+
+    padding:
+        var(--space-3)
+        var(--space-4)
+        var(--space-4);
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(15, 15, 17, 0.98) 0%,
+            rgba(15, 15, 17, 0.94) 70%,
+            rgba(15, 15, 17, 0.72) 100%
+        );
+
+    color: #ffffff;
+}
+
+
+.sermon-card__options:not([hidden]) {
+    display: grid;
+
+    gap: var(--space-3);
+}
+
+
+/* ---------- Active title ---------- */
+
+.sermon-card__panel-title {
+    color: #ffffff;
+
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+
+/* ---------- Actions ---------- */
+
+.sermon-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: var(--space-2);
+}
+
+
+.sermon-card__action {
+    min-height: 38px;
+
+    margin: 0;
+
+    padding:
+        0.55rem
+        0.85rem;
+
+    font-size: var(--font-size-sm);
+}
+
+
+/*
+ * CLOSED AUDIO STATE
+ *
+ * YouTube | Listen | Download Audio
+ */
+
+.sermon-card__youtube-action {
+    order: 1;
+}
+
+
+.sermon-card__listen-action {
+    order: 2;
+}
+
+
+.sermon-card__download-action {
+    order: 3;
+}
+
+
+/* ---------- Audio-open arrangement ---------- */
+
+/*
+ * AUDIO OPEN
+ *
+ * YouTube | Download Audio
+ * Hide Audio
+ * Player
+ */
+
+.sermon-card.is-audio-open
+.sermon-card__youtube-action {
+    order: 1;
+}
+
+
+.sermon-card.is-audio-open
+.sermon-card__download-action {
+    order: 2;
+}
+
+
+.sermon-card.is-audio-open
+.sermon-card__listen-action {
+    order: 3;
+
+    flex-basis: 100%;
+
+    width: fit-content;
+}
+
+
+.sermon-card.is-audio-open
+.sermon-card__audio {
+    order: 4;
+}
+
+
+/* ---------- Audio player ---------- */
+
+.sermon-card__audio {
+    width: 100%;
+
+    margin-top: var(--space-1);
+}
+
+
+.sermon-card__audio:not([hidden]) {
+    display: block;
+
+    flex-basis: 100%;
+}
+
+
+.sermon-card__audio-player {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+}
+
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 900px) {
+
+    .sermons-library__grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 620px) {
+
+    .sermons-library__grid {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-5);
+    }
+
+
+    .sermon-card__options {
+        padding: var(--space-3);
+    }
+
+
+    .sermon-card__actions {
+        gap: var(--space-2);
+    }
+
+
+    .sermon-card__action {
+        min-height: 36px;
+
+        padding:
+            0.5rem
+            0.7rem;
+    }
+
+}
+
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sermon-card__thumbnail,
+    .sermon-card__view-overlay,
+    .sermon-card__title-overlay {
+        transition: none;
     }
 
 }

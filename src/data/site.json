@@ -5,60 +5,71 @@
     "tagline": null,
     "description": null,
     "welcome_message": null,
-    "vision": "To Bring people back to God, Disciple and equip them for the Ministry",
-    "vision_reference": "Mathew 28:19 - 20",
-    "mission": null,
-    "history": null,
+    "vision": "To bring people back to God's family, disciple and equip them for the ministry in order to magnify God.",
+    "vision_reference": "Matthew 28:19-20",
+    "mission": "YOU WERE MADE TO SHARE GOOD NEWS [EVANGELISM]",
+    "history": "Divine River Church was founded in 2007 by a group of elders headed by Pastor Pasteur Kavuma. The inaugural Sunday service was held on 16 September 2007 at Nabweru Community Hall and was attended by 45 members and visitors. Since then, the church has grown physically and spiritually. By October 2023, the church had established its own premises and reported about 200 members, excluding children.",
+    "belief": "",
     "values": [],
     "base_url": null
   },
-  "leadership": [
+
+  "leadership": [],
+
+  "teams": [
     {
-      "id": "pr-pasteur-kavuma",
-      "name": "Pr Pasteur Kavuma",
-      "title": null,
-      "mobile": "+256 754 275036",
-      "whatsapp": false,
-      "biography": null,
-      "image": null,
-      "published": true,
-      "sort_order": 1
+      "id": "pastoral-team",
+      "name": "Pastoral Team",
+      "description": "Responsible for the spiritual care and edification of Divine River Church, including preaching and teaching, counselling, mentoring ministers, pastoral visits and care for the congregation. The team works with the Elders’ Council in providing spiritual oversight.",
+      "sort_order": 1,
+      "published": true
     },
     {
-      "id": "pr-noah-mubiru",
-      "name": "Pr Noah Mubiru",
-      "title": null,
-      "mobile": "+256 782 576969",
-      "whatsapp": null,
-      "biography": null,
-      "image": null,
-      "published": true,
-      "sort_order": 2
+      "id": "elders-council",
+      "name": "Elders’ Council",
+      "description": "Forms part of the church's spiritual and governance structure, working alongside the Pastoral Team in oversight and direction and participating in important leadership and administrative decisions.",
+      "sort_order": 2,
+      "published": true
     },
     {
-      "id": "pr-lamech-sebbuunza",
-      "name": "Pr Lamech Sebbuunza",
-      "title": null,
-      "mobile": "+256 773 213404",
-      "whatsapp": null,
-      "biography": null,
-      "image": null,
-      "published": true,
-      "sort_order": 3
+      "id": "administration-team",
+      "name": "Administration Team",
+      "description": "Coordinates the day-to-day running of church activities, supports the Pastor's Office and ministries, oversees church premises and property, and coordinates areas such as gatherings, finance, estates and communication/publicity.",
+      "sort_order": 3,
+      "published": true
     },
     {
-      "id": "pr-anthony-mubiru",
-      "name": "Pr Anthony Mubiru",
-      "title": null,
-      "mobile": "+256 757 255619",
-      "whatsapp": null,
-      "biography": null,
-      "image": null,
-      "published": true,
-      "sort_order": 4
+      "id": "childrens-ministry-team",
+      "name": "Children’s Ministry Team",
+      "description": "Provides pastoral care and Christian teaching for children and teenagers through activities such as Sunday School and Teens Fellowship, helping them grow through Bible teaching, worship, prayer, fellowship and discipleship.",
+      "sort_order": 4,
+      "published": true
+    },
+    {
+      "id": "evangelism-team",
+      "name": "Evangelism Team",
+      "description": "Supports the church's outreach and mission by sharing the Gospel within the community and beyond and helping people come to faith and grow as disciples.",
+      "sort_order": 5,
+      "published": true
+    },
+    {
+      "id": "hospitality-team",
+      "name": "Hospitality Team",
+      "description": "Supports a welcoming and caring church environment through welcome, care, follow-up and practical support, including functions such as ushering.",
+      "sort_order": 6,
+      "published": true
+    },
+    {
+      "id": "marrieds-ministry-team",
+      "name": "Marrieds’ Ministry Team",
+      "description": "Supports married couples in building Christian homes through fellowship, encouragement, peer learning and spiritual and practical support, working through men's and women's fellowships.",
+      "sort_order": 7,
+      "published": true
     }
   ],
+
   "branches": [],
+
   "contact": {
     "phone": null,
     "whatsapp": null,
@@ -68,6 +79,7 @@
     "general_enquiry": null,
     "prayer_contact": null
   },
+
   "service_times": [
     {
       "id": "sunday-first-service",
@@ -92,6 +104,7 @@
       "sort_order": 2
     }
   ],
+
   "location": {
     "address": null,
     "google_maps_url": "https://maps.app.goo.gl/1zDh24Ci9dNc55Hf6",
@@ -99,6 +112,7 @@
     "embed_url": null,
     "landmark": null
   },
+
   "social_links": [
     {
       "platform": "youtube",
@@ -122,6 +136,7 @@
       "sort_order": 3
     }
   ],
+
   "livestream": {
     "youtube_channel_url": "https://www.youtube.com/@divineriverchurch",
     "youtube_live_url": "https://www.youtube.com/@divineriverchurch/streams",
@@ -131,6 +146,7 @@
     "offline_message": null,
     "published": true
   },
+
   "giving": {
     "introduction": null,
     "methods": [],

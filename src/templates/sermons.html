@@ -2,8 +2,9 @@
 
 {% block content %}
 
+
 <!-- =======================================================
-     Stage 9.5 - Sermons Page
+     Prototype 2 - Sermons Page
      ======================================================= -->
 
 
@@ -85,183 +86,91 @@
 </section>
 
 
-<!-- Previous Sermons -->
+<!-- Prototype 2 Audio Samples -->
 <section class="section section--surface sermons-section">
     <div class="container">
 
         <div class="sermons-section__header">
 
             <h2>
-                Watch Previous Sermons
+                Prototype 2 Audio Sample
             </h2>
 
             <p>
-                Revisit previous messages and church broadcasts through our
-                official YouTube and Facebook channels.
+                This temporary sample demonstrates how sermon video,
+                audio playback and audio downloads will work when
+                sermon audio becomes available.
             </p>
 
         </div>
 
 
-        <div class="sermons-platform-grid">
-
-
-            <!-- YouTube -->
-            {% if livestream.youtube_videos_url %}
-
-            <a
-                class="sermons-platform-card"
-                href="{{ livestream.youtube_videos_url }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Watch previous Divine River Church sermons on YouTube"
-            >
-
-                <div class="sermons-platform-card__icon-wrap">
-
-                    <img
-                        class="sermons-platform-card__icon"
-                        src="/assets/images/branding/social/youtube.svg"
-                        alt=""
-                        aria-hidden="true"
-                    >
-
-                </div>
-
-                <div class="sermons-platform-card__content">
-
-                    <h3>
-                        YouTube
-                    </h3>
-
-                    <p>
-                        Watch previous sermons and video messages on our
-                        official YouTube channel.
-                    </p>
-
-                    <span class="sermons-platform-card__action">
-                        Watch on YouTube
-                    </span>
-
-                </div>
-
-            </a>
-
-            {% endif %}
-
-
-            <!-- Facebook -->
-            {% if livestream.facebook_sermons_url %}
-
-            <a
-                class="sermons-platform-card"
-                href="{{ livestream.facebook_sermons_url }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Watch Divine River Church sermons on Facebook"
-            >
-
-                <div class="sermons-platform-card__icon-wrap">
-
-                    <img
-                        class="sermons-platform-card__icon"
-                        src="/assets/images/branding/social/facebook.svg"
-                        alt=""
-                        aria-hidden="true"
-                    >
-
-                </div>
-
-                <div class="sermons-platform-card__content">
-
-                    <h3>
-                        Facebook
-                    </h3>
-
-                    <p>
-                        Follow previous church messages, videos and broadcasts
-                        through our official Facebook page.
-                    </p>
-
-                    <span class="sermons-platform-card__action">
-                        Watch on Facebook
-                    </span>
-
-                </div>
-
-            </a>
-
-            {% endif %}
-
+        {% if sermon_samples %}
+        
+        <div class="sermons-library__grid sermons-library__grid--samples">
+            
+            {% for sample in sermon_samples %}
+            
+                {% set sermon_item = sample %}
+                {% set sermon_is_sample = true %}
+            
+                {% include "sermon-card.html" %}
+                
+        {% endfor %}
+        
         </div>
+
+{% endif %}
 
     </div>
 </section>
 
 
-<!-- Future Sermon Library -->
+<!-- Latest Sermons -->
 <section class="section sermons-section">
     <div class="container">
 
-        <div class="sermons-library">
+        <div class="sermons-section__header">
 
             <h2>
-                Sermon Library
+                Latest Sermons
             </h2>
 
-            {% if sermons %}
-
-            <div class="sermons-library__grid">
-
-                {% for sermon in sermons %}
-
-                <article class="card sermon-card">
-
-                    <div class="card__content">
-
-                        <h3 class="card__title">
-                            {{ sermon.title }}
-                        </h3>
-
-                        {% if sermon.speaker %}
-                        <p class="card__meta">
-                            {{ sermon.speaker }}
-                        </p>
-                        {% endif %}
-
-                        {% if sermon.youtube_url %}
-                        <a
-                            class="button button--secondary"
-                            href="{{ sermon.youtube_url }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Watch Sermon
-                        </a>
-                        {% endif %}
-
-                    </div>
-
-                </article>
-
-                {% endfor %}
-
-            </div>
-
-            {% else %}
-
-            <div class="sermons-empty-state">
-
-                <p>
-                    Individual sermon listings will be added here as sermon
-                    information becomes available.
-                </p>
-
-            </div>
-
-            {% endif %}
+            <p>
+                Watch recent Divine River Church messages and services
+                through our official YouTube channel.
+            </p>
 
         </div>
+
+
+        {% if sermons %}
+
+        <div class="sermons-library__grid">
+
+            {% for sermon in sermons %}
+
+                {% set sermon_item = sermon %}
+                {% set sermon_is_sample = false %}
+
+                {% include "sermon-card.html" %}
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="sermons-empty-state">
+
+            <p>
+                Latest sermon listings will be added here as they
+                become available.
+            </p>
+
+        </div>
+
+        {% endif %}
 
     </div>
 </section>

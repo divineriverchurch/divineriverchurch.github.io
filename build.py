@@ -105,14 +105,20 @@ def load_json(filename: str) -> dict[str, Any]:
     try:
         with path.open("r", encoding="utf-8") as file:
             data = json.load(file)
+
     except json.JSONDecodeError as exc:
         fail(
             f"Invalid JSON in {filename}: "
-            f"line {exc.lineno}, column {exc.colno}: {exc.msg}"
+            f"line {exc.lineno}, "
+            f"column {exc.colno}: "
+            f"{exc.msg}"
         )
 
     if not isinstance(data, dict):
-        fail(f"{filename} must contain a JSON object at the top level.")
+        fail(
+            f"{filename} must contain a JSON object "
+            f"at the top level."
+        )
 
     return data
 
@@ -123,6 +129,7 @@ def load_all_data() -> dict[str, dict[str, Any]]:
         "ministries": load_json("ministries.json"),
         "programmes": load_json("programmes.json"),
         "sermons": load_json("sermons.json"),
+        "sermon_samples": load_json("sermon-samples.json"),
         "events": load_json("events.json"),
         "testimonials": load_json("testimonials.json"),
     }
@@ -139,22 +146,30 @@ def require_list(
 ) -> list[Any]:
 
     if key not in data:
-        fail(f"{filename} must contain top-level key '{key}'.")
+        fail(
+            f"{filename} must contain "
+            f"top-level key '{key}'."
+        )
 
     value = data[key]
 
     if not isinstance(value, list):
-        fail(f"{filename}.{key} must be a list.")
+        fail(
+            f"{filename}.{key} must be a list."
+        )
 
     return value
 
 
-def published_only(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def published_only(
+    records: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
     """
-    A missing published field defaults to False.
+    Return only explicitly published records.
 
-    This prevents accidentally publishing content merely because
-    the author forgot to add the publication flag.
+    A missing 'published' field defaults to unpublished.
+    This prevents content from appearing publicly merely
+    because the publication flag was omitted.
     """
 
     return [
@@ -178,7 +193,10 @@ def check_duplicate_ids(
         if record_id is None:
             continue
 
-        if not isinstance(record_id, str) or not record_id.strip():
+        if (
+            not isinstance(record_id, str)
+            or not record_id.strip()
+        ):
             fail(
                 f"{collection_name} contains a record "
                 f"with an invalid id."
@@ -201,7 +219,10 @@ def require_string(
 
     value = record.get(field)
 
-    if not isinstance(value, str) or not value.strip():
+    if (
+        not isinstance(value, str)
+        or not value.strip()
+    ):
         fail(
             f"{description} requires a non-empty "
             f"'{field}' value."
@@ -214,41 +235,77 @@ def require_string(
 # SITE.JSON VALIDATION
 # ============================================================
 
-def validate_site_data(site_data: dict[str, Any]) -> None:
+def validate_site_data(
+    site_data: dict[str, Any],
+) -> None:
 
     site = site_data.get("site")
 
     if not isinstance(site, dict):
-        fail("site.json must contain a 'site' object.")
+        fail(
+            "site.json must contain a 'site' object."
+        )
+
+    # --------------------------------------------------------
+    # Core church information
+    # --------------------------------------------------------
 
     if not site.get("name"):
-        warn("site.name has not yet been supplied.")
+        warn(
+            "site.name has not yet been supplied."
+        )
 
     if not site.get("vision"):
-        warn("site.vision has not yet been supplied.")
+        warn(
+            "site.vision has not yet been supplied."
+        )
 
     if not site.get("mission"):
-        warn("site.mission has not yet been supplied.")
+        warn(
+            "site.mission has not yet been supplied."
+        )
 
     if not site.get("history"):
-        warn("site.history has not yet been supplied.")
+        warn(
+            "site.history has not yet been supplied."
+        )
+
+    if not site.get("belief"):
+        warn(
+            "site.belief has not yet been supplied. "
+            "The About page will display a placeholder."
+        )
 
     values = site.get("values", [])
 
     if not values:
-        warn("site.values is currently empty.")
+        warn(
+            "site.values is currently empty."
+        )
 
     # --------------------------------------------------------
-    # Leadership
+    # Legacy leadership records
+    # --------------------------------------------------------
+    #
+    # Prototype 2 no longer displays individual leadership
+    # records on the About page. This validation is retained
+    # for compatibility if such records are used elsewhere
+    # in a future version.
     # --------------------------------------------------------
 
-    leadership = site_data.get("leadership", [])
+    leadership = site_data.get(
+        "leadership",
+        [],
+    )
 
     if not isinstance(leadership, list):
-        fail("site.json leadership must be a list.")
+        fail(
+            "site.json leadership must be a list."
+        )
 
     leadership_dicts = [
-        item for item in leadership
+        item
+        for item in leadership
         if isinstance(item, dict)
     ]
 
@@ -257,7 +314,9 @@ def validate_site_data(site_data: dict[str, Any]) -> None:
         "site.json leadership",
     )
 
-    for pastor in published_only(leadership_dicts):
+    for pastor in published_only(
+        leadership_dicts
+    ):
 
         require_string(
             pastor,
@@ -268,51 +327,124 @@ def validate_site_data(site_data: dict[str, Any]) -> None:
         require_string(
             pastor,
             "mobile",
-            f"Published leadership record "
-            f"'{pastor.get('id', 'unknown')}'",
+            (
+                "Published leadership record "
+                f"'{pastor.get('id', 'unknown')}'"
+            ),
         )
 
         whatsapp = pastor.get("whatsapp")
 
-        if whatsapp not in (True, False, None):
+        if whatsapp not in (
+            True,
+            False,
+            None,
+        ):
             fail(
-                f"Leadership record "
+                "Leadership record "
                 f"'{pastor.get('id')}' has invalid "
-                f"whatsapp value. Use true, false or null."
+                "whatsapp value. "
+                "Use true, false or null."
             )
+
+    # --------------------------------------------------------
+    # Teams
+    # --------------------------------------------------------
+
+    teams = site_data.get(
+        "teams",
+        [],
+    )
+
+    if not isinstance(teams, list):
+        fail(
+            "site.json teams must be a list."
+        )
+
+    team_dicts = [
+        item
+        for item in teams
+        if isinstance(item, dict)
+    ]
+
+    check_duplicate_ids(
+        team_dicts,
+        "site.json teams",
+    )
+
+    for team in published_only(
+        team_dicts
+    ):
+
+        team_id = require_string(
+            team,
+            "id",
+            "Published team",
+        )
+
+        require_string(
+            team,
+            "name",
+            f"Published team '{team_id}'",
+        )
+
+        require_string(
+            team,
+            "description",
+            f"Published team '{team_id}'",
+        )
 
     # --------------------------------------------------------
     # Contact
     # --------------------------------------------------------
 
-    contact = site_data.get("contact", {})
+    contact = site_data.get(
+        "contact",
+        {},
+    )
 
     if not isinstance(contact, dict):
-        fail("site.json contact must be an object.")
+        fail(
+            "site.json contact must be an object."
+        )
 
     if not contact.get("phone"):
-        warn("No official main church telephone supplied.")
+        warn(
+            "No official main church telephone supplied."
+        )
 
     if not contact.get("whatsapp"):
-        warn("No official church WhatsApp number supplied.")
+        warn(
+            "No official church WhatsApp number supplied."
+        )
 
     if not contact.get("email"):
-        warn("No official church email supplied.")
+        warn(
+            "No official church email supplied."
+        )
 
     if not contact.get("address"):
-        warn("No textual church address supplied.")
+        warn(
+            "No textual church address supplied."
+        )
 
     # --------------------------------------------------------
     # Service times
     # --------------------------------------------------------
 
-    service_times = site_data.get("service_times", [])
+    service_times = site_data.get(
+        "service_times",
+        [],
+    )
 
     if not isinstance(service_times, list):
-        fail("site.json service_times must be a list.")
+        fail(
+            "site.json service_times must be a list."
+        )
 
     service_dicts = [
-        item for item in service_times
+        item
+        for item in service_times
         if isinstance(item, dict)
     ]
 
@@ -321,7 +453,9 @@ def validate_site_data(site_data: dict[str, Any]) -> None:
         "site.json service_times",
     )
 
-    for service in published_only(service_dicts):
+    for service in published_only(
+        service_dicts
+    ):
 
         require_string(
             service,
@@ -332,7 +466,10 @@ def validate_site_data(site_data: dict[str, Any]) -> None:
         require_string(
             service,
             "day",
-            f"Service '{service.get('id', 'unknown')}'",
+            (
+                "Service "
+                f"'{service.get('id', 'unknown')}'"
+            ),
         )
 
         if not (
@@ -343,39 +480,57 @@ def validate_site_data(site_data: dict[str, Any]) -> None:
             )
         ):
             fail(
-                f"Published service "
+                "Published service "
                 f"'{service.get('id', 'unknown')}' "
-                f"requires display_time or start/end times."
+                "requires display_time or "
+                "start/end times."
             )
 
     # --------------------------------------------------------
     # Location
     # --------------------------------------------------------
 
-    location = site_data.get("location", {})
+    location = site_data.get(
+        "location",
+        {},
+    )
 
     if not isinstance(location, dict):
-        fail("site.json location must be an object.")
+        fail(
+            "site.json location must be an object."
+        )
 
-    if not location.get("google_maps_url"):
-        warn("Google Maps URL has not yet been supplied.")
+    if not location.get(
+        "google_maps_url"
+    ):
+        warn(
+            "Google Maps URL has not yet been supplied."
+        )
 
     # --------------------------------------------------------
     # Social links
     # --------------------------------------------------------
 
-    social_links = site_data.get("social_links", [])
+    social_links = site_data.get(
+        "social_links",
+        [],
+    )
 
     if not isinstance(social_links, list):
-        fail("site.json social_links must be a list.")
+        fail(
+            "site.json social_links must be a list."
+        )
+
+    social_link_dicts = [
+        item
+        for item in social_links
+        if isinstance(item, dict)
+    ]
 
     for link in published_only(
-        [
-            item
-            for item in social_links
-            if isinstance(item, dict)
-        ]
+        social_link_dicts
     ):
+
         require_string(
             link,
             "platform",
@@ -385,27 +540,39 @@ def validate_site_data(site_data: dict[str, Any]) -> None:
         require_string(
             link,
             "url",
-            f"Social link '{link.get('platform', 'unknown')}'",
+            (
+                "Social link "
+                f"'{link.get('platform', 'unknown')}'"
+            ),
         )
 
     # --------------------------------------------------------
     # Giving
     # --------------------------------------------------------
 
-    giving = site_data.get("giving", {})
+    giving = site_data.get(
+        "giving",
+        {},
+    )
 
     if not isinstance(giving, dict):
-        fail("site.json giving must be an object.")
+        fail(
+            "site.json giving must be an object."
+        )
 
     if not giving.get("methods"):
-        warn("No giving methods have yet been supplied.")
+        warn(
+            "No giving methods have yet been supplied."
+        )
 
 
 # ============================================================
 # COLLECTION VALIDATION
 # ============================================================
 
-def validate_ministries(data: dict[str, Any]) -> None:
+def validate_ministries(
+    data: dict[str, Any],
+) -> None:
 
     ministries = require_list(
         data,
@@ -414,16 +581,25 @@ def validate_ministries(data: dict[str, Any]) -> None:
     )
 
     records = [
-        item for item in ministries
+        item
+        for item in ministries
         if isinstance(item, dict)
     ]
 
-    check_duplicate_ids(records, "ministries.json")
+    check_duplicate_ids(
+        records,
+        "ministries.json",
+    )
 
     if not records:
-        warn("ministries.json currently contains no ministries.")
+        warn(
+            "ministries.json currently contains "
+            "no ministries."
+        )
 
-    for ministry in published_only(records):
+    for ministry in published_only(
+        records
+    ):
 
         require_string(
             ministry,
@@ -438,7 +614,9 @@ def validate_ministries(data: dict[str, Any]) -> None:
         )
 
 
-def validate_programmes(data: dict[str, Any]) -> None:
+def validate_programmes(
+    data: dict[str, Any],
+) -> None:
 
     programmes = require_list(
         data,
@@ -447,16 +625,25 @@ def validate_programmes(data: dict[str, Any]) -> None:
     )
 
     records = [
-        item for item in programmes
+        item
+        for item in programmes
         if isinstance(item, dict)
     ]
 
-    check_duplicate_ids(records, "programmes.json")
+    check_duplicate_ids(
+        records,
+        "programmes.json",
+    )
 
     if not records:
-        warn("programmes.json currently contains no programmes.")
+        warn(
+            "programmes.json currently contains "
+            "no programmes."
+        )
 
-    for programme in published_only(records):
+    for programme in published_only(
+        records
+    ):
 
         programme_id = require_string(
             programme,
@@ -484,12 +671,15 @@ def validate_programmes(data: dict[str, Any]) -> None:
             )
         ):
             fail(
-                f"Published programme '{programme_id}' "
-                f"requires display_time or start/end times."
+                f"Published programme "
+                f"'{programme_id}' requires "
+                f"display_time or start/end times."
             )
 
 
-def validate_sermons(data: dict[str, Any]) -> None:
+def validate_sermons(
+    data: dict[str, Any],
+) -> None:
 
     sermons = require_list(
         data,
@@ -498,16 +688,25 @@ def validate_sermons(data: dict[str, Any]) -> None:
     )
 
     records = [
-        item for item in sermons
+        item
+        for item in sermons
         if isinstance(item, dict)
     ]
 
-    check_duplicate_ids(records, "sermons.json")
+    check_duplicate_ids(
+        records,
+        "sermons.json",
+    )
 
     if not records:
-        warn("sermons.json currently contains no sermons.")
+        warn(
+            "sermons.json currently contains "
+            "no sermons."
+        )
 
-    for sermon in published_only(records):
+    for sermon in published_only(
+        records
+    ):
 
         sermon_id = require_string(
             sermon,
@@ -526,12 +725,134 @@ def validate_sermons(data: dict[str, Any]) -> None:
             or sermon.get("youtube_url")
         ):
             fail(
-                f"Published sermon '{sermon_id}' requires "
+                f"Published sermon "
+                f"'{sermon_id}' requires "
                 f"youtube_id or youtube_url."
             )
 
 
-def validate_events(data: dict[str, Any]) -> None:
+def validate_sermon_samples(
+    data: dict[str, Any],
+) -> None:
+
+    samples = require_list(
+        data,
+        "samples",
+        "sermon-samples.json",
+    )
+
+    records = [
+        item
+        for item in samples
+        if isinstance(item, dict)
+    ]
+
+    check_duplicate_ids(
+        records,
+        "sermon-samples.json",
+    )
+
+    if not records:
+        warn(
+            "sermon-samples.json currently "
+            "contains no samples."
+        )
+
+    for sample in published_only(
+        records
+    ):
+
+        sample_id = require_string(
+            sample,
+            "id",
+            "Published sermon sample",
+        )
+
+        require_string(
+            sample,
+            "title",
+            f"Sermon sample '{sample_id}'",
+        )
+
+        if not (
+            sample.get("youtube_id")
+            or sample.get("youtube_url")
+        ):
+            fail(
+                f"Sermon sample "
+                f"'{sample_id}' requires "
+                f"youtube_id or youtube_url."
+            )
+
+        require_string(
+            sample,
+            "thumbnail",
+            f"Sermon sample '{sample_id}'",
+        )
+
+        audio = sample.get("audio")
+
+        if not isinstance(audio, dict):
+            fail(
+                f"Sermon sample "
+                f"'{sample_id}' requires "
+                f"an audio object."
+            )
+
+        available = audio.get("available")
+
+        if not isinstance(
+            available,
+            bool,
+        ):
+            fail(
+                f"Sermon sample "
+                f"'{sample_id}' audio.available "
+                f"must be true or false."
+            )
+
+        if available:
+
+            require_string(
+                audio,
+                "archive_provider",
+                (
+                    "Sermon sample "
+                    f"'{sample_id}' audio"
+                ),
+            )
+
+            require_string(
+                audio,
+                "archive_item",
+                (
+                    "Sermon sample "
+                    f"'{sample_id}' audio"
+                ),
+            )
+
+            require_string(
+                audio,
+                "filename",
+                (
+                    "Sermon sample "
+                    f"'{sample_id}' audio"
+                ),
+            )
+
+            require_string(
+                audio,
+                "url",
+                (
+                    "Sermon sample "
+                    f"'{sample_id}' audio"
+                ),
+            )
+
+
+def validate_events(
+    data: dict[str, Any],
+) -> None:
 
     events = require_list(
         data,
@@ -540,16 +861,25 @@ def validate_events(data: dict[str, Any]) -> None:
     )
 
     records = [
-        item for item in events
+        item
+        for item in events
         if isinstance(item, dict)
     ]
 
-    check_duplicate_ids(records, "events.json")
+    check_duplicate_ids(
+        records,
+        "events.json",
+    )
 
     if not records:
-        warn("events.json currently contains no events.")
+        warn(
+            "events.json currently contains "
+            "no events."
+        )
 
-    for event in published_only(records):
+    for event in published_only(
+        records
+    ):
 
         event_id = require_string(
             event,
@@ -570,7 +900,9 @@ def validate_events(data: dict[str, Any]) -> None:
         )
 
 
-def validate_testimonials(data: dict[str, Any]) -> None:
+def validate_testimonials(
+    data: dict[str, Any],
+) -> None:
 
     testimonials = require_list(
         data,
@@ -579,13 +911,19 @@ def validate_testimonials(data: dict[str, Any]) -> None:
     )
 
     records = [
-        item for item in testimonials
+        item
+        for item in testimonials
         if isinstance(item, dict)
     ]
 
-    check_duplicate_ids(records, "testimonials.json")
+    check_duplicate_ids(
+        records,
+        "testimonials.json",
+    )
 
-    for testimonial in published_only(records):
+    for testimonial in published_only(
+        records
+    ):
 
         testimonial_id = require_string(
             testimonial,
@@ -593,10 +931,16 @@ def validate_testimonials(data: dict[str, Any]) -> None:
             "Published testimonial",
         )
 
-        if testimonial.get("permission_confirmed") is not True:
+        if (
+            testimonial.get(
+                "permission_confirmed"
+            )
+            is not True
+        ):
             fail(
-                f"Published testimonial '{testimonial_id}' "
-                f"does not have publication permission."
+                f"Published testimonial "
+                f"'{testimonial_id}' does not have "
+                f"publication permission."
             )
 
         require_string(
@@ -610,12 +954,33 @@ def validate_all_data(
     data: dict[str, dict[str, Any]],
 ) -> None:
 
-    validate_site_data(data["site"])
-    validate_ministries(data["ministries"])
-    validate_programmes(data["programmes"])
-    validate_sermons(data["sermons"])
-    validate_events(data["events"])
-    validate_testimonials(data["testimonials"])
+    validate_site_data(
+        data["site"]
+    )
+
+    validate_ministries(
+        data["ministries"]
+    )
+
+    validate_programmes(
+        data["programmes"]
+    )
+
+    validate_sermons(
+        data["sermons"]
+    )
+
+    validate_sermon_samples(
+        data["sermon_samples"]
+    )
+
+    validate_events(
+        data["events"]
+    )
+
+    validate_testimonials(
+        data["testimonials"]
+    )
 
 
 # ============================================================
@@ -628,123 +993,274 @@ def prepare_context(
 
     site_data = data["site"]
 
+    # --------------------------------------------------------
+    # Legacy leadership
+    # --------------------------------------------------------
+
     leadership = published_only(
         [
             item
-            for item in site_data.get("leadership", [])
+            for item in site_data.get(
+                "leadership",
+                [],
+            )
             if isinstance(item, dict)
         ]
     )
 
     leadership.sort(
-        key=lambda item: item.get("sort_order", 9999)
+        key=lambda item: item.get(
+            "sort_order",
+            9999,
+        )
     )
+
+    # --------------------------------------------------------
+    # Teams
+    # --------------------------------------------------------
+
+    teams = published_only(
+        [
+            item
+            for item in site_data.get(
+                "teams",
+                [],
+            )
+            if isinstance(item, dict)
+        ]
+    )
+
+    teams.sort(
+        key=lambda item: item.get(
+            "sort_order",
+            9999,
+        )
+    )
+
+    # --------------------------------------------------------
+    # Service times
+    # --------------------------------------------------------
 
     service_times = published_only(
         [
             item
-            for item in site_data.get("service_times", [])
+            for item in site_data.get(
+                "service_times",
+                [],
+            )
             if isinstance(item, dict)
         ]
     )
 
     service_times.sort(
-        key=lambda item: item.get("sort_order", 9999)
+        key=lambda item: item.get(
+            "sort_order",
+            9999,
+        )
     )
+
+    # --------------------------------------------------------
+    # Social links
+    # --------------------------------------------------------
 
     social_links = published_only(
         [
             item
-            for item in site_data.get("social_links", [])
+            for item in site_data.get(
+                "social_links",
+                [],
+            )
             if isinstance(item, dict)
         ]
     )
 
     social_links.sort(
-        key=lambda item: item.get("sort_order", 9999)
+        key=lambda item: item.get(
+            "sort_order",
+            9999,
+        )
     )
+
+    # --------------------------------------------------------
+    # Ministries
+    # --------------------------------------------------------
 
     ministries = published_only(
         [
             item
-            for item in data["ministries"].get("ministries", [])
+            for item in data["ministries"].get(
+                "ministries",
+                [],
+            )
             if isinstance(item, dict)
         ]
     )
 
     ministries.sort(
-        key=lambda item: item.get("sort_order", 9999)
+        key=lambda item: item.get(
+            "sort_order",
+            9999,
+        )
     )
+
+    # --------------------------------------------------------
+    # Programmes
+    # --------------------------------------------------------
 
     programmes = published_only(
         [
             item
-            for item in data["programmes"].get("programmes", [])
+            for item in data["programmes"].get(
+                "programmes",
+                [],
+            )
             if isinstance(item, dict)
         ]
     )
 
     programmes.sort(
-        key=lambda item: item.get("sort_order", 9999)
+        key=lambda item: item.get(
+            "sort_order",
+            9999,
+        )
     )
+
+    # --------------------------------------------------------
+    # Sermons
+    # --------------------------------------------------------
 
     sermons = published_only(
         [
             item
-            for item in data["sermons"].get("sermons", [])
+            for item in data["sermons"].get(
+                "sermons",
+                [],
+            )
             if isinstance(item, dict)
         ]
     )
 
     sermons.sort(
         key=lambda item: (
-            item.get("date") or ""
+            item.get("date")
+            or ""
         ),
         reverse=True,
     )
 
+    # --------------------------------------------------------
+    # Prototype 2 sermon samples
+    # --------------------------------------------------------
+
+    sermon_samples = published_only(
+        [
+            item
+            for item in data[
+                "sermon_samples"
+            ].get(
+                "samples",
+                [],
+            )
+            if isinstance(item, dict)
+        ]
+    )
+
+    # --------------------------------------------------------
+    # Events
+    # --------------------------------------------------------
+
     events = published_only(
         [
             item
-            for item in data["events"].get("events", [])
+            for item in data["events"].get(
+                "events",
+                [],
+            )
             if isinstance(item, dict)
         ]
     )
 
     events.sort(
-        key=lambda item: item.get("date") or ""
+        key=lambda item: (
+            item.get("date")
+            or ""
+        )
     )
+
+    # --------------------------------------------------------
+    # Testimonials
+    # --------------------------------------------------------
 
     testimonials = published_only(
         [
             item
-            for item in data["testimonials"].get("testimonials", [])
+            for item in data[
+                "testimonials"
+            ].get(
+                "testimonials",
+                [],
+            )
             if isinstance(item, dict)
         ]
     )
 
+    # --------------------------------------------------------
+    # Navigation
+    # --------------------------------------------------------
+
     navigation = [
         {
             "name": page["name"],
-            "slug": page["slug"] or "home",
-            "url": "/" if page["slug"] == "" else f"/{page['slug']}/",
+            "slug": (
+                page["slug"]
+                or "home"
+            ),
+            "url": (
+                "/"
+                if page["slug"] == ""
+                else f"/{page['slug']}/"
+            ),
         }
         for page in PAGES
     ]
 
+    # --------------------------------------------------------
+    # Shared template context
+    # --------------------------------------------------------
+
     return {
-        "site": site_data.get("site", {}),
+        "site": site_data.get(
+            "site",
+            {},
+        ),
         "leadership": leadership,
-        "branches": site_data.get("branches", []),
-        "contact": site_data.get("contact", {}),
+        "teams": teams,
+        "branches": site_data.get(
+            "branches",
+            [],
+        ),
+        "contact": site_data.get(
+            "contact",
+            {},
+        ),
         "service_times": service_times,
-        "location": site_data.get("location", {}),
+        "location": site_data.get(
+            "location",
+            {},
+        ),
         "social_links": social_links,
-        "livestream": site_data.get("livestream", {}),
-        "giving": site_data.get("giving", {}),
+        "livestream": site_data.get(
+            "livestream",
+            {},
+        ),
+        "giving": site_data.get(
+            "giving",
+            {},
+        ),
         "ministries": ministries,
         "programmes": programmes,
         "sermons": sermons,
+        "sermon_samples": sermon_samples,
         "events": events,
         "testimonials": testimonials,
         "navigation": navigation,
@@ -765,7 +1281,10 @@ def create_environment() -> Environment:
             ]
         ),
         autoescape=select_autoescape(
-            enabled_extensions=("html", "xml"),
+            enabled_extensions=(
+                "html",
+                "xml",
+            ),
             default_for_string=True,
         ),
         trim_blocks=True,
@@ -780,7 +1299,9 @@ def create_environment() -> Environment:
 def clean_dist() -> None:
 
     if DIST_DIR.exists():
-        shutil.rmtree(DIST_DIR)
+        shutil.rmtree(
+            DIST_DIR
+        )
 
     DIST_DIR.mkdir(
         parents=True,
@@ -788,18 +1309,30 @@ def clean_dist() -> None:
     )
 
 
-def output_path_for_slug(slug: str) -> Path:
+def output_path_for_slug(
+    slug: str,
+) -> Path:
 
     if slug == "":
-        return DIST_DIR / "index.html"
+        return (
+            DIST_DIR
+            / "index.html"
+        )
 
-    directory = DIST_DIR / slug
+    directory = (
+        DIST_DIR
+        / slug
+    )
+
     directory.mkdir(
         parents=True,
         exist_ok=True,
     )
 
-    return directory / "index.html"
+    return (
+        directory
+        / "index.html"
+    )
 
 
 def render_pages(
@@ -809,20 +1342,29 @@ def render_pages(
 
     for page in PAGES:
 
-        template = environment.get_template(
-            page["template"]
+        template = (
+            environment.get_template(
+                page["template"]
+            )
         )
 
         context = {
             **shared_context,
-            "current_page": page["slug"] or "home",
+            "current_page": (
+                page["slug"]
+                or "home"
+            ),
             "page_name": page["name"],
         }
 
-        html = template.render(**context)
+        html = template.render(
+            **context
+        )
 
-        output_path = output_path_for_slug(
-            page["slug"]
+        output_path = (
+            output_path_for_slug(
+                page["slug"]
+            )
         )
 
         output_path.write_text(
@@ -831,7 +1373,7 @@ def render_pages(
         )
 
         print(
-            f"GENERATED: "
+            "GENERATED: "
             f"{output_path.relative_to(PROJECT_ROOT)}"
         )
 
@@ -839,9 +1381,15 @@ def render_pages(
 def copy_assets() -> None:
 
     if not ASSETS_DIR.exists():
-        fail(f"Assets directory not found: {ASSETS_DIR}")
+        fail(
+            f"Assets directory not found: "
+            f"{ASSETS_DIR}"
+        )
 
-    destination = DIST_DIR / "assets"
+    destination = (
+        DIST_DIR
+        / "assets"
+    )
 
     shutil.copytree(
         ASSETS_DIR,
@@ -850,7 +1398,7 @@ def copy_assets() -> None:
     )
 
     print(
-        f"COPIED: "
+        "COPIED: "
         f"{destination.relative_to(PROJECT_ROOT)}"
     )
 
@@ -863,9 +1411,13 @@ def resolve_base_url(
     site: dict[str, Any],
 ) -> str:
 
-    environment_url = os.getenv("SITE_BASE_URL")
+    environment_url = os.getenv(
+        "SITE_BASE_URL"
+    )
 
-    configured_url = site.get("base_url")
+    configured_url = site.get(
+        "base_url"
+    )
 
     base_url = (
         environment_url
@@ -873,13 +1425,16 @@ def resolve_base_url(
         or "http://localhost:8000"
     )
 
-    base_url = base_url.rstrip("/")
+    base_url = base_url.rstrip(
+        "/"
+    )
 
     if "localhost" in base_url:
         warn(
             "Using development SITE_BASE_URL "
             "'http://localhost:8000'. "
-            "Set SITE_BASE_URL before production build."
+            "Set SITE_BASE_URL before "
+            "production build."
         )
 
     return base_url
@@ -889,20 +1444,29 @@ def generate_sitemap(
     base_url: str,
 ) -> None:
 
-    urls = []
+    urls: list[str] = []
 
     for page in PAGES:
 
         if page["slug"]:
-            url = f"{base_url}/{page['slug']}/"
+            url = (
+                f"{base_url}/"
+                f"{page['slug']}/"
+            )
         else:
-            url = f"{base_url}/"
+            url = (
+                f"{base_url}/"
+            )
 
         urls.append(url)
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        (
+            '<urlset '
+            'xmlns="http://www.sitemaps.org/'
+            'schemas/sitemap/0.9">'
+        ),
     ]
 
     for url in urls:
@@ -914,19 +1478,28 @@ def generate_sitemap(
             ]
         )
 
-    lines.append("</urlset>")
+    lines.append(
+        "</urlset>"
+    )
 
-    path = DIST_DIR / "sitemap.xml"
+    path = (
+        DIST_DIR
+        / "sitemap.xml"
+    )
 
     path.write_text(
         "\n".join(lines) + "\n",
         encoding="utf-8",
     )
 
-    print("GENERATED: dist/sitemap.xml")
+    print(
+        "GENERATED: dist/sitemap.xml"
+    )
 
 
-def generate_robots(base_url: str) -> None:
+def generate_robots(
+    base_url: str,
+) -> None:
 
     content = (
         "User-agent: *\n"
@@ -934,14 +1507,19 @@ def generate_robots(base_url: str) -> None:
         f"Sitemap: {base_url}/sitemap.xml\n"
     )
 
-    path = DIST_DIR / "robots.txt"
+    path = (
+        DIST_DIR
+        / "robots.txt"
+    )
 
     path.write_text(
         content,
         encoding="utf-8",
     )
 
-    print("GENERATED: dist/robots.txt")
+    print(
+        "GENERATED: dist/robots.txt"
+    )
 
 
 def generate_404(
@@ -949,7 +1527,11 @@ def generate_404(
     shared_context: dict[str, Any],
 ) -> None:
 
-    template = environment.get_template("404.html")
+    template = (
+        environment.get_template(
+            "404.html"
+        )
+    )
 
     context = {
         **shared_context,
@@ -957,16 +1539,23 @@ def generate_404(
         "page_name": "Page Not Found",
     }
 
-    html = template.render(**context)
+    html = template.render(
+        **context
+    )
 
-    path = DIST_DIR / "404.html"
+    path = (
+        DIST_DIR
+        / "404.html"
+    )
 
     path.write_text(
         html,
         encoding="utf-8",
     )
 
-    print("GENERATED: dist/404.html")
+    print(
+        "GENERATED: dist/404.html"
+    )
 
 
 # ============================================================
@@ -999,8 +1588,12 @@ def validate_output() -> None:
     ]
 
     if missing:
+
         missing_text = "\n".join(
-            f"  - {path.relative_to(PROJECT_ROOT)}"
+            (
+                "  - "
+                f"{path.relative_to(PROJECT_ROOT)}"
+            )
             for path in missing
         )
 
@@ -1017,15 +1610,20 @@ def validate_output() -> None:
 def print_warnings() -> None:
 
     if not warnings:
-        print("\nNo build warnings.")
+        print(
+            "\nNo build warnings."
+        )
         return
 
     print(
-        f"\nBUILD WARNINGS ({len(warnings)}):"
+        f"\nBUILD WARNINGS "
+        f"({len(warnings)}):"
     )
 
     for warning in warnings:
-        print(f"  WARNING: {warning}")
+        print(
+            f"  WARNING: {warning}"
+        )
 
 
 # ============================================================
@@ -1034,61 +1632,125 @@ def print_warnings() -> None:
 
 def build() -> None:
 
-    print("=" * 60)
-    print("Divine River Church - Version 1 Static Build")
-    print("=" * 60)
+    # Prevent duplicate warnings if build() is called
+    # more than once in the same Python process.
+    warnings.clear()
 
-    print("\n1. Loading JSON data...")
+    print(
+        "=" * 60
+    )
+
+    print(
+        "Divine River Church - "
+        "Version 1 Static Build"
+    )
+
+    print(
+        "=" * 60
+    )
+
+    print(
+        "\n1. Loading JSON data..."
+    )
+
     data = load_all_data()
 
-    print("2. Validating source data...")
-    validate_all_data(data)
+    print(
+        "2. Validating source data..."
+    )
 
-    print("3. Preparing published content...")
-    context = prepare_context(data)
+    validate_all_data(
+        data
+    )
 
-    print("4. Cleaning dist/...")
+    print(
+        "3. Preparing published content..."
+    )
+
+    context = prepare_context(
+        data
+    )
+
+    print(
+        "4. Cleaning dist/..."
+    )
+
     clean_dist()
 
-    print("5. Initialising Jinja...")
-    environment = create_environment()
+    print(
+        "5. Initialising Jinja..."
+    )
 
-    print("6. Rendering pages...")
+    environment = (
+        create_environment()
+    )
+
+    print(
+        "6. Rendering pages..."
+    )
+
     render_pages(
         environment,
         context,
     )
 
-    print("7. Copying assets...")
+    print(
+        "7. Copying assets..."
+    )
+
     copy_assets()
 
-    print("8. Generating supporting files...")
+    print(
+        "8. Generating supporting files..."
+    )
 
     base_url = resolve_base_url(
         context["site"]
     )
 
-    generate_404(environment, context)
-    generate_sitemap(base_url)
-    generate_robots(base_url)
+    generate_404(
+        environment,
+        context,
+    )
 
-    print("9. Validating generated output...")
+    generate_sitemap(
+        base_url
+    )
+
+    generate_robots(
+        base_url
+    )
+
+    print(
+        "9. Validating generated output..."
+    )
+
     validate_output()
 
     print_warnings()
 
-    print("\n" + "=" * 60)
-    print("BUILD PASSED")
-    print("=" * 60)
+    print(
+        "\n" + "=" * 60
+    )
 
     print(
-        f"\nOutput directory: {DIST_DIR}"
+        "BUILD PASSED"
+    )
+
+    print(
+        "=" * 60
+    )
+
+    print(
+        f"\nOutput directory: "
+        f"{DIST_DIR}"
     )
 
 
 if __name__ == "__main__":
 
     try:
+
         build()
 
     except BuildValidationError as exc:
@@ -1113,8 +1775,11 @@ if __name__ == "__main__":
         )
 
         print(
-            f"UNEXPECTED ERROR: "
-            f"{type(exc).__name__}: {exc}",
+            (
+                "UNEXPECTED ERROR: "
+                f"{type(exc).__name__}: "
+                f"{exc}"
+            ),
             file=sys.stderr,
         )
 
