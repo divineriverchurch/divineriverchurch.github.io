@@ -5,10 +5,10 @@
       "name": "Women's Fellowship",
       "description": null,
       "day": "Monday",
-      "start_time": null,
-      "end_time": null,
-      "display_time": "5 to 7",
-      "venue": "Church",
+      "start_time": "17:00",
+      "end_time": "19:00",
+      "display_time": "5 pm to 7 pm",
+      "venue": "At Church",
       "contact": null,
       "published": true,
       "sort_order": 1
@@ -21,7 +21,7 @@
       "start_time": "10:00",
       "end_time": "18:00",
       "display_time": "10 am to 6 pm",
-      "venue": "Church",
+      "venue": "At Church",
       "contact": null,
       "published": true,
       "sort_order": 2
@@ -34,23 +34,10 @@
       "start_time": "18:00",
       "end_time": "21:00",
       "display_time": "6 pm to 9 pm",
-      "venue": "Church",
+      "venue": "At Church",
       "contact": null,
       "published": true,
       "sort_order": 3
-    },
-    {
-      "id": "thursday-choir-practice",
-      "name": "Choir Practice",
-      "description": null,
-      "day": "Thursday",
-      "start_time": "16:00",
-      "end_time": "19:00",
-      "display_time": "4 pm to 7 pm",
-      "venue": "Church",
-      "contact": null,
-      "published": true,
-      "sort_order": 4
     },
     {
       "id": "bible-study",
@@ -60,62 +47,10 @@
       "start_time": "16:00",
       "end_time": "19:00",
       "display_time": "4 pm to 7 pm",
-      "venue": "Church",
+      "venue": "At Church",
       "contact": null,
       "published": true,
-      "sort_order": 5
-    },
-    {
-      "id": "church-cleaning",
-      "name": "Church Cleaning",
-      "description": null,
-      "day": "Saturday",
-      "start_time": "07:00",
-      "end_time": "11:00",
-      "display_time": "7 am to 11 am",
-      "venue": "Church",
-      "contact": null,
-      "published": true,
-      "sort_order": 6
-    },
-    {
-      "id": "saturday-choir-practice",
-      "name": "Choir Practice",
-      "description": null,
-      "day": "Saturday",
-      "start_time": "16:00",
-      "end_time": "19:00",
-      "display_time": "4 pm to 7 pm",
-      "venue": "Church",
-      "contact": null,
-      "published": true,
-      "sort_order": 7
-    },
-    {
-      "id": "sunday-first-service",
-      "name": "First Sunday Service",
-      "description": null,
-      "day": "Sunday",
-      "start_time": "08:00",
-      "end_time": "10:00",
-      "display_time": "8 am to 10:00 am",
-      "venue": "Church",
-      "contact": null,
-      "published": true,
-      "sort_order": 8
-    },
-    {
-      "id": "sunday-second-service",
-      "name": "Second Sunday Service",
-      "description": null,
-      "day": "Sunday",
-      "start_time": "10:30",
-      "end_time": "13:00",
-      "display_time": "10:30 am to 1:00 pm",
-      "venue": "Church",
-      "contact": null,
-      "published": true,
-      "sort_order": 9
+      "sort_order": 4
     }
   ]
 }

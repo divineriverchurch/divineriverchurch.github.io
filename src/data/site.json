@@ -3,7 +3,7 @@
     "name": "Divine River Church",
     "logo": "assets/images/branding/divine-river-church-logo.png",
     "tagline": null,
-    "description": null,
+    "description": "A community-based church located in Nabweru, Wakiso District Uganda, behind Nabweru Police Station.",
     "welcome_message": null,
     "vision": "To bring people back to God's family, disciple and equip them for the ministry in order to magnify God.",
     "vision_reference": "Matthew 28:19-20",
@@ -83,23 +83,23 @@
   "service_times": [
     {
       "id": "sunday-first-service",
-      "name": "First Sunday Service",
+      "name": "First Service",
       "day": "Sunday",
       "start_time": "08:00",
       "end_time": "10:00",
       "display_time": "8 am to 10:00 am",
-      "venue": "Church",
+      "venue": "At Church",
       "published": true,
       "sort_order": 1
     },
     {
       "id": "sunday-second-service",
-      "name": "Second Sunday Service",
+      "name": "Second Service",
       "day": "Sunday",
       "start_time": "10:30",
       "end_time": "13:00",
       "display_time": "10:30 am to 1:00 pm",
-      "venue": "Church",
+      "venue": "At Church",
       "published": true,
       "sort_order": 2
     }
@@ -148,8 +148,31 @@
   },
 
   "giving": {
-    "introduction": null,
-    "methods": [],
+    "introduction": "Support the ministry and work of Divine River Church through the church's approved giving channels.",
+    "methods": [
+      {
+        "id": "airtel-money",
+        "name": "Airtel Money",
+        "merchant_code": "4393660",
+        "recipient": "DIVINE RIVER MISSIONS LTD",
+        "ussd_code": "*185*9#",
+        "instructions": [
+          "Dial *185*9#",
+          "Enter Merchant Code 4393660",
+          "Enter the amount",
+          "Enter type of offering + your name",
+          "Verify DIVINE RIVER MISSIONS LTD",
+          "Enter your Airtel Money PIN"
+        ],
+        "published": true,
+        "sort_order": 1
+      }
+    ],
+    "safety": [
+      "Confirm DIVINE RIVER MISSIONS LTD before paying.",
+      "Never share your PIN.",
+      "This website does not collect payment credentials."
+    ],
     "enquiry_contact": null
   }
 }

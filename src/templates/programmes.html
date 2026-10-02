@@ -2,13 +2,18 @@
 
 {% block content %}
 
+
 <!-- =======================================================
-     Stage 9.3 - Programmes Page
+     Prototype 2 - Programmes Page
      ======================================================= -->
 
 
-<!-- Page Introduction -->
+<!-- =======================================================
+     Hero
+     ======================================================= -->
+
 <section class="programmes-hero">
+
     <div class="container">
 
         <div class="programmes-hero__content">
@@ -20,11 +25,16 @@
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Weekly Programme -->
+<!-- =======================================================
+     Weekly Church Programme
+     ======================================================= -->
+
 <section class="section programmes-section">
+
     <div class="container">
 
         <div class="programmes-section__header">
@@ -42,10 +52,7 @@
             "Monday",
             "Tuesday",
             "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
+            "Friday"
         ] %}
 
 
@@ -58,6 +65,7 @@
                     | selectattr("day", "equalto", day)
                     | list
                 %}
+
 
                 {% if day_programmes %}
 
@@ -136,7 +144,8 @@
         <div class="programmes-empty-state">
 
             <p>
-                Weekly programme information will be published here when available.
+                Weekly programme information will be published here
+                when available.
             </p>
 
         </div>
@@ -144,12 +153,18 @@
         {% endif %}
 
     </div>
+
 </section>
 
 
-<!-- Sunday Services -->
+<!-- =======================================================
+     Sunday Services
+     ======================================================= -->
+
 {% if service_times %}
+
 <section class="section section--surface programmes-services">
+
     <div class="container">
 
         <div class="programmes-section__header">
@@ -171,16 +186,30 @@
                     {{ service.name }}
                 </h3>
 
+
                 {% if service.display_time %}
+
                 <p class="programme-service-card__time">
                     {{ service.display_time }}
                 </p>
+
+                {% elif service.start_time and service.end_time %}
+
+                <p class="programme-service-card__time">
+                    {{ service.start_time }}
+                    –
+                    {{ service.end_time }}
+                </p>
+
                 {% endif %}
 
+
                 {% if service.venue %}
+
                 <p class="programme-service-card__venue">
                     {{ service.venue }}
                 </p>
+
                 {% endif %}
 
             </article>
@@ -190,7 +219,9 @@
         </div>
 
     </div>
+
 </section>
+
 {% endif %}
 
 

@@ -560,11 +560,123 @@ def validate_site_data(
             "site.json giving must be an object."
         )
 
-    if not giving.get("methods"):
+
+    giving_methods = giving.get(
+        "methods",
+        [],
+    )
+
+    if not isinstance(giving_methods, list):
+        fail(
+            "site.json giving.methods must be a list."
+        )
+
+
+    giving_method_dicts = [
+        item
+        for item in giving_methods
+        if isinstance(item, dict)
+    ]
+
+
+    check_duplicate_ids(
+        giving_method_dicts,
+        "site.json giving methods",
+    )
+
+
+    if not giving_method_dicts:
         warn(
             "No giving methods have yet been supplied."
         )
 
+
+    for method in published_only(
+        giving_method_dicts
+    ):
+
+        method_id = require_string(
+            method,
+            "id",
+            "Published giving method",
+        )
+
+        require_string(
+            method,
+            "name",
+            f"Published giving method '{method_id}'",
+        )
+
+        require_string(
+            method,
+            "merchant_code",
+            f"Published giving method '{method_id}'",
+        )
+
+        require_string(
+            method,
+            "recipient",
+            f"Published giving method '{method_id}'",
+        )
+
+        require_string(
+            method,
+            "ussd_code",
+            f"Published giving method '{method_id}'",
+        )
+
+
+        instructions = method.get(
+            "instructions",
+            [],
+        )
+
+        if (
+            not isinstance(instructions, list)
+            or not instructions
+        ):
+            fail(
+                "Published giving method "
+                f"'{method_id}' requires a non-empty "
+                "'instructions' list."
+            )
+
+
+        for instruction in instructions:
+
+            if (
+                not isinstance(instruction, str)
+                or not instruction.strip()
+            ):
+                fail(
+                    "Published giving method "
+                    f"'{method_id}' contains an invalid "
+                    "instruction."
+                )
+
+
+    safety = giving.get(
+        "safety",
+        [],
+    )
+
+    if not isinstance(safety, list):
+        fail(
+            "site.json giving.safety must be a list."
+        )
+
+
+    for safety_item in safety:
+
+        if (
+            not isinstance(safety_item, str)
+            or not safety_item.strip()
+        ):
+            fail(
+                "site.json giving.safety must contain "
+                "only non-empty strings."
+            )
+            
 
 # ============================================================
 # COLLECTION VALIDATION
