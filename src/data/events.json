@@ -1,3 +1,83 @@
 {
-  "events": []
+  "events": [
+    {
+      "id": "his-touch-worship-experience-2026",
+      "title": "His Touch Worship Experience 2026",
+
+      "summary": "Join Divine River Church for a special afternoon of praise, deep worship, prayer and fellowship.",
+
+      "description": [
+        "His Touch Worship Experience 2026 is a special worship gathering at Divine River Church dedicated to praise, deep worship, prayer and reflection. The event brings together the church community and guests for a focused time of worship and Christian fellowship.",
+        "Members of Divine River Church, families, friends and worshippers from the wider community are welcome to attend. Entrance is free."
+      ],
+
+      "date": "2026-10-25",
+      "display_date": "Sunday, 25 October 2026",
+
+      "start_time": "15:00",
+      "display_time": "3:00 PM",
+
+      "venue": "Divine River Church, Nabweru, after Nabweru Police Station",
+      "venue_short": "Divine River Church, Nabweru",
+
+      "admission": "Free",
+
+      "featuring": [
+        "HISTOUCH Team",
+        "Organic Worship"
+      ],
+
+      "media": {
+        "poster": "assets/images/events/2026-10-19 20.36.21.jpeg",
+        "poster_alt": "His Touch Worship Experience 2026 event poster",
+
+        "gallery": [
+          {
+            "image": "assets/images/events/2026-10-19 at 20.36.22 (2).jpeg",
+            "alt": "His Touch Worship Experience 2026 promotional poster featuring a guest worship musician",
+            "layout": "portrait"
+          },
+          {
+            "image": "assets/images/events/2026-10-19 at 20.36.22 (3).jpeg",
+            "alt": "His Touch Worship Experience 2026 promotional poster featuring saxophonist Mark Musoke",
+            "layout": "portrait"
+          },
+          {
+            "image": "assets/images/events/2026-10-19 at 20.36.22.jpeg",
+            "alt": "His Touch Worship Experience 2026 promotional poster featuring saxophonist Mark Musoke",
+            "layout": "portrait"
+          },
+          {
+            "image": "assets/images/events/2026-10-19 at 20.36.21.jpeg",
+            "alt": "His Touch Worship Experience 2026 promotional poster featuring worship guests",
+            "layout": "portrait"
+          },
+          {
+            "image": "assets/images/events/2026-10-19 at 20.36.22 (1).jpeg",
+            "alt": "His Touch Worship Experience 2026 promotional poster featuring Mozy Drummer",
+            "layout": "portrait"
+          },
+          {
+            "image": "assets/images/events/2026-10-19 at 20.36.22 (4).jpeg",
+            "alt": "His Touch Worship Experience 2026 promotional banner featuring Pr Julius and the Organic Worship Team",
+            "layout": "wide"
+          }
+        ]
+      },
+
+      "external_links": {
+        "tiktok": {
+          "label": "Follow HISTOUCH on TikTok",
+          "url": "https://www.tiktok.com/@histouch3worship"
+        }
+      },
+
+      "use_site_youtube": true,
+      "use_site_facebook": true,
+      "use_site_directions": true,
+
+      "published": true,
+      "sort_order": 1
+    }
+  ]
 }

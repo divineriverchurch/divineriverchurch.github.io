@@ -1,0 +1,162 @@
+{
+  "giving": {
+    "introduction": "Support the ministry and work of Divine River Church through the church's approved giving channels.",
+
+    "methods": [
+      {
+        "id": "airtel-money",
+        "name": "Airtel Money",
+        "type": "mobile-money-merchant",
+        "merchant_code": "4393660",
+        "recipient": "DIVINE RIVER MISSIONS LTD",
+        "ussd_code": "*185*9#",
+        "how_to_give_title": "How to Give",
+        "instructions": [
+          "Dial *185*9#",
+          "Enter Merchant Code 4393660",
+          "Enter the amount",
+          "Enter the type of offering + your name",
+          "Verify DIVINE RIVER MISSIONS LTD",
+          "Enter your Airtel Money PIN"
+        ],
+        "published": true,
+        "sort_order": 1
+      }
+    ],
+
+    "bank_accounts": [
+      {
+        "id": "centenary-bank",
+        "name": "Centenary Bank",
+        "type": "bank-account",
+        "bank_name": "Centenary Bank",
+        "account_name": "Divine River Missions LTD",
+        "account_number": "3010310900",
+
+        "transfer_options": {
+          "expand_label": "View transfer options",
+          "collapse_label": "Back to account",
+          "show_progress": true,
+
+          "routes": [
+            {
+              "id": "airtel-money-to-bank",
+              "name": "Using Airtel Money",
+              "how_to_give_title": "How to Give",
+              "instructions": [
+                "Dial *185#",
+                "Select Financial Services",
+                "Select Banks",
+                "Choose Centenary Bank",
+                "Select Airtel Money to Bank",
+                "Enter account number 3010310900",
+                "Enter the amount",
+                "Verify the account details and confirm Divine River Missions LTD",
+                "Enter your Airtel Money PIN"
+              ],
+              "navigation": {
+                "previous": null,
+                "next": {
+                  "route_id": "mtn-momo-to-bank",
+                  "label": "Next: MTN MoMo"
+                }
+              },
+              "sort_order": 1
+            },
+            {
+              "id": "mtn-momo-to-bank",
+              "name": "Using MTN MoMo",
+              "how_to_give_title": "How to Give",
+              "instructions": [
+                "Dial *165*6#",
+                "Select Send to Bank Account",
+                "Select Bank",
+                "Choose Centenary Bank",
+                "Enter or select account number 3010310900",
+                "Enter the amount",
+                "Verify the account details and confirm Divine River Missions LTD",
+                "Enter your MTN MoMo PIN",
+                "Wait for the transaction confirmation message"
+              ],
+              "navigation": {
+                "previous": {
+                  "route_id": "airtel-money-to-bank",
+                  "label": "Previous: Airtel Money"
+                },
+                "next": {
+                  "route_id": "centemobile-ussd",
+                  "label": "Next: CenteMobile USSD"
+                }
+              },
+              "sort_order": 2
+            },
+            {
+              "id": "centemobile-ussd",
+              "name": "Using CenteMobile USSD",
+              "how_to_give_title": "How to Give",
+              "instructions": [
+                "Dial *211#",
+                "Select the transfer/send-money option",
+                "Choose the option to transfer to a bank account",
+                "Enter account number 3010310900",
+                "Enter the amount",
+                "Verify the account details and confirm Divine River Missions LTD",
+                "Authorise the transaction using your CenteMobile security credentials",
+                "Wait for the transaction confirmation"
+              ],
+              "navigation": {
+                "previous": {
+                  "route_id": "mtn-momo-to-bank",
+                  "label": "Previous: MTN MoMo"
+                },
+                "next": {
+                  "route_id": "centemobile-app",
+                  "label": "Next: CenteMobile App"
+                }
+              },
+              "sort_order": 3
+            },
+            {
+              "id": "centemobile-app",
+              "name": "Using the CenteMobile App",
+              "how_to_give_title": "How to Give",
+              "instructions": [
+                "Open the CenteMobile app",
+                "Sign in using your normal CenteMobile credentials",
+                "Select the transfer/send-money option",
+                "Choose the option to transfer to a Centenary Bank account",
+                "Enter account number 3010310900",
+                "Enter the amount",
+                "Verify the account details and confirm Divine River Missions LTD",
+                "Authorise the transaction using your normal CenteMobile security credentials",
+                "Wait for the transaction confirmation"
+              ],
+              "navigation": {
+                "previous": {
+                  "route_id": "centemobile-ussd",
+                  "label": "Previous: CenteMobile USSD"
+                },
+                "next": {
+                  "route_id": "airtel-money-to-bank",
+                  "label": "Back to Airtel Money"
+                }
+              },
+              "sort_order": 4
+            }
+          ]
+        },
+
+        "published": true,
+        "sort_order": 1
+      }
+    ],
+
+    "safety": [
+      "Confirm DIVINE RIVER MISSIONS LTD before paying.",
+      "Never share your PIN.",
+      "This website does not collect payment credentials."
+    ],
+
+    "enquiry_contact": null
+  }
+}

@@ -4,12 +4,17 @@
 
 
 <!-- =======================================================
-     Prototype 2 - Sermons Page
+     Stage 9.5 - Sermons Page
+     Production Sermons Gallery
      ======================================================= -->
 
 
-<!-- Page Introduction -->
+<!-- =======================================================
+     Page Introduction
+     ======================================================= -->
+
 <section class="sermons-hero">
+
     <div class="container">
 
         <div class="sermons-hero__content">
@@ -21,14 +26,22 @@
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Watch Live -->
+<!-- =======================================================
+     Watch Live
+     ======================================================= -->
+
 <section class="section sermons-section">
+
     <div class="container">
 
         <div class="sermons-live">
+
+
+            <!-- Live Section Content -->
 
             <div class="sermons-live__content">
 
@@ -38,6 +51,7 @@
                     alt=""
                     aria-hidden="true"
                 >
+
 
                 <div>
 
@@ -54,6 +68,8 @@
 
             </div>
 
+
+            <!-- Watch Sunday Streams -->
 
             {% if livestream.youtube_live_url %}
 
@@ -80,65 +96,36 @@
 
             {% endif %}
 
+
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Prototype 2 Audio Samples -->
+<!-- =======================================================
+     Sermons Gallery
+     ======================================================= -->
+
 <section class="section section--surface sermons-section">
+
     <div class="container">
+
+
+        <!-- ===================================================
+             Gallery Header
+             =================================================== -->
 
         <div class="sermons-section__header">
 
             <h2>
-                Prototype 2 Audio Sample
+                Sermons Gallery
             </h2>
 
             <p>
-                This temporary sample demonstrates how sermon video,
-                audio playback and audio downloads will work when
-                sermon audio becomes available.
-            </p>
-
-        </div>
-
-
-        {% if sermon_samples %}
-        
-        <div class="sermons-library__grid sermons-library__grid--samples">
-            
-            {% for sample in sermon_samples %}
-            
-                {% set sermon_item = sample %}
-                {% set sermon_is_sample = true %}
-            
-                {% include "sermon-card.html" %}
-                
-        {% endfor %}
-        
-        </div>
-
-{% endif %}
-
-    </div>
-</section>
-
-
-<!-- Latest Sermons -->
-<section class="section sermons-section">
-    <div class="container">
-
-        <div class="sermons-section__header">
-
-            <h2>
-                Latest Sermons
-            </h2>
-
-            <p>
-                Watch recent Divine River Church messages and services
-                through our official YouTube channel.
+                Watch sermons, worship services and special gatherings
+                from Divine River Church.
             </p>
 
         </div>
@@ -146,33 +133,134 @@
 
         {% if sermons %}
 
-        <div class="sermons-library__grid">
 
-            {% for sermon in sermons %}
+        <!-- ===================================================
+             Prepare Sermons
 
-                {% set sermon_item = sermon %}
-                {% set sermon_is_sample = false %}
+             The YouTube sync writes sermons newest-first, but
+             sorting here also ensures that the newest sermon
+             is always displayed first in the gallery.
+             =================================================== -->
 
-                {% include "sermon-card.html" %}
+        {% set sorted_sermons =
+            sermons
+            | sort(
+                attribute="date",
+                reverse=true
+            )
+        %}
 
-            {% endfor %}
+
+        <!-- ===================================================
+             Sermons Gallery
+
+             Initial state:
+             - Sermons 1-12 are visible.
+             - Sermons 13+ remain in the HTML but are hidden.
+             - main.js will reveal the next 12 when Load More
+               is selected.
+             =================================================== -->
+
+        <div
+            class="sermons-gallery"
+            data-sermons-gallery
+            data-sermons-page-size="12"
+        >
+
+
+            <div
+                class="sermons-library__grid"
+                id="sermons-gallery-grid"
+                data-sermons-gallery-grid
+            >
+
+
+                {% for sermon in sorted_sermons %}
+
+
+                <!-- ===========================================
+                     Individual Gallery Item
+                     =========================================== -->
+
+                <div
+                    class="sermons-gallery__item"
+                    data-sermons-gallery-item
+                    data-sermon-position="{{ loop.index }}"
+                    {% if loop.index > 12 %}hidden{% endif %}
+                >
+
+                    {% set sermon_item = sermon %}
+                    {% set sermon_is_sample = false %}
+
+                    {% include "sermon-card.html" %}
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+            <!-- =================================================
+                 Load More
+
+                 Only rendered when more than 12 sermons exist.
+
+                 With 56 sermons:
+                 1-12   visible initially
+                 13-24  after first click
+                 25-36  after second click
+                 37-48  after third click
+                 49-56  after fourth click
+
+                 main.js will hide this button once every sermon
+                 has been revealed.
+                 ================================================= -->
+
+            {% if sorted_sermons | length > 12 %}
+
+            <div class="sermons-gallery__load-more">
+
+                <button
+                    class="button button--secondary sermons-gallery__load-more-button"
+                    type="button"
+                    data-sermons-load-more
+                    aria-controls="sermons-gallery-grid"
+                >
+                    Load More
+                </button>
+
+            </div>
+
+            {% endif %}
+
 
         </div>
 
+
         {% else %}
+
+
+        <!-- ===================================================
+             Empty State
+             =================================================== -->
 
         <div class="sermons-empty-state">
 
             <p>
-                Latest sermon listings will be added here as they
-                become available.
+                Sermon listings will be added here as they become available.
             </p>
 
         </div>
 
+
         {% endif %}
 
+
     </div>
+
 </section>
 
 

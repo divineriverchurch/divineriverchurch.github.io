@@ -2,13 +2,18 @@
 
 {% block content %}
 
+
 <!-- =======================================================
-     Stage 9.6 - Contact Page
+     Version 1 - Contact Page
      ======================================================= -->
 
 
-<!-- Page Introduction -->
+<!-- =======================================================
+     Page Introduction
+     ======================================================= -->
+
 <section class="contact-hero">
+
     <div class="container">
 
         <div class="contact-hero__content">
@@ -20,11 +25,16 @@
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Visit / Location -->
+<!-- =======================================================
+     Visit / Location
+     ======================================================= -->
+
 <section class="section contact-section">
+
     <div class="container">
 
         <div class="contact-section__header">
@@ -41,8 +51,9 @@
             <div class="contact-location__content">
 
                 <h3>
-                    Divine River Church
+                    {{ site.name }}
                 </h3>
+
 
                 {% if location.address %}
 
@@ -53,7 +64,8 @@
                 {% else %}
 
                 <p class="contact-location__text">
-                    Use Google Maps to find the church location and get directions.
+                    Use Google Maps to find the church location
+                    and get directions.
                 </p>
 
                 {% endif %}
@@ -77,7 +89,7 @@
                 href="{{ location.directions_url }}"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Get directions to Divine River Church using Google Maps"
+                aria-label="Get directions to {{ site.name }} using Google Maps"
             >
                 Get Directions
             </a>
@@ -94,7 +106,7 @@
             <iframe
                 class="contact-map__frame"
                 src="{{ location.embed_url }}"
-                title="Divine River Church location"
+                title="{{ site.name }} location"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
                 allowfullscreen
@@ -105,12 +117,18 @@
         {% endif %}
 
     </div>
+
 </section>
 
 
-<!-- Sunday Services -->
+<!-- =======================================================
+     Sunday Services
+     ======================================================= -->
+
 {% if service_times %}
+
 <section class="section section--surface contact-section">
+
     <div class="container">
 
         <div class="contact-section__header">
@@ -132,6 +150,7 @@
                     {{ service.name }}
                 </h3>
 
+
                 {% if service.display_time %}
 
                 <p class="contact-service-card__time">
@@ -139,6 +158,7 @@
                 </p>
 
                 {% endif %}
+
 
                 {% if service.venue %}
 
@@ -155,12 +175,18 @@
         </div>
 
     </div>
+
 </section>
+
 {% endif %}
 
 
-<!-- Direct Contact -->
+<!-- =======================================================
+     Direct Contact
+     ======================================================= -->
+
 <section class="section contact-section">
+
     <div class="container">
 
         <div class="contact-section__header">
@@ -177,13 +203,16 @@
         <div class="contact-methods">
 
 
+            <!-- Telephone -->
+
             {% if contact.phone %}
 
             <div class="contact-method">
 
                 <p class="contact-method__label">
-                    Telephone
+                    {{ contact.phone_label or "Telephone" }}
                 </p>
+
 
                 <a
                     class="contact-method__value"
@@ -192,10 +221,21 @@
                     {{ contact.phone }}
                 </a>
 
+
+                {% if contact.phone_whatsapp_enabled is sameas false %}
+
+                <p class="contact-method__note">
+                    Telephone only. This number is not WhatsApp enabled.
+                </p>
+
+                {% endif %}
+
             </div>
 
             {% endif %}
 
+
+            <!-- WhatsApp -->
 
             {% if contact.whatsapp %}
 
@@ -204,6 +244,7 @@
                 <p class="contact-method__label">
                     WhatsApp
                 </p>
+
 
                 <a
                     class="contact-method__value"
@@ -219,6 +260,8 @@
             {% endif %}
 
 
+            <!-- Email -->
+
             {% if contact.email %}
 
             <div class="contact-method">
@@ -226,6 +269,7 @@
                 <p class="contact-method__label">
                     Email
                 </p>
+
 
                 <a
                     class="contact-method__value"
@@ -241,12 +285,13 @@
 
         </div>
 
+
         {% else %}
 
         <div class="contact-empty-state">
 
             <p>
-                Official church telephone, WhatsApp and email details will be
+                Official church contact details will be
                 published here when they are available.
             </p>
 
@@ -255,12 +300,18 @@
         {% endif %}
 
     </div>
+
 </section>
 
 
-<!-- Social Links -->
+<!-- =======================================================
+     Social Links
+     ======================================================= -->
+
 {% if social_links %}
+
 <section class="section section--surface contact-section">
+
     <div class="container">
 
         <div class="contact-section__header">
@@ -276,15 +327,19 @@
 
             {% for social in social_links %}
 
-                {% set social_platform = social.platform | lower %}
+                {% set social_platform =
+                    social.platform | lower
+                %}
+
 
                 <a
                     class="contact-social-link"
                     href="{{ social.url }}"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Divine River Church on {{ social.name }}"
+                    aria-label="{{ site.name }} on {{ social.name }}"
                 >
+
 
                     {% if social_platform == "youtube" %}
 
@@ -295,6 +350,7 @@
                         aria-hidden="true"
                     >
 
+
                     {% elif social_platform == "facebook" %}
 
                     <img
@@ -303,6 +359,7 @@
                         alt=""
                         aria-hidden="true"
                     >
+
 
                     {% elif social_platform == "instagram" %}
 
@@ -327,7 +384,9 @@
         </div>
 
     </div>
+
 </section>
+
 {% endif %}
 
 

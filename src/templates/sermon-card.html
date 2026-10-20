@@ -1,0 +1,439 @@
+{# ==========================================================
+   Sermon Card
+   Production Sermons Gallery
+   ========================================================== #}
+
+
+{# ----------------------------------------------------------
+   Core sermon data
+   ---------------------------------------------------------- #}
+
+{% set sermon_id = sermon_item.id %}
+{% set sermon_title = sermon_item.title %}
+{% set sermon_thumbnail = sermon_item.thumbnail %}
+
+
+{# ----------------------------------------------------------
+   YouTube URL
+
+   Prefer the stored YouTube URL.
+
+   If only a video ID exists, construct the normal
+   YouTube watch URL from that ID.
+   ---------------------------------------------------------- #}
+
+{% if sermon_item.youtube_url is defined and sermon_item.youtube_url %}
+
+    {% set sermon_youtube_url = sermon_item.youtube_url %}
+
+{% elif sermon_item.youtube_id is defined and sermon_item.youtube_id %}
+
+    {% set sermon_youtube_url =
+        "https://www.youtube.com/watch?v=" ~ sermon_item.youtube_id
+    %}
+
+{% else %}
+
+    {% set sermon_youtube_url = none %}
+
+{% endif %}
+
+
+{# ----------------------------------------------------------
+   Thumbnail path
+
+   Current synced sermons use local paths such as:
+
+   assets/images/sermons/Rh3PJ48RTEI.jpg
+
+   The remote-URL branch is retained as a safe fallback for
+   any older sermon record that has not yet been resynchronised.
+   ---------------------------------------------------------- #}
+
+{% if
+    sermon_thumbnail.startswith("http://")
+    or
+    sermon_thumbnail.startswith("https://")
+%}
+
+    {% set sermon_thumbnail_src = sermon_thumbnail %}
+
+{% else %}
+
+    {% set sermon_thumbnail_src = "/" ~ sermon_thumbnail %}
+
+{% endif %}
+
+
+{# ----------------------------------------------------------
+   Human-readable date
+
+   Prefer display_date when build.py supplies it.
+
+   Until that build.py change is made, this component can
+   also convert a normal YYYY-MM-DD sermon date itself.
+
+   Example:
+   2026-10-04
+       ->
+   4 October 2026
+   ---------------------------------------------------------- #}
+
+{% set raw_sermon_date =
+    sermon_item.date
+    if sermon_item.date is defined
+    else ""
+%}
+
+
+{% if sermon_item.display_date is defined and sermon_item.display_date %}
+
+    {% set sermon_display_date = sermon_item.display_date %}
+
+{% elif raw_sermon_date and raw_sermon_date | length == 10 %}
+
+    {% set sermon_month_names = {
+        "01": "January",
+        "02": "February",
+        "03": "March",
+        "04": "April",
+        "05": "May",
+        "06": "June",
+        "07": "July",
+        "08": "August",
+        "09": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December"
+    } %}
+
+    {% set sermon_month =
+        sermon_month_names.get(
+            raw_sermon_date[5:7],
+            raw_sermon_date[5:7]
+        )
+    %}
+
+    {% set sermon_day =
+        raw_sermon_date[8:10] | int
+    %}
+
+    {% set sermon_display_date =
+        sermon_day
+        ~ " "
+        ~ sermon_month
+        ~ " "
+        ~ raw_sermon_date[0:4]
+    %}
+
+{% else %}
+
+    {% set sermon_display_date = raw_sermon_date %}
+
+{% endif %}
+
+
+{# ----------------------------------------------------------
+   Duration
+   ---------------------------------------------------------- #}
+
+{% set sermon_duration =
+    sermon_item.duration_display
+    if sermon_item.duration_display is defined
+    else ""
+%}
+
+
+{# ----------------------------------------------------------
+   Optional future audio support
+
+   Current automatically synced sermons do not have audio.
+
+   If a sermon later receives:
+
+   "audio": {
+       "available": true,
+       "url": "..."
+   }
+
+   the existing sermon JavaScript can expose Listen and
+   Download Audio without changing the basic card structure.
+   ---------------------------------------------------------- #}
+
+{% set sermon_audio =
+    sermon_item.audio
+    if sermon_item.audio is defined
+    else none
+%}
+
+{% set sermon_has_audio =
+    sermon_audio
+    and sermon_audio.available is defined
+    and sermon_audio.available
+    and sermon_audio.url is defined
+    and sermon_audio.url
+%}
+
+
+<!-- =======================================================
+     Sermon Card
+     ======================================================= -->
+
+<article
+    class="sermon-card"
+    data-sermon-card
+    data-sermon-id="{{ sermon_id }}"
+>
+
+
+    <!-- ===================================================
+         Media Area
+
+         Closed:
+             Local YouTube thumbnail
+
+         Hover / keyboard focus:
+             View Options
+
+         Open:
+             Darkened thumbnail
+             Sermon title
+             Watch on YouTube
+         =================================================== -->
+
+    <div class="sermon-card__stage">
+
+
+        <!-- Thumbnail / View Options Trigger -->
+
+        <button
+            class="sermon-card__media"
+            type="button"
+            data-sermon-card-trigger
+            aria-expanded="false"
+            aria-controls="sermon-options-{{ sermon_id }}"
+            aria-label="View options for {{ sermon_title }}"
+        >
+
+
+            <img
+                class="sermon-card__thumbnail"
+                src="{{ sermon_thumbnail_src }}"
+                alt="{{ sermon_title }} sermon thumbnail"
+                loading="lazy"
+                decoding="async"
+            >
+
+
+            <!-- Hover / Focus Overlay -->
+
+            <span
+                class="sermon-card__view-overlay"
+                aria-hidden="true"
+            >
+
+                <span class="sermon-card__view-text">
+                    View Options
+                </span>
+
+            </span>
+
+
+        </button>
+
+
+        <!-- =================================================
+             Open Card Options
+
+             Hidden initially.
+
+             main.js exposes this panel when the user selects
+             View Options.
+
+             For current synced sermons the only visible
+             action is Watch on YouTube.
+             ================================================= -->
+
+        <div
+            class="sermon-card__options"
+            id="sermon-options-{{ sermon_id }}"
+            data-sermon-card-options
+            hidden
+        >
+
+
+            <!-- Title Inside Open Thumbnail -->
+
+            <div class="sermon-card__panel-title">
+                {{ sermon_title }}
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="sermon-card__actions">
+
+
+                {% if sermon_youtube_url %}
+
+                <a
+                    class="
+                        button
+                        button--primary
+                        sermon-card__action
+                        sermon-card__youtube-action
+                    "
+                    href="{{ sermon_youtube_url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Watch {{ sermon_title }} on YouTube"
+                >
+                    Watch on YouTube
+                </a>
+
+                {% endif %}
+
+
+                {# ===========================================
+                   Future Audio Actions
+
+                   These do not render for the current synced
+                   sermons because those records have no
+                   available audio object.
+                   =========================================== #}
+
+                {% if sermon_has_audio %}
+
+                <button
+                    class="
+                        button
+                        button--secondary
+                        sermon-card__action
+                        sermon-card__listen-action
+                    "
+                    type="button"
+                    data-sermon-audio-trigger
+                    aria-expanded="false"
+                    aria-controls="sermon-audio-{{ sermon_id }}"
+                >
+                    Listen
+                </button>
+
+
+                <a
+                    class="
+                        button
+                        button--secondary
+                        sermon-card__action
+                        sermon-card__download-action
+                    "
+                    href="{{ sermon_audio.url }}"
+                    download
+                >
+                    Download Audio
+                </a>
+
+
+                <div
+                    class="sermon-card__audio"
+                    id="sermon-audio-{{ sermon_id }}"
+                    data-sermon-audio
+                    hidden
+                >
+
+                    <audio
+                        class="sermon-card__audio-player"
+                        controls
+                        preload="none"
+                    >
+
+                        <source
+                            src="{{ sermon_audio.url }}"
+                        >
+
+                        Your browser does not support audio playback.
+
+                    </audio>
+
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ===================================================
+         Information Area
+
+         This information remains below the thumbnail in
+         both the closed and open states.
+         =================================================== -->
+
+    <div class="sermon-card__content">
+
+
+        <!-- Sermon Title -->
+
+        <h3 class="sermon-card__title">
+            {{ sermon_title }}
+        </h3>
+
+
+        <!-- Date + Duration -->
+
+        {% if sermon_display_date or sermon_duration %}
+
+        <div class="sermon-card__meta">
+
+
+            {% if sermon_display_date %}
+
+            <time
+                class="sermon-card__date"
+                {% if raw_sermon_date %}
+                datetime="{{ raw_sermon_date }}"
+                {% endif %}
+            >
+                {{ sermon_display_date }}
+            </time>
+
+            {% endif %}
+
+
+            {% if sermon_display_date and sermon_duration %}
+
+            <span
+                class="sermon-card__meta-separator"
+                aria-hidden="true"
+            >
+                •
+            </span>
+
+            {% endif %}
+
+
+            {% if sermon_duration %}
+
+            <span class="sermon-card__duration">
+                {{ sermon_duration }}
+            </span>
+
+            {% endif %}
+
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</article>

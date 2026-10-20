@@ -44,95 +44,95 @@
 
         <div class="ministries-grid">
 
-            {% for ministry in ministries %}
+            {% for ministry in ministries | sort(attribute="sort_order") %}
 
-            <article class="ministry-card">
+            {% if ministry.published %}
 
-                {% if ministry.image %}
+            <article
+                class="ministry-card"
+                id="{{ ministry.id }}"
+            >
 
-                <div class="ministry-card__media">
+                <details class="ministry-card__details">
 
-                    <img
-                        class="ministry-card__image"
-                        src="/{{ ministry.image }}"
-                        alt="{{ ministry.name }}"
-                        loading="lazy"
-                    >
+                    <!--
+                        The summary remains visible whether the
+                        card is open or closed.
+                    -->
+                    <summary class="ministry-card__summary">
 
-                </div>
+                        <div class="ministry-card__content">
 
-                {% endif %}
-
-
-                <div class="ministry-card__content">
-
-                    <h3 class="ministry-card__name">
-                        {{ ministry.name }}
-                    </h3>
+                            <h3 class="ministry-card__name">
+                                {{ ministry.name }}
+                            </h3>
 
 
-                    {% if ministry.description %}
+                            {% if ministry.summary %}
 
-                    <p class="ministry-card__description">
-                        {{ ministry.description }}
-                    </p>
+                            <p class="ministry-card__summary-text">
+                                {{ ministry.summary }}
+                            </p>
 
-                    {% endif %}
+                            {% endif %}
 
 
-                    {% if ministry.leader %}
+                            <!--
+                                CSS will switch between these two labels
+                                depending on whether <details> is open.
+                            -->
+                            <span class="ministry-card__toggle">
 
-                    <div class="ministry-card__detail">
+                                <span class="ministry-card__toggle-open">
+                                    View details
+                                </span>
 
-                        <span class="ministry-card__label">
-                            Leader
-                        </span>
+                                <span class="ministry-card__toggle-close">
+                                    Show less
+                                </span>
 
-                        <span>
-                            {{ ministry.leader }}
-                        </span>
+                            </span>
+
+                        </div>
+
+                    </summary>
+
+
+                    <!-- Expanded Content -->
+                    <div class="ministry-card__expanded">
+
+                        {% if ministry.details %}
+
+                        <p class="ministry-card__description">
+                            {{ ministry.details }}
+                        </p>
+
+                        {% endif %}
+
+
+                        {% if ministry.scriptures %}
+
+                        <div class="ministry-card__scriptures">
+
+                            <span class="ministry-card__scriptures-label">
+                                Scripture
+                            </span>
+
+                            <p class="ministry-card__scriptures-list">
+                                {{ ministry.scriptures | join("; ") }}
+                            </p>
+
+                        </div>
+
+                        {% endif %}
 
                     </div>
 
-                    {% endif %}
-
-
-                    {% if ministry.schedule %}
-
-                    <div class="ministry-card__detail">
-
-                        <span class="ministry-card__label">
-                            Schedule
-                        </span>
-
-                        <span>
-                            {{ ministry.schedule }}
-                        </span>
-
-                    </div>
-
-                    {% endif %}
-
-
-                    {% if ministry.contact %}
-
-                    <div class="ministry-card__detail">
-
-                        <span class="ministry-card__label">
-                            Contact
-                        </span>
-
-                        <span>
-                            {{ ministry.contact }}
-                        </span>
-
-                    </div>
-
-                    {% endif %}
-
-                </div>
+                </details>
 
             </article>
+
+            {% endif %}
 
             {% endfor %}
 

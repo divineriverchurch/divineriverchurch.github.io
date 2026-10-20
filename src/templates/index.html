@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- =======================================================
-     Prototype 2 - Home Page
+     Version 1 - Home Page
      ======================================================= -->
 
 
@@ -11,17 +11,24 @@
      Hero
      ======================================================= -->
 
+{% if home.hero.published %}
+
 <section class="home-hero">
 
     <div class="container home-hero__inner">
 
         <div class="home-hero__content">
 
+            {% if home.hero.show_site_name and site.name %}
+
             <h1 class="home-hero__title">
                 {{ site.name }}
             </h1>
 
-            {% if site.description %}
+            {% endif %}
+
+
+            {% if home.hero.show_site_description and site.description %}
 
             <p class="home-hero__location">
                 {{ site.description }}
@@ -29,16 +36,21 @@
 
             {% endif %}
 
+
+            {% if home.hero.primary_action %}
+
             <div class="home-hero__actions">
 
                 <a
                     class="button button--primary"
-                    href="/contact/"
+                    href="{{ home.hero.primary_action.url }}"
                 >
-                    Contact
+                    {{ home.hero.primary_action.label }}
                 </a>
 
             </div>
+
+            {% endif %}
 
         </div>
 
@@ -46,10 +58,14 @@
 
 </section>
 
+{% endif %}
+
 
 <!-- =======================================================
      Vision + Mission
      ======================================================= -->
+
+{% if home.vision_mission.published %}
 
 <section class="section home-section">
 
@@ -60,22 +76,23 @@
 
             <!-- Vision -->
 
-            {% if site.vision %}
+            {% if home.vision_mission.show_vision and about.vision %}
 
             <article class="home-principle-card">
 
                 <p class="home-section__eyebrow">
-                    Our Vision
+                    {{ about.vision.title }}
                 </p>
 
                 <p class="home-principle-card__text">
-                    {{ site.vision }}
+                    {{ about.vision.text }}
                 </p>
 
-                {% if site.vision_reference %}
+
+                {% if about.vision.scriptures %}
 
                 <p class="home-principle-card__reference">
-                    {{ site.vision_reference }}
+                    {{ about.vision.scriptures | join("; ") }}
                 </p>
 
                 {% endif %}
@@ -87,17 +104,26 @@
 
             <!-- Mission -->
 
-            {% if site.mission %}
+            {% if home.vision_mission.show_mission and about.mission %}
 
             <article class="home-principle-card">
 
                 <p class="home-section__eyebrow">
-                    Our Mission
+                    {{ about.mission.title }}
                 </p>
 
                 <p class="home-principle-card__text">
-                    {{ site.mission }}
+                    {{ about.mission.text }}
                 </p>
+
+
+                {% if about.mission.scriptures %}
+
+                <p class="home-principle-card__reference">
+                    {{ about.mission.scriptures | join("; ") }}
+                </p>
+
+                {% endif %}
 
             </article>
 
@@ -110,10 +136,14 @@
 
 </section>
 
+{% endif %}
+
 
 <!-- =======================================================
      Worship With Us
      ======================================================= -->
+
+{% if home.services.published %}
 
 <section class="section section--surface home-section">
 
@@ -122,17 +152,17 @@
         <div class="home-section__header">
 
             <p class="home-section__eyebrow">
-                Worship With Us
+                {{ home.services.eyebrow }}
             </p>
 
             <h2>
-                Sunday Services
+                {{ home.services.title }}
             </h2>
 
         </div>
 
 
-        {% if service_times %}
+        {% if home.services.show_published_services and service_times %}
 
         <div class="home-services-grid">
 
@@ -144,6 +174,7 @@
                     {{ service.name }}
                 </h3>
 
+
                 {% if service.display_time %}
 
                 <p class="home-service-card__time">
@@ -151,6 +182,7 @@
                 </p>
 
                 {% endif %}
+
 
                 {% if service.venue %}
 
@@ -165,6 +197,7 @@
             {% endfor %}
 
         </div>
+
 
         {% else %}
 
@@ -183,10 +216,14 @@
 
 </section>
 
+{% endif %}
+
 
 <!-- =======================================================
      Sermons + Live
      ======================================================= -->
+
+{% if home.sermons.published or home.livestream.published %}
 
 <section class="section home-section">
 
@@ -197,15 +234,18 @@
 
             <!-- Sermons -->
 
+            {% if home.sermons.published %}
+
             <article class="home-media-card">
 
                 <p class="home-section__eyebrow">
-                    Sermons
+                    {{ home.sermons.eyebrow }}
                 </p>
 
                 <h2>
-                    Watch and Listen
+                    {{ home.sermons.title }}
                 </h2>
+
 
                 {% if sermons %}
 
@@ -216,6 +256,7 @@
                         <h3>
                             {{ latest_sermon.title }}
                         </h3>
+
 
                         {% if latest_sermon.date %}
 
@@ -230,40 +271,51 @@
                 {% else %}
 
                 <p class="home-media-card__text">
-                    Watch sermon videos and explore available
-                    audio from Divine River Church.
+                    {{ home.sermons.description }}
                 </p>
 
                 {% endif %}
 
+
+                {% if home.sermons.action %}
+
                 <a
                     class="button button--primary"
-                    href="/sermons/"
+                    href="{{ home.sermons.action.url }}"
                 >
-                    Explore Sermons
+                    {{ home.sermons.action.label }}
                 </a>
 
+                {% endif %}
+
             </article>
+
+            {% endif %}
 
 
             <!-- Watch Live -->
 
+            {% if home.livestream.published %}
+
             <article class="home-media-card">
 
                 <p class="home-section__eyebrow">
-                    Live
+                    {{ home.livestream.eyebrow }}
                 </p>
 
                 <h2>
-                    Watch Live
+                    {{ home.livestream.title }}
                 </h2>
 
                 <p class="home-media-card__text">
-                    Follow Divine River Church services and
-                    broadcasts through our official YouTube channel.
+                    {{ home.livestream.description }}
                 </p>
 
-                {% if livestream.youtube_live_url %}
+
+                {% if
+                    home.livestream.use_site_livestream
+                    and livestream.youtube_live_url
+                %}
 
                 <a
                     class="button button--primary"
@@ -271,12 +323,14 @@
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    {{ livestream.button_label or "Watch Live" }}
+                    {{ livestream.button_label or home.livestream.title }}
                 </a>
 
                 {% endif %}
 
             </article>
+
+            {% endif %}
 
 
         </div>
@@ -285,10 +339,14 @@
 
 </section>
 
+{% endif %}
+
 
 <!-- =======================================================
      What's Happening
      ======================================================= -->
+
+{% if home.events.published %}
 
 <section class="section section--surface home-section">
 
@@ -299,70 +357,163 @@
             <div class="home-section__header">
 
                 <p class="home-section__eyebrow">
-                    What's Happening
+                    {{ home.events.eyebrow }}
                 </p>
 
                 <h2>
-                    Upcoming Events
+                    {{ home.events.title }}
                 </h2>
 
             </div>
 
+
+            {% if home.events.action %}
+
             <a
                 class="home-section__link"
-                href="/events/"
+                href="{{ home.events.action.url }}"
             >
-                View Events
+                {{ home.events.action.label }}
             </a>
 
+            {% endif %}
+
         </div>
 
 
-        {% if events %}
+        {% if home.events.show_published_events and events %}
 
-        <div class="home-card-grid">
+            {% set featured_event = events[0] %}
 
-            {% for event in events[:3] %}
+            <div class="home-event-feature">
 
-            <article class="card">
+                <article
+                    class="home-event-card{% if not featured_event.media or not featured_event.media.poster %} home-event-card--no-media{% endif %}"
+                >
 
-                <div class="card__content">
+                    {% if featured_event.media and featured_event.media.poster %}
 
-                    <h3 class="card__title">
-                        {{ event.name }}
-                    </h3>
+                    <div class="home-event-card__media">
 
-                    {% if event.date %}
+                        <img
+                            class="home-event-card__image"
+                            src="/{{ featured_event.media.poster }}"
+                            alt="{{ featured_event.media.poster_alt or featured_event.title }}"
+                            loading="lazy"
+                            decoding="async"
+                        >
 
-                    <p class="card__meta">
-                        {{ event.date }}
-                    </p>
+                    </div>
 
                     {% endif %}
 
-                    {% if event.description %}
 
-                    <p>
-                        {{ event.description }}
-                    </p>
+                    <div class="home-event-card__content">
 
-                    {% endif %}
+                        <h3 class="home-event-card__title">
+                            {{ featured_event.title }}
+                        </h3>
 
-                </div>
 
-            </article>
+                        {% if
+                            featured_event.display_date
+                            or featured_event.date
+                            or featured_event.display_time
+                        %}
 
-            {% endfor %}
+                        <p class="home-event-card__meta">
 
-        </div>
+                            {% if featured_event.display_date or featured_event.date %}
+
+                            <time
+                                class="home-event-card__date"
+                                datetime="{{ featured_event.date }}"
+                            >
+                                {{ featured_event.display_date or featured_event.date }}
+                            </time>
+
+                            {% endif %}
+
+
+                            {% if
+                                (featured_event.display_date or featured_event.date)
+                                and featured_event.display_time
+                            %}
+
+                            <span
+                                class="home-event-card__meta-separator"
+                                aria-hidden="true"
+                            >
+                                •
+                            </span>
+
+                            {% endif %}
+
+
+                            {% if featured_event.display_time %}
+
+                            <span class="home-event-card__time">
+                                {{ featured_event.display_time }}
+                            </span>
+
+                            {% endif %}
+
+                        </p>
+
+                        {% endif %}
+
+
+                        {% if featured_event.venue_short or featured_event.venue %}
+
+                        <p class="home-event-card__venue">
+                            {{ featured_event.venue_short or featured_event.venue }}
+                        </p>
+
+                        {% endif %}
+
+
+                        {% if featured_event.summary %}
+
+                        <p class="home-event-card__summary">
+                            {{ featured_event.summary }}
+                        </p>
+
+                        {% elif featured_event.description %}
+
+                        <p class="home-event-card__summary">
+                            {{ featured_event.description[0] }}
+                        </p>
+
+                        {% endif %}
+
+
+                        {% if featured_event.id %}
+
+                        <div class="home-event-card__actions">
+
+                            <a
+                                class="button button--primary"
+                                href="/events/#{{ featured_event.id }}"
+                            >
+                                View Event Details
+                            </a>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            </div>
 
         {% else %}
 
         <div class="home-empty-state">
 
             <p>
-                Upcoming events will appear here when they
-                are published.
+                {{ home.events.empty_message }}
             </p>
 
         </div>
@@ -373,10 +524,14 @@
 
 </section>
 
+{% endif %}
+
 
 <!-- =======================================================
      Give + Visit
      ======================================================= -->
+
+{% if home.giving.published or home.visit.published %}
 
 <section class="section home-section">
 
@@ -387,48 +542,68 @@
 
             <!-- Give -->
 
+            {% if home.giving.published %}
+
             <article class="home-action-card">
 
                 <p class="home-section__eyebrow">
-                    Give
+                    {{ home.giving.eyebrow }}
                 </p>
 
                 <h2>
-                    Giving
+                    {{ home.giving.title }}
                 </h2>
 
                 <p class="home-action-card__text">
-                    Church giving information will be available
-                    through the Give page.
+                    {{ home.giving.description }}
                 </p>
+
+
+                {% if home.giving.action %}
 
                 <a
                     class="button button--secondary"
-                    href="/give/"
+                    href="{{ home.giving.action.url }}"
                 >
-                    Give
+                    {{ home.giving.action.label }}
                 </a>
 
+                {% endif %}
+
             </article>
+
+            {% endif %}
 
 
             <!-- Visit -->
 
+            {% if home.visit.published %}
+
             <article class="home-action-card">
 
                 <p class="home-section__eyebrow">
-                    Visit
+                    {{ home.visit.eyebrow }}
                 </p>
 
                 <h2>
-                    Visit Divine River Church
+                    {{ home.visit.title }}
                 </h2>
+
+
+                {% if home.visit.show_site_description and site.description %}
 
                 <p class="home-action-card__text">
                     {{ site.description }}
                 </p>
 
-                {% if location.directions_url %}
+                {% endif %}
+
+
+                {% if
+                    home.visit.action
+                    and home.visit.action.use_site_directions_url
+                    and location.directions_url
+                %}
 
                 <a
                     class="button button--primary"
@@ -436,12 +611,14 @@
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Get Directions
+                    {{ home.visit.action.label }}
                 </a>
 
                 {% endif %}
 
             </article>
+
+            {% endif %}
 
 
         </div>
@@ -450,12 +627,18 @@
 
 </section>
 
+{% endif %}
+
 
 <!-- =======================================================
      Connect
      ======================================================= -->
 
-{% if social_links %}
+{% if
+    home.social.published
+    and home.social.show_published_social_links
+    and social_links
+%}
 
 <section class="section section--surface home-section">
 
@@ -464,11 +647,11 @@
         <div class="home-section__header">
 
             <p class="home-section__eyebrow">
-                Connect
+                {{ home.social.eyebrow }}
             </p>
 
             <h2>
-                Follow Us
+                {{ home.social.title }}
             </h2>
 
         </div>
@@ -516,6 +699,7 @@
                     >
 
                     {% endif %}
+
 
                     <span class="home-social-link__label">
                         {{ social.name }}

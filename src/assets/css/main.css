@@ -1014,6 +1014,171 @@ a:hover {
 
 
 /* =========================================================
+   Home Featured Event
+   ========================================================= */
+
+.home-event-feature {
+    width: 100%;
+    max-width: 1100px;
+}
+
+
+.home-event-card {
+    display: grid;
+
+    grid-template-columns:
+        minmax(260px, 0.85fr)
+        minmax(0, 1.15fr);
+
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-bg);
+
+    box-shadow:
+        0 0.35rem 1rem rgba(0, 0, 0, 0.05);
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-normal);
+}
+
+
+.home-event-card:hover {
+    border-color: var(--color-primary);
+
+    box-shadow:
+        0 0.5rem 1.2rem rgba(0, 0, 0, 0.08);
+}
+
+
+.home-event-card--no-media {
+    grid-template-columns: 1fr;
+}
+
+
+.home-event-card__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+
+    padding: var(--space-4);
+
+    border-right: 1px solid var(--color-border);
+
+    background: var(--color-surface-alt);
+}
+
+
+.home-event-card__image {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 520px;
+
+    object-fit: contain;
+
+    border-radius: var(--radius-md);
+}
+
+
+.home-event-card__content {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    padding: var(--space-6);
+}
+
+
+.home-event-card__title {
+    margin-bottom: var(--space-4);
+
+    font-size:
+        clamp(
+            var(--font-size-xl),
+            2.8vw,
+            var(--font-size-3xl)
+        );
+
+    overflow-wrap: break-word;
+}
+
+
+.home-event-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: var(--space-2);
+
+    margin-bottom: var(--space-2);
+
+    color: var(--color-primary);
+
+    font-weight: 800;
+}
+
+
+.home-event-card__date,
+.home-event-card__time {
+    color: inherit;
+}
+
+
+.home-event-card__meta-separator {
+    color: var(--color-text-muted);
+}
+
+
+.home-event-card__venue {
+    margin-bottom: var(--space-4);
+
+    color: var(--color-text-muted);
+
+    font-weight: 700;
+}
+
+
+.home-event-card__summary {
+    max-width: 62ch;
+
+    margin-bottom: var(--space-5);
+
+    color: var(--color-text);
+
+    line-height: 1.75;
+}
+
+
+.home-event-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: var(--space-3);
+
+    margin-top: auto;
+}
+
+
+.home-event-card__actions .button {
+    width: fit-content;
+    max-width: 100%;
+}
+
+
+/* =========================================================
    Empty State
    ========================================================= */
 
@@ -1740,11 +1905,13 @@ a:hover {
     border-bottom: 1px solid var(--color-border);
 }
 
+
 .ministries-hero__content {
     max-width: 760px;
 
     padding-block: var(--space-8);
 }
+
 
 .ministries-hero__title {
     margin-bottom: 0;
@@ -1759,9 +1926,11 @@ a:hover {
     margin-bottom: var(--space-7);
 }
 
+
 .ministries-section__header h2 {
     margin-bottom: var(--space-3);
 }
+
 
 .ministries-section__intro {
     margin-bottom: 0;
@@ -1784,12 +1953,16 @@ a:hover {
         );
 
     gap: var(--space-5);
+
+    align-items: start;
 }
 
 
 /* ---------- Ministry Card ---------- */
 
 .ministry-card {
+    min-width: 0;
+
     overflow: hidden;
 
     border: 1px solid var(--color-border);
@@ -1800,31 +1973,46 @@ a:hover {
     transition:
         border-color var(--transition-fast),
         transform var(--transition-fast),
+        box-shadow var(--transition-fast),
         background-color var(--transition-fast);
 }
+
 
 .ministry-card:hover {
     border-color: var(--color-primary);
 
     transform: translateY(-2px);
+
+    box-shadow:
+        0 0.4rem 1rem rgba(0, 0, 0, 0.06);
 }
 
 
-/* ---------- Optional Ministry Image ---------- */
+/* ---------- Details Element ---------- */
 
-.ministry-card__media {
-    overflow: hidden;
-
-    aspect-ratio: 16 / 9;
-
-    background: var(--color-surface-alt);
-}
-
-.ministry-card__image {
+.ministry-card__details {
     width: 100%;
-    height: 100%;
+}
 
-    object-fit: cover;
+
+/* ---------- Closed / Open Summary ---------- */
+
+.ministry-card__summary {
+    display: block;
+
+    list-style: none;
+
+    cursor: pointer;
+}
+
+
+.ministry-card__summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.ministry-card__summary::marker {
+    content: "";
 }
 
 
@@ -1838,34 +2026,119 @@ a:hover {
     padding: var(--space-5);
 }
 
+
 .ministry-card__name {
     margin-bottom: 0;
 
     font-size: var(--font-size-xl);
 }
 
-.ministry-card__description {
+
+.ministry-card__summary-text {
     margin-bottom: 0;
 
     color: var(--color-text-muted);
+
+    line-height: 1.7;
 }
 
 
-/* ---------- Optional Ministry Details ---------- */
+/* ---------- View Details / Show Less ---------- */
 
-.ministry-card__detail {
-    display: grid;
+.ministry-card__toggle {
+    display: inline-flex;
+    align-items: center;
 
-    gap: var(--space-1);
+    width: fit-content;
+    min-height: 44px;
 
-    padding-top: var(--space-3);
+    color: var(--color-primary);
 
-    border-top: 1px solid var(--color-border);
+    font-size: var(--font-size-sm);
+    font-weight: 800;
 
-    color: var(--color-text-muted);
+    cursor: pointer;
 }
 
-.ministry-card__label {
+
+.ministry-card__toggle-open {
+    display: inline;
+}
+
+
+.ministry-card__toggle-close {
+    display: none;
+}
+
+
+.ministry-card__details[open]
+.ministry-card__toggle-open {
+    display: none;
+}
+
+
+.ministry-card__details[open]
+.ministry-card__toggle-close {
+    display: inline;
+}
+
+
+/* ---------- Expanded Content ---------- */
+
+.ministry-card__expanded {
+    padding:
+        0
+        var(--space-5)
+        var(--space-5);
+}
+
+
+.ministry-card__expanded::before {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 1px;
+
+    margin-bottom: var(--space-5);
+
+    background: var(--color-border);
+}
+
+
+.ministry-card__description {
+    margin-bottom: 0;
+
+    color: var(--color-text);
+
+    line-height: 1.8;
+}
+
+
+/* ---------- Scripture ---------- */
+
+.ministry-card__scriptures {
+    margin-top: var(--space-5);
+
+    padding: var(--space-4);
+
+    border-left: 4px solid var(--color-primary);
+    border-radius:
+        0
+        var(--radius-md)
+        var(--radius-md)
+        0;
+
+    background: var(--color-surface-alt);
+}
+
+
+.ministry-card__scriptures-label {
+    display: block;
+
+    margin-bottom: var(--space-2);
+
     color: var(--color-text);
 
     font-size: var(--font-size-sm);
@@ -1873,6 +2146,30 @@ a:hover {
 
     letter-spacing: 0.04em;
     text-transform: uppercase;
+}
+
+
+.ministry-card__scriptures-list {
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    line-height: 1.7;
+}
+
+
+/* ---------- Open Card State ---------- */
+
+.ministry-card:has(.ministry-card__details[open]) {
+    border-color: var(--color-primary);
+}
+
+
+/* ---------- Keyboard Accessibility ---------- */
+
+.ministry-card__summary:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: -3px;
 }
 
 
@@ -1889,8 +2186,38 @@ a:hover {
     color: var(--color-text-muted);
 }
 
+
 .ministries-empty-state p:last-child {
     margin-bottom: 0;
+}
+
+
+/* ---------- Ministries Responsive ---------- */
+
+@media (max-width: 620px) {
+
+    .ministries-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .ministry-card__content {
+        padding: var(--space-4);
+    }
+
+
+    .ministry-card__expanded {
+        padding:
+            0
+            var(--space-4)
+            var(--space-4);
+    }
+
+
+    .ministry-card__scriptures {
+        padding: var(--space-3);
+    }
+
 }
 
 
@@ -2105,71 +2432,18 @@ a:hover {
 }
 
 
-/* ---------- Sermon Library ---------- */
-
-.sermons-library {
-    max-width: 1000px;
-}
-
-.sermons-library > h2 {
-    margin-bottom: var(--space-6);
-}
-
-.sermons-library__grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(min(100%, 280px), 1fr)
-        );
-
-    gap: var(--space-5);
-}
-
-
-/* ---------- Empty State ---------- */
-
-.sermons-empty-state {
-    max-width: 700px;
-
-    padding: var(--space-5);
-
-    border: 1px dashed var(--color-border);
-    border-radius: var(--radius-lg);
-
-    color: var(--color-text-muted);
-}
-
-.sermons-empty-state p:last-child {
-    margin-bottom: 0;
-}
-
-
-/* ---------- Sermons Responsive ---------- */
-
-@media (max-width: 639px) {
-
-    .sermons-live {
-        align-items: stretch;
-    }
-
-    .sermons-live__content {
-        flex-direction: column;
-    }
-
-    .sermons-platform-card {
-        flex-direction: column;
-    }
-
-}
-
 /* ==========================================================
-   PROTOTYPE 2 - SERMON MEDIA CARDS
+   SERMONS GALLERY - PRODUCTION
    ========================================================== */
 
 
 /* ---------- Gallery ---------- */
+
+.sermons-gallery {
+    width: 100%;
+    min-width: 0;
+}
+
 
 .sermons-library__grid {
     display: grid;
@@ -2178,37 +2452,45 @@ a:hover {
         repeat(3, minmax(0, 1fr));
 
     gap: var(--space-5);
+
+    width: 100%;
+    min-width: 0;
 }
 
 
-/* Prototype 2 sample gallery */
+.sermons-gallery__item {
+    min-width: 0;
+}
 
-.sermons-library__grid--samples {
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
 
-    max-width: 1000px;
+.sermons-gallery__item[hidden] {
+    display: none;
 }
 
 
 /* ---------- Card ---------- */
 
 .sermon-card {
+    display: flex;
+    flex-direction: column;
+
     min-width: 0;
+    height: 100%;
 
     overflow: hidden;
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
 
-    background: var(--color-surface);
+    background: var(--color-bg);
 
     box-shadow:
         0 0.35rem 1rem rgba(0, 0, 0, 0.06);
 
     transition:
         border-color var(--transition-fast),
-        box-shadow var(--transition-fast);
+        box-shadow var(--transition-fast),
+        background-color var(--transition-normal);
 }
 
 
@@ -2220,12 +2502,14 @@ a:hover {
 }
 
 
-/* ---------- Media stage ---------- */
+/* ---------- Media Stage ---------- */
 
 .sermon-card__stage {
     position: relative;
 
     overflow: hidden;
+
+    width: 100%;
 
     aspect-ratio: 16 / 9;
 
@@ -2233,7 +2517,7 @@ a:hover {
 }
 
 
-/* ---------- Thumbnail trigger ---------- */
+/* ---------- Thumbnail Trigger ---------- */
 
 .sermon-card__media {
     position: absolute;
@@ -2247,9 +2531,10 @@ a:hover {
     height: 100%;
 
     padding: 0;
-    border: 0;
 
     overflow: hidden;
+
+    border: 0;
 
     background: var(--brand-black);
     color: #ffffff;
@@ -2276,41 +2561,7 @@ a:hover {
 }
 
 
-/* ---------- Default title overlay ---------- */
-
-.sermon-card__title-overlay {
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    z-index: 2;
-
-    padding:
-        2.75rem
-        var(--space-4)
-        var(--space-3);
-
-    color: #ffffff;
-
-    font-size: var(--font-size-base);
-    font-weight: 700;
-    line-height: 1.35;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(0, 0, 0, 0.88),
-            rgba(0, 0, 0, 0)
-        );
-
-    transition:
-        opacity var(--transition-fast);
-}
-
-
-/* ---------- View Options ---------- */
+/* ---------- View Options Overlay ---------- */
 
 .sermon-card__view-overlay {
     position: absolute;
@@ -2325,6 +2576,8 @@ a:hover {
     background: rgba(0, 0, 0, 0.25);
 
     opacity: 0;
+
+    pointer-events: none;
 
     transition:
         opacity var(--transition-normal);
@@ -2346,25 +2599,19 @@ a:hover {
 
     border-radius: var(--radius-pill);
 
-    background: rgba(0, 0, 0, 0.48);
+    background: rgba(0, 0, 0, 0.5);
 
     color: #ffffff;
 
     font-size: var(--font-size-sm);
     font-weight: 800;
+    line-height: 1;
 
     backdrop-filter: blur(5px);
 }
 
 
-/* ---------- Closed-card hover ---------- */
-
-/*
- * Hover only affects CLOSED cards.
- *
- * Hovering another card never closes the
- * currently active card.
- */
+/* ---------- Closed Card Hover / Focus ---------- */
 
 .sermon-card:not(.is-open)
 .sermon-card__media:hover
@@ -2392,18 +2639,7 @@ a:hover {
 }
 
 
-.sermon-card:not(.is-open)
-.sermon-card__media:hover
-.sermon-card__title-overlay,
-
-.sermon-card:not(.is-open)
-.sermon-card__media:focus-visible
-.sermon-card__title-overlay {
-    opacity: 0.35;
-}
-
-
-/* ---------- Keyboard focus ---------- */
+/* ---------- Keyboard Focus ---------- */
 
 .sermon-card__media:focus-visible {
     outline: 3px solid var(--color-focus);
@@ -2411,11 +2647,11 @@ a:hover {
 }
 
 
-/* ---------- Open-card image ---------- */
+/* ---------- Open Card Thumbnail ---------- */
 
 .sermon-card.is-open
 .sermon-card__thumbnail {
-    filter: brightness(0.55);
+    filter: brightness(0.48);
 
     transform: scale(1.01);
 }
@@ -2427,13 +2663,7 @@ a:hover {
 }
 
 
-.sermon-card.is-open
-.sermon-card__title-overlay {
-    opacity: 0;
-}
-
-
-/* ---------- In-thumbnail action panel ---------- */
+/* ---------- In-Thumbnail Action Panel ---------- */
 
 .sermon-card__options {
     position: absolute;
@@ -2445,16 +2675,16 @@ a:hover {
     z-index: 5;
 
     padding:
-        var(--space-3)
+        var(--space-4)
         var(--space-4)
         var(--space-4);
 
     background:
         linear-gradient(
             to top,
-            rgba(15, 15, 17, 0.98) 0%,
-            rgba(15, 15, 17, 0.94) 70%,
-            rgba(15, 15, 17, 0.72) 100%
+            rgba(15, 15, 17, 0.99) 0%,
+            rgba(15, 15, 17, 0.95) 68%,
+            rgba(15, 15, 17, 0.68) 100%
         );
 
     color: #ffffff;
@@ -2468,9 +2698,11 @@ a:hover {
 }
 
 
-/* ---------- Active title ---------- */
+/* ---------- Open Card Title ---------- */
 
 .sermon-card__panel-title {
+    margin: 0;
+
     color: #ffffff;
 
     font-size: var(--font-size-base);
@@ -2479,7 +2711,7 @@ a:hover {
 }
 
 
-/* ---------- Actions ---------- */
+/* ---------- Open Card Actions ---------- */
 
 .sermon-card__actions {
     display: flex;
@@ -2503,16 +2735,12 @@ a:hover {
 }
 
 
-/*
- * CLOSED AUDIO STATE
- *
- * YouTube | Listen | Download Audio
- */
-
 .sermon-card__youtube-action {
     order: 1;
 }
 
+
+/* ---------- Optional Future Audio Actions ---------- */
 
 .sermon-card__listen-action {
     order: 2;
@@ -2523,16 +2751,6 @@ a:hover {
     order: 3;
 }
 
-
-/* ---------- Audio-open arrangement ---------- */
-
-/*
- * AUDIO OPEN
- *
- * YouTube | Download Audio
- * Hide Audio
- * Player
- */
 
 .sermon-card.is-audio-open
 .sermon-card__youtube-action {
@@ -2562,8 +2780,6 @@ a:hover {
 }
 
 
-/* ---------- Audio player ---------- */
-
 .sermon-card__audio {
     width: 100%;
 
@@ -2583,6 +2799,102 @@ a:hover {
 
     width: 100%;
     max-width: 100%;
+}
+
+
+/* ---------- Information Below Thumbnail ---------- */
+
+.sermon-card__content {
+    display: grid;
+
+    gap: var(--space-2);
+
+    padding:
+        var(--space-4)
+        var(--space-4)
+        var(--space-5);
+
+    flex: 1 1 auto;
+}
+
+
+.sermon-card__title {
+    margin: 0;
+
+    color: var(--color-text);
+
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+    line-height: 1.35;
+
+    overflow-wrap: break-word;
+}
+
+
+.sermon-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: var(--space-2);
+
+    margin-top: auto;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+
+.sermon-card__date,
+.sermon-card__duration {
+    color: inherit;
+}
+
+
+.sermon-card__meta-separator {
+    color: var(--color-text-muted);
+
+    line-height: 1;
+}
+
+
+/* ---------- Load More ---------- */
+
+.sermons-gallery__load-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    margin-top: var(--space-7);
+}
+
+
+.sermons-gallery__load-more-button {
+    min-width: 150px;
+}
+
+
+/* ---------- Empty State ---------- */
+
+.sermons-empty-state {
+    max-width: 700px;
+
+    padding: var(--space-5);
+
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    color: var(--color-text-muted);
+}
+
+
+.sermons-empty-state p:last-child {
+    margin-bottom: 0;
 }
 
 
@@ -2609,6 +2921,26 @@ a:hover {
     }
 
 
+    .sermon-card__content {
+        padding:
+            var(--space-4)
+            var(--space-4)
+            var(--space-5);
+    }
+
+
+    .sermon-card__title {
+        font-size: var(--font-size-base);
+    }
+
+
+    .sermon-card__meta {
+        gap: var(--space-1);
+
+        font-size: var(--font-size-xs);
+    }
+
+
     .sermon-card__options {
         padding: var(--space-3);
     }
@@ -2627,16 +2959,26 @@ a:hover {
             0.7rem;
     }
 
+
+    .sermons-gallery__load-more {
+        margin-top: var(--space-6);
+    }
+
+
+    .sermons-gallery__load-more-button {
+        width: 100%;
+    }
+
 }
 
 
-/* ---------- Reduced motion ---------- */
+/* ---------- Reduced Motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
 
+    .sermon-card,
     .sermon-card__thumbnail,
-    .sermon-card__view-overlay,
-    .sermon-card__title-overlay {
+    .sermon-card__view-overlay {
         transition: none;
     }
 
@@ -2955,10 +3297,13 @@ a:hover {
 
 /* =========================================================
    STAGE 9.7 - EVENTS PAGE
+   EXPANDABLE EVENT CARDS
    ========================================================= */
 
 
-/* ---------- Events Hero ---------- */
+/* =========================================================
+   Events Hero
+   ========================================================= */
 
 .events-hero {
     display: flex;
@@ -2976,18 +3321,22 @@ a:hover {
     border-bottom: 1px solid var(--color-border);
 }
 
+
 .events-hero__content {
     max-width: 760px;
 
     padding-block: var(--space-8);
 }
 
+
 .events-hero__title {
     margin-bottom: 0;
 }
 
 
-/* ---------- Section Header ---------- */
+/* =========================================================
+   Section Header
+   ========================================================= */
 
 .events-section__header {
     max-width: 760px;
@@ -2995,12 +3344,15 @@ a:hover {
     margin-bottom: var(--space-6);
 }
 
+
 .events-section__header h2 {
     margin-bottom: 0;
 }
 
 
-/* ---------- Events Grid ---------- */
+/* =========================================================
+   Events Grid
+   ========================================================= */
 
 .events-grid {
     display: grid;
@@ -3008,16 +3360,26 @@ a:hover {
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(min(100%, 300px), 1fr)
+            minmax(min(100%, 420px), 1fr)
         );
 
-    gap: var(--space-5);
+    gap: var(--space-6);
+
+    align-items: start;
+
+    max-width: 900px;
 }
 
 
-/* ---------- Event Card ---------- */
+/* =========================================================
+   Event Card
+   ========================================================= */
 
 .event-card {
+    width: 100%;
+    max-width: 760px;
+    min-width: 0;
+
     overflow: hidden;
 
     border: 1px solid var(--color-border);
@@ -3025,87 +3387,372 @@ a:hover {
 
     background: var(--color-surface);
 
+    box-shadow:
+        0 0.35rem 1.1rem
+        rgba(0, 0, 0, 0.06);
+
     transition:
         border-color var(--transition-fast),
-        transform var(--transition-fast);
+        box-shadow var(--transition-fast),
+        background-color var(--transition-normal);
 }
+
 
 .event-card:hover {
     border-color: var(--color-primary);
 
-    transform: translateY(-2px);
+    box-shadow:
+        0 0.5rem 1.4rem
+        rgba(0, 0, 0, 0.09);
 }
 
 
-/* ---------- Event Image ---------- */
+.event-card:has(.event-card__details[open]) {
+    border-color: var(--color-primary);
+}
+
+
+/* =========================================================
+   Main Event Poster
+   ========================================================= */
+
+/*
+   The approved event artwork is portrait-oriented.
+   Use contain rather than cover so text on the poster
+   is never cropped.
+*/
 
 .event-card__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
     overflow: hidden;
 
-    aspect-ratio: 16 / 9;
+    background: var(--brand-black);
+}
 
+
+.event-card__image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+    max-height: 760px;
+
+    object-fit: contain;
+
+    background: var(--brand-black);
+}
+
+
+/* =========================================================
+   Native Details Element
+   ========================================================= */
+
+.event-card__details {
+    width: 100%;
+}
+
+
+/* =========================================================
+   Collapsed / Open Summary
+   ========================================================= */
+
+.event-card__summary {
+    display: block;
+
+    width: 100%;
+
+    list-style: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast);
+}
+
+
+.event-card__summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.event-card__summary::marker {
+    content: "";
+}
+
+
+.event-card__summary:hover {
     background: var(--color-surface-alt);
 }
 
-.event-card__image {
-    width: 100%;
-    height: 100%;
 
-    object-fit: cover;
+.event-card__summary:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: -3px;
 }
 
 
-/* ---------- Event Content ---------- */
+/* =========================================================
+   Collapsed Card Content
+   ========================================================= */
 
-.event-card__content {
+.event-card__summary-content {
     display: grid;
 
-    gap: var(--space-4);
+    gap: var(--space-3);
 
     padding: var(--space-5);
 }
 
-.event-card__date {
+
+.event-card__title {
     margin-bottom: 0;
+
+    font-size:
+        clamp(
+            var(--font-size-xl),
+            3vw,
+            var(--font-size-3xl)
+        );
+}
+
+
+.event-card__summary-text {
+    max-width: 62ch;
+
+    margin-bottom: 0;
+
+    color: var(--color-text-muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   Primary Date / Time
+   ========================================================= */
+
+.event-card__primary-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap:
+        var(--space-2)
+        var(--space-3);
+
+    margin-bottom: 0;
+
+    color: var(--color-primary);
+
+    font-weight: 800;
+}
+
+
+.event-card__meta-separator {
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   Short Venue and Admission
+   ========================================================= */
+
+.event-card__venue-short {
+    margin-bottom: 0;
+
+    color: var(--color-text);
+
+    font-weight: 700;
+}
+
+
+.event-card__admission {
+    width: fit-content;
+
+    margin-bottom: 0;
+
+    padding:
+        var(--space-1)
+        var(--space-3);
+
+    border-radius: var(--radius-pill);
+
+    background: var(--color-surface-alt);
+
+    color: var(--color-text);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   View Details / Show Less Toggle
+   ========================================================= */
+
+.event-card__toggle {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+    min-height: 44px;
+
+    margin-top: var(--space-1);
 
     color: var(--color-primary);
 
     font-size: var(--font-size-sm);
     font-weight: 800;
 
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    cursor: pointer;
 }
 
-.event-card__name {
-    margin-bottom: 0;
 
-    font-size: var(--font-size-2xl);
+.event-card__toggle-open {
+    display: inline;
 }
+
+
+.event-card__toggle-close {
+    display: none;
+}
+
+
+.event-card__details[open]
+.event-card__toggle-open {
+    display: none;
+}
+
+
+.event-card__details[open]
+.event-card__toggle-close {
+    display: inline;
+}
+
+
+/* =========================================================
+   Expanded Content
+   ========================================================= */
+
+.event-card__expanded {
+    padding:
+        0
+        var(--space-5)
+        var(--space-6);
+}
+
+
+.event-card__expanded::before {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 1px;
+
+    margin-bottom: var(--space-5);
+
+    background: var(--color-border);
+}
+
+
+/* =========================================================
+   Full Description
+   ========================================================= */
 
 .event-card__description {
-    margin-bottom: 0;
+    max-width: 68ch;
 
-    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
 }
 
 
-/* ---------- Event Details ---------- */
+.event-card__description p {
+    margin-bottom: var(--space-4);
 
-.event-card__detail {
+    color: var(--color-text);
+
+    line-height: 1.8;
+}
+
+
+.event-card__description p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   Event Details Panel
+   ========================================================= */
+
+.event-card__information {
+    margin-bottom: var(--space-6);
+
+    padding: var(--space-5);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-bg);
+}
+
+
+.event-card__information-title {
+    margin-bottom: var(--space-4);
+
+    font-size: var(--font-size-xl);
+}
+
+
+.event-card__information-list {
     display: grid;
 
-    gap: var(--space-1);
+    gap: 0;
 
-    padding-top: var(--space-3);
-
-    border-top: 1px solid var(--color-border);
-
-    color: var(--color-text-muted);
+    margin: 0;
 }
 
-.event-card__label {
-    color: var(--color-text);
+
+.event-card__information-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(100px, 140px)
+        minmax(0, 1fr);
+
+    gap: var(--space-4);
+
+    padding-block: var(--space-3);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.event-card__information-row:first-child {
+    padding-top: 0;
+}
+
+
+.event-card__information-row:last-child {
+    padding-bottom: 0;
+
+    border-bottom: 0;
+}
+
+
+.event-card__information-row dt,
+.event-card__information-row dd {
+    margin: 0;
+}
+
+
+.event-card__information-row dt {
+    color: var(--color-text-muted);
 
     font-size: var(--font-size-sm);
     font-weight: 800;
@@ -3114,12 +3761,163 @@ a:hover {
     text-transform: uppercase;
 }
 
-.event-card__actions {
-    padding-top: var(--space-2);
+
+.event-card__information-row dd {
+    min-width: 0;
+
+    color: var(--color-text);
+
+    font-weight: 600;
+
+    overflow-wrap: break-word;
 }
 
 
-/* ---------- Coming Soon Empty State ---------- */
+/* =========================================================
+   Featured Guests Promotional Media
+   ========================================================= */
+
+.event-card__gallery {
+    margin-bottom: var(--space-6);
+}
+
+
+.event-card__gallery-title {
+    margin-bottom: var(--space-4);
+
+    font-size: var(--font-size-xl);
+}
+
+
+.event-card__gallery-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    align-items: start;
+
+    gap: var(--space-4);
+}
+
+
+.event-card__gallery-item {
+    margin: 0;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface-alt);
+}
+
+
+.event-card__gallery-item--portrait {
+    align-self: start;
+}
+
+
+.event-card__gallery-item--wide {
+    grid-column: 1 / -1;
+}
+
+
+.event-card__gallery-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+
+.event-card__gallery-image--portrait,
+.event-card__gallery-image--wide {
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   Event Actions
+   ========================================================= */
+
+.event-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: var(--space-3);
+
+    margin-top: var(--space-2);
+}
+
+
+.event-card__action {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   Bottom Show Less
+   ========================================================= */
+
+.event-card__show-less {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+
+    border-top: 1px solid var(--color-border);
+}
+
+
+.event-card__show-less-button {
+    width: fit-content;
+}
+
+
+/* =========================================================
+   Open State
+   ========================================================= */
+
+.event-card__details[open]
+.event-card__summary {
+    background: var(--color-surface);
+}
+
+
+.event-card__details[open]
+.event-card__summary:hover {
+    background: var(--color-surface);
+}
+
+
+/* =========================================================
+   Dark Theme Support
+   ========================================================= */
+
+html[data-theme="dark"]
+.event-card {
+    box-shadow:
+        0 0.35rem 1.1rem
+        rgba(0, 0, 0, 0.22);
+}
+
+
+html[data-theme="dark"]
+.event-card__information {
+    background: var(--color-bg);
+}
+
+
+/* =========================================================
+   Coming Soon Empty State
+   ========================================================= */
 
 .events-coming-soon {
     max-width: 760px;
@@ -3127,7 +3925,11 @@ a:hover {
     margin-inline: auto;
 
     padding:
-        clamp(var(--space-6), 6vw, var(--space-9))
+        clamp(
+            var(--space-6),
+            6vw,
+            var(--space-9)
+        )
         var(--space-6);
 
     border: 1px solid var(--color-border);
@@ -3139,7 +3941,9 @@ a:hover {
 }
 
 
-/* ---------- Decorative Symbol ---------- */
+/* =========================================================
+   Decorative Symbol
+   ========================================================= */
 
 .events-coming-soon__symbol {
     display: flex;
@@ -3159,6 +3963,7 @@ a:hover {
     background: var(--color-primary);
 }
 
+
 .events-coming-soon__symbol span {
     display: block;
 
@@ -3171,7 +3976,9 @@ a:hover {
 }
 
 
-/* ---------- Coming Soon Content ---------- */
+/* =========================================================
+   Coming Soon Content
+   ========================================================= */
 
 .events-coming-soon__eyebrow {
     margin-bottom: var(--space-2);
@@ -3185,9 +3992,11 @@ a:hover {
     text-transform: uppercase;
 }
 
+
 .events-coming-soon__title {
     margin-bottom: var(--space-4);
 }
+
 
 .events-coming-soon__text {
     max-width: 600px;
@@ -3201,7 +4010,9 @@ a:hover {
 }
 
 
-/* ---------- Empty State Actions ---------- */
+/* =========================================================
+   Empty State Actions
+   ========================================================= */
 
 .events-coming-soon__actions {
     display: flex;
@@ -3213,16 +4024,53 @@ a:hover {
 }
 
 
-/* ---------- Events Responsive ---------- */
+/* =========================================================
+   Events Responsive Fallback
+   ========================================================= */
+
+/*
+   responsive.css contains the main device-specific rules.
+   These fallback rules keep the page usable even if that
+   stylesheet is unavailable.
+*/
 
 @media (max-width: 639px) {
 
-    .events-coming-soon__actions {
+    .event-card__summary-content,
+    .event-card__expanded,
+    .event-card__information {
+        padding-left: var(--space-4);
+        padding-right: var(--space-4);
+    }
+
+
+    .event-card__information-row {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-1);
+    }
+
+
+    .event-card__gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .event-card__actions {
+        align-items: stretch;
+
         flex-direction: column;
     }
 
+
+    .event-card__actions .button,
     .events-coming-soon__actions .button {
         width: 100%;
+    }
+
+
+    .events-coming-soon__actions {
+        flex-direction: column;
     }
 
 }
@@ -3230,7 +4078,7 @@ a:hover {
 
 /* =========================================================
    STAGE 9.8 - GIVE PAGE
-   PROTOTYPE 2
+   PROTOTYPE 3 - FIXED FLIP CARD
    ========================================================= */
 
 
@@ -3314,20 +4162,33 @@ a:hover {
     gap: var(--space-5);
 
     max-width: 900px;
+
+    /*
+       Cards keep their own natural height.
+       Opening/flipping the Centenary card must never stretch
+       the Airtel Money card beside it.
+    */
+    align-items: start;
 }
 
 
 /* =========================================================
-   Giving Method Card
+   Standard Giving Method Card
    ========================================================= */
 
 .give-method-card {
+    min-width: 0;
+
     overflow: hidden;
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
 
     background: var(--color-surface);
+
+    transition:
+        background-color var(--transition-normal),
+        border-color var(--transition-normal);
 }
 
 
@@ -3346,7 +4207,7 @@ a:hover {
 
 
 /* =========================================================
-   Payment Details
+   Airtel Money Payment Details
    ========================================================= */
 
 .give-method-card__details {
@@ -3415,7 +4276,7 @@ a:hover {
 
 
 /* =========================================================
-   Instructions
+   Standard Giving Instructions
    ========================================================= */
 
 .give-method-card__instructions {
@@ -3442,6 +4303,547 @@ a:hover {
     padding-left: var(--space-2);
 
     color: var(--color-text);
+}
+
+
+/* =========================================================
+   Centenary Bank Fixed Flip Card
+   ========================================================= */
+
+/*
+   The outer Centenary card has one fixed footprint.
+   The front and back faces occupy exactly the same space.
+*/
+
+.give-bank-card {
+    --give-bank-card-height: 520px;
+
+    position: relative;
+
+    width: 100%;
+    height: var(--give-bank-card-height);
+
+    min-width: 0;
+
+    overflow: visible;
+
+    border: 0;
+    border-radius: var(--radius-lg);
+
+    background: transparent;
+
+    perspective: 1400px;
+}
+
+
+/*
+   The inner wrapper is the element that rotates.
+*/
+
+.give-bank-card__inner {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/*
+   JavaScript adds .is-flipped to the outer card.
+*/
+
+.give-bank-card.is-flipped
+.give-bank-card__inner {
+    transform: rotateY(180deg);
+}
+
+
+/* =========================================================
+   Flip Card Faces
+   ========================================================= */
+
+.give-bank-card__face {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+    color: var(--color-text);
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    transition:
+        background-color var(--transition-normal),
+        border-color var(--transition-normal);
+}
+
+
+.give-bank-card__face--front {
+    z-index: 2;
+
+    transform: rotateY(0deg);
+}
+
+
+.give-bank-card__face--back {
+    transform: rotateY(180deg);
+}
+
+
+/* =========================================================
+   Centenary Bank Front Face
+   ========================================================= */
+
+.give-bank-card__account-details {
+    display: grid;
+
+    gap: var(--space-4);
+
+    min-width: 0;
+
+    padding: var(--space-5);
+}
+
+
+.give-bank-detail {
+    display: grid;
+
+    gap: var(--space-2);
+
+    min-width: 0;
+
+    padding: var(--space-4);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-bg);
+}
+
+
+.give-bank-detail__label {
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+
+.give-bank-detail__value {
+    min-width: 0;
+
+    color: var(--color-text);
+
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+
+/*
+   The account number is deliberately prevented from wrapping.
+*/
+
+.give-bank-detail__value--account-number {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+
+    color: var(--color-primary);
+
+    font-size:
+        clamp(
+            1.9rem,
+            4vw,
+            2.6rem
+        );
+
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+}
+
+
+/*
+   Keep the flip button at the bottom of the front face.
+*/
+
+.give-bank-card__front-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: auto;
+
+    padding:
+        var(--space-4)
+        var(--space-5)
+        var(--space-5);
+}
+
+
+.give-bank-card__flip-button {
+    width: fit-content;
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   Centenary Bank Back Face
+   ========================================================= */
+
+/*
+   Only the active transfer route is shown.
+   Each visible route fills the complete back face and is
+   divided into:
+   1. fixed header
+   2. scrollable instruction body
+   3. fixed footer
+*/
+
+.give-transfer-route[hidden] {
+    display: none !important;
+}
+
+
+.give-transfer-route:not([hidden]) {
+    display: grid;
+
+    grid-template-rows:
+        auto
+        minmax(0, 1fr)
+        auto;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+
+/* =========================================================
+   Route Header
+   ========================================================= */
+
+.give-transfer-route__header {
+    flex: 0 0 auto;
+
+    padding:
+        var(--space-4)
+        var(--space-5);
+
+    border-bottom: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+}
+
+
+.give-transfer-route__progress {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+
+.give-transfer-route__title {
+    margin-bottom: 0;
+
+    font-size: var(--font-size-xl);
+}
+
+
+/* =========================================================
+   Route Body
+   ========================================================= */
+
+.give-transfer-route__body {
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+
+    padding:
+        var(--space-4)
+        var(--space-5)
+        0;
+}
+
+
+.give-transfer-route__instructions {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+
+.give-transfer-route__instructions-title {
+    flex: 0 0 auto;
+
+    margin-bottom: var(--space-3);
+
+    color: var(--color-text);
+
+    font-size: var(--font-size-base);
+    font-weight: 800;
+}
+
+
+/*
+   This is the only area that scrolls.
+*/
+
+.give-transfer-route__instructions-scroll {
+    flex: 1 1 auto;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-right: var(--space-2);
+    padding-bottom: var(--space-3);
+
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+.give-transfer-route__instructions-scroll
+.give-instructions {
+    gap: var(--space-2);
+
+    padding-left: 1.35rem;
+}
+
+
+.give-transfer-route__instructions-scroll
+.give-instructions li {
+    line-height: 1.45;
+
+    overflow-wrap: break-word;
+}
+
+
+/* ---------- Scrollbar ---------- */
+
+.give-transfer-route__instructions-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+.give-transfer-route__instructions-scroll::-webkit-scrollbar-track {
+    background: var(--color-surface-alt);
+
+    border-radius: var(--radius-pill);
+}
+
+
+.give-transfer-route__instructions-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+
+    border-radius: var(--radius-pill);
+}
+
+
+.give-transfer-route__instructions-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   Route Footer
+   ========================================================= */
+
+.give-transfer-route__footer {
+    flex: 0 0 auto;
+
+    padding:
+        var(--space-3)
+        var(--space-5)
+        var(--space-4);
+
+    border-top: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+}
+
+
+/*
+   True two-position navigation:
+   Previous is anchored left,
+   Next is anchored right.
+*/
+
+.give-transfer-route__navigation {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    align-items: end;
+
+    gap: var(--space-3);
+
+    width: 100%;
+}
+
+
+.give-transfer-route__nav-left {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    min-width: 0;
+}
+
+
+.give-transfer-route__nav-right {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    min-width: 0;
+}
+
+
+.give-transfer-route__nav-button {
+    max-width: 100%;
+
+    white-space: normal;
+
+    text-align: center;
+
+    line-height: 1.2;
+}
+
+
+/*
+   Back to account always sits beneath the left/right controls
+   and is centred.
+*/
+
+.give-transfer-route__back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    margin-top: var(--space-3);
+}
+
+
+.give-transfer-route__back-button {
+    width: fit-content;
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   Flip Card Focus / Interaction
+   ========================================================= */
+
+.give-bank-card__flip-button:focus-visible,
+.give-transfer-route__nav-button:focus-visible,
+.give-transfer-route__back-button:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+}
+
+
+/*
+   The back face becomes the visual face only after JavaScript
+   flips the card.
+*/
+
+.give-bank-card:not(.is-flipped)
+.give-bank-card__face--back {
+    pointer-events: none;
+}
+
+
+.give-bank-card.is-flipped
+.give-bank-card__face--front {
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   Dark Theme Support
+   ========================================================= */
+
+/*
+   The flip card uses the site design tokens throughout.
+   These explicit rules keep the two faces visually aligned
+   when the theme changes.
+*/
+
+html[data-theme="dark"]
+.give-bank-card__face,
+html[data-theme="dark"]
+.give-transfer-route__header,
+html[data-theme="dark"]
+.give-transfer-route__footer {
+    background: var(--color-surface);
+}
+
+
+html[data-theme="dark"]
+.give-bank-detail,
+html[data-theme="dark"]
+.give-payment-detail {
+    background: var(--color-bg);
+}
+
+
+/* =========================================================
+   Reduced Motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .give-bank-card__inner {
+        transition: none;
+    }
+
 }
 
 
@@ -3598,7 +5000,7 @@ a:hover {
 
 
 /* =========================================================
-   Responsive
+   Give Page Responsive Support
    ========================================================= */
 
 @media (max-width: 639px) {
@@ -3613,6 +5015,70 @@ a:hover {
     .give-method-card__instructions,
     .give-safety__content {
         padding: var(--space-4);
+    }
+
+
+    .give-bank-card {
+        --give-bank-card-height: 540px;
+    }
+
+
+    .give-bank-card__account-details {
+        padding: var(--space-4);
+    }
+
+
+    .give-bank-detail {
+        padding: var(--space-3);
+    }
+
+
+    .give-bank-card__front-action {
+        padding:
+            var(--space-3)
+            var(--space-4)
+            var(--space-4);
+    }
+
+
+    .give-transfer-route__header {
+        padding:
+            var(--space-3)
+            var(--space-4);
+    }
+
+
+    .give-transfer-route__body {
+        padding:
+            var(--space-3)
+            var(--space-4)
+            0;
+    }
+
+
+    .give-transfer-route__footer {
+        padding:
+            var(--space-3)
+            var(--space-4);
+    }
+
+
+    .give-transfer-route__navigation {
+        gap: var(--space-2);
+    }
+
+
+    .give-transfer-route__nav-button {
+        padding:
+            0.65rem
+            0.75rem;
+
+        font-size: var(--font-size-sm);
+    }
+
+
+    .give-transfer-route__back {
+        margin-top: var(--space-2);
     }
 
 }

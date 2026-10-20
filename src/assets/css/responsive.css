@@ -5,51 +5,1094 @@
    ========================================================= */
 
 
-/* ---------- Larger Phones / Small Tablets ---------- */
+/* =========================================================
+   Base Responsive Protection
+   Phones and Small Screens
+   ========================================================= */
+
+
+/* =========================================================
+   Events Page - Expandable Event Cards
+   ========================================================= */
+
+
+/*
+   Keep event cards, media and expanded content inside
+   the available viewport width on all devices.
+*/
+.events-grid,
+.event-card,
+.event-card__details,
+.event-card__summary,
+.event-card__summary-content,
+.event-card__expanded,
+.event-card__information,
+.event-card__gallery,
+.event-card__gallery-grid,
+.event-card__actions {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+
+/*
+   The approved poster contains important text.
+   Preserve the whole image rather than cropping it.
+*/
+.event-card__media {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+
+.event-card__image {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+
+    object-fit: contain;
+}
+
+
+/*
+   Date and time may wrap on narrow screens without
+   forcing the card wider than the viewport.
+*/
+.event-card__primary-meta {
+    min-width: 0;
+}
+
+
+.event-card__primary-meta span {
+    min-width: 0;
+}
+
+
+/*
+   Long venue and featuring text may wrap normally.
+*/
+.event-card__venue-short,
+.event-card__information-row dd {
+    max-width: 100%;
+
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+
+/*
+   Featured Guests media always remains inside the gallery.
+
+   Portrait promotional posters keep their natural aspect
+   ratio so text and artwork are not cropped.
+
+   The landscape promotional banner spans the complete
+   gallery width at every breakpoint.
+*/
+.event-card__gallery-item,
+.event-card__gallery-image {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+
+.event-card__gallery-item--wide {
+    grid-column: 1 / -1;
+}
+
+
+.event-card__gallery-image--portrait,
+.event-card__gallery-image--wide {
+    height: auto;
+
+    object-fit: contain;
+}
+
+
+/*
+   Action labels may wrap without overflowing.
+*/
+.event-card__action,
+.event-card__show-less-button {
+    max-width: 100%;
+
+    white-space: normal;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   Home Page - Featured Event
+   ========================================================= */
+
+.home-event-feature,
+.home-event-card,
+.home-event-card__media,
+.home-event-card__content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+
+.home-event-card {
+    grid-template-columns: 1fr;
+}
+
+
+.home-event-card__media {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.home-event-card__image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+
+    object-fit: contain;
+}
+
+
+.home-event-card__actions .button {
+    max-width: 100%;
+
+    white-space: normal;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   Give Page - Centenary Bank Flip Card
+   ========================================================= */
+
+
+/*
+   The card always stays within the available page width.
+*/
+.give-bank-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+
+/*
+   Keep the rotating inner card constrained to the
+   fixed footprint established in main.css.
+*/
+.give-bank-card__inner {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+
+/*
+   Both card faces occupy the same fixed footprint.
+*/
+.give-bank-card__face {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+
+/* =========================================================
+   Bank Account Details
+   ========================================================= */
+
+.give-bank-card__account-details {
+    min-width: 0;
+}
+
+
+.give-bank-detail {
+    min-width: 0;
+}
+
+
+/*
+   Account number must stay on one line.
+
+   Font size is responsive so that it remains readable
+   without forcing the card wider than the viewport.
+*/
+.give-bank-detail__value--account-number {
+    display: block;
+
+    max-width: 100%;
+
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+
+    font-size:
+        clamp(
+            1.7rem,
+            7.5vw,
+            2.5rem
+        );
+
+    letter-spacing: 0.06em;
+}
+
+
+/* =========================================================
+   Transfer Route Layout
+   ========================================================= */
+
+.give-transfer-route {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+
+/*
+   Header must remain fixed while the instruction body
+   below it is allowed to shrink.
+*/
+.give-transfer-route__header {
+    min-width: 0;
+
+    flex: 0 0 auto;
+}
+
+
+/*
+   The route body must be able to shrink inside the
+   fixed card height. This is required for internal
+   scrolling to work correctly.
+*/
+.give-transfer-route__body {
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+}
+
+
+/*
+   Instructions fill the available middle section.
+*/
+.give-transfer-route__instructions {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+
+/*
+   Only this area scrolls.
+
+   The route heading and navigation footer remain
+   stationary while instructions move.
+*/
+.give-transfer-route__instructions-scroll {
+    width: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/*
+   Long instruction text may wrap normally without
+   forcing the card wider than the viewport.
+*/
+.give-transfer-route__instructions-scroll li {
+    max-width: 100%;
+
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+
+/* =========================================================
+   Transfer Footer
+   ========================================================= */
+
+.give-transfer-route__footer {
+    width: 100%;
+
+    min-width: 0;
+
+    flex: 0 0 auto;
+}
+
+
+/* =========================================================
+   Previous / Next Navigation
+   ========================================================= */
+
+
+/*
+   Two equal navigation areas.
+
+   LEFT:
+   Previous
+
+   RIGHT:
+   Next
+*/
+.give-transfer-route__navigation {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    align-items: end;
+
+    gap: var(--space-2);
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* ---------- Previous / Left ---------- */
+
+.give-transfer-route__nav-left {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* ---------- Next / Right ---------- */
+
+.give-transfer-route__nav-right {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/*
+   Navigation button text may wrap on very narrow screens.
+
+   This prevents long labels such as:
+   "Previous: CenteMobile USSD"
+   from overlapping the button on the opposite side.
+*/
+.give-transfer-route__nav-button {
+    width: fit-content;
+    max-width: 100%;
+    min-width: 0;
+
+    padding:
+        0.65rem
+        0.8rem;
+
+    white-space: normal;
+
+    font-size: 0.84rem;
+    line-height: 1.25;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   Back to Account
+   ========================================================= */
+
+
+/*
+   Back to account always occupies its own row
+   beneath Previous / Next and remains centred.
+*/
+.give-transfer-route__back {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    margin-top: var(--space-2);
+}
+
+
+.give-transfer-route__back-button {
+    width: fit-content;
+    max-width: 100%;
+
+    padding:
+        0.65rem
+        1rem;
+
+    font-size: 0.88rem;
+}
+
+
+/* =========================================================
+   Very Narrow Phones
+   Up to 420px
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    /*
+       Maintain a fixed card footprint while giving
+       the scrollable instructions enough usable height.
+    */
+    .give-bank-card {
+        --give-bank-card-height: 540px;
+    }
+
+
+    /*
+       Reduce horizontal spacing inside the card.
+    */
+    .give-bank-card__face--front
+    .give-method-card__header {
+        padding:
+            var(--space-4)
+            var(--space-3);
+    }
+
+
+    .give-bank-card__account-details {
+        gap: var(--space-3);
+
+        padding:
+            var(--space-3);
+    }
+
+
+    .give-bank-detail {
+        padding:
+            var(--space-3);
+    }
+
+
+    /*
+       Account number remains on one line even on
+       narrow phones.
+    */
+    .give-bank-detail__value--account-number {
+        font-size:
+            clamp(
+                1.45rem,
+                7.7vw,
+                1.95rem
+            );
+
+        letter-spacing: 0.035em;
+    }
+
+
+    .give-bank-card__front-action {
+        padding:
+            var(--space-3);
+    }
+
+
+    .give-bank-card__flip-button {
+        max-width: 100%;
+
+        padding:
+            0.7rem
+            0.9rem;
+
+        font-size: 0.9rem;
+    }
+
+
+    /* ---------- Route Header ---------- */
+
+    .give-transfer-route__header {
+        padding:
+            var(--space-3);
+    }
+
+
+    .give-transfer-route__progress {
+        margin-bottom: var(--space-1);
+
+        font-size: 0.72rem;
+    }
+
+
+    .give-transfer-route__title {
+        font-size: 1.15rem;
+    }
+
+
+    /* ---------- Route Body ---------- */
+
+    .give-transfer-route__body {
+        padding:
+            var(--space-3)
+            var(--space-3)
+            0;
+    }
+
+
+    .give-transfer-route__instructions-title {
+        margin-bottom: var(--space-2);
+
+        font-size: 0.95rem;
+    }
+
+
+    .give-transfer-route__instructions-scroll
+    .give-instructions {
+        gap: var(--space-2);
+
+        padding-left: 1.2rem;
+
+        font-size: 0.9rem;
+    }
+
+
+    .give-transfer-route__instructions-scroll
+    .give-instructions li {
+        line-height: 1.4;
+    }
+
+
+    /* ---------- Footer ---------- */
+
+    .give-transfer-route__footer {
+        padding:
+            var(--space-2)
+            var(--space-3)
+            var(--space-3);
+    }
+
+
+    .give-transfer-route__navigation {
+        gap: var(--space-1);
+    }
+
+
+    .give-transfer-route__nav-button {
+        padding:
+            0.55rem
+            0.55rem;
+
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
+
+
+    .give-transfer-route__back {
+        margin-top: var(--space-2);
+    }
+
+
+    .give-transfer-route__back-button {
+        padding:
+            0.55rem
+            0.8rem;
+
+        font-size: 0.8rem;
+    }
+
+
+    /* =====================================================
+       Home Featured Event
+       ===================================================== */
+
+    .home-event-card__media {
+        padding: var(--space-3);
+    }
+
+
+    .home-event-card__content {
+        padding: var(--space-4);
+    }
+
+
+    .home-event-card__title {
+        font-size: var(--font-size-xl);
+    }
+
+
+    .home-event-card__meta {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: var(--space-1);
+    }
+
+
+    .home-event-card__meta-separator {
+        display: none;
+    }
+
+
+    .home-event-card__actions .button {
+        width: 100%;
+    }
+
+
+    /* =====================================================
+       Events Page
+       ===================================================== */
+
+    .events-grid {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-4);
+    }
+
+
+    .event-card__summary-content {
+        gap: var(--space-3);
+
+        padding: var(--space-4);
+    }
+
+
+    .event-card__title {
+        font-size: 1.45rem;
+    }
+
+
+    .event-card__summary-text {
+        font-size: 0.95rem;
+        line-height: 1.65;
+    }
+
+
+    .event-card__primary-meta {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: var(--space-1);
+    }
+
+
+    .event-card__meta-separator {
+        display: none;
+    }
+
+
+    .event-card__expanded {
+        padding:
+            0
+            var(--space-4)
+            var(--space-5);
+    }
+
+
+    .event-card__information {
+        padding: var(--space-4);
+    }
+
+
+    .event-card__information-row {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-1);
+
+        padding-block: var(--space-3);
+    }
+
+
+    .event-card__gallery-grid {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-3);
+    }
+
+
+    .event-card__actions {
+        align-items: stretch;
+
+        flex-direction: column;
+
+        gap: var(--space-2);
+    }
+
+
+    .event-card__actions .button,
+    .event-card__show-less-button {
+        width: 100%;
+    }
+
+
+    .event-card__show-less {
+        margin-top: var(--space-5);
+        padding-top: var(--space-4);
+    }
+
+
+    .event-card__image {
+        max-height: none;
+    }
+
+}
+
+
+/* =========================================================
+   Standard Phones
+   421px to 639px
+   ========================================================= */
+
+@media (min-width: 421px) and (max-width: 639px) {
+
+    .give-bank-card {
+        --give-bank-card-height: 540px;
+    }
+
+
+    .give-bank-detail__value--account-number {
+        font-size:
+            clamp(
+                1.7rem,
+                7vw,
+                2.2rem
+            );
+
+        letter-spacing: 0.05em;
+    }
+
+
+    .give-transfer-route__nav-button {
+        padding:
+            0.6rem
+            0.7rem;
+
+        font-size: 0.8rem;
+    }
+
+
+    .give-transfer-route__back-button {
+        font-size: 0.85rem;
+    }
+
+
+    /* =====================================================
+       Events Page
+       ===================================================== */
+
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .event-card__summary-content {
+        padding: var(--space-4);
+    }
+
+
+    .event-card__primary-meta {
+        flex-wrap: wrap;
+    }
+
+
+    .event-card__expanded {
+        padding:
+            0
+            var(--space-4)
+            var(--space-5);
+    }
+
+
+    .event-card__information {
+        padding: var(--space-4);
+    }
+
+
+    .event-card__information-row {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-1);
+    }
+
+
+    .event-card__gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .event-card__actions {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .event-card__actions .button,
+    .event-card__show-less-button {
+        width: 100%;
+    }
+
+
+    .event-card__image {
+        max-height: none;
+    }
+
+}
+
+
+/* =========================================================
+   Larger Phones / Small Tablets
+   ========================================================= */
 
 @media (min-width: 640px) {
 
     .container {
         width: min(
-            calc(100% - (var(--space-5) * 2)),
+            calc(
+                100% - (var(--space-5) * 2)
+            ),
             var(--container-width)
         );
     }
 
+
     .grid--cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
     }
+
 
     .site-header__live {
         display: inline-flex;
     }
 
+
     .site-footer__grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+
+    /* =====================================================
+       Give Page
+       ===================================================== */
+
+    .give-bank-card {
+        --give-bank-card-height: 520px;
+    }
+
+
+    .give-bank-detail__value--account-number {
+        font-size:
+            clamp(
+                1.9rem,
+                4.6vw,
+                2.5rem
+            );
+
+        letter-spacing: 0.07em;
+    }
+
+
+    .give-transfer-route__navigation {
+        gap: var(--space-3);
+    }
+
+
+    .give-transfer-route__nav-button {
+        padding:
+            0.7rem
+            0.9rem;
+
+        font-size: 0.86rem;
+    }
+
+
+    .give-transfer-route__back-button {
+        font-size: 0.9rem;
+    }
+
+
+    /* =====================================================
+       Events Page
+       ===================================================== */
+
+    .events-grid {
+        grid-template-columns:
+            minmax(0, 760px);
+
+        max-width: 760px;
+    }
+
+
+    .event-card {
+        max-width: 760px;
+    }
+
+
+    .event-card__summary-content {
+        padding: var(--space-5);
+    }
+
+
+    .event-card__information-row {
+        grid-template-columns:
+            minmax(110px, 140px)
+            minmax(0, 1fr);
+    }
+
+
+    .event-card__gallery-grid {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
 
+
+    .event-card__actions {
+        flex-direction: row;
+        align-items: center;
+    }
+
+
+    .event-card__actions .button {
+        width: auto;
+    }
+
+
+    .event-card__show-less-button {
+        width: fit-content;
+    }
+
 }
 
 
-/* ---------- Tablets ---------- */
+/* =========================================================
+   Tablets
+   ========================================================= */
 
 @media (min-width: 768px) {
 
     .section {
-        padding-block: var(--space-8);
+        padding-block:
+            var(--space-8);
+    }
+
+
+    /* =====================================================
+       Home Featured Event
+       ===================================================== */
+
+    .home-event-card {
+        grid-template-columns:
+            minmax(240px, 0.8fr)
+            minmax(0, 1.2fr);
+    }
+
+
+    .home-event-card__media {
+        border-right: 1px solid var(--color-border);
+        border-bottom: 0;
+    }
+
+
+    /* =====================================================
+       Give Page
+       ===================================================== */
+
+    .give-bank-card {
+        --give-bank-card-height: 520px;
+    }
+
+
+    .give-bank-detail__value--account-number {
+        font-size: 2.15rem;
+    }
+
+
+    .give-transfer-route__nav-button {
+        font-size: 0.9rem;
+    }
+
+
+    .give-transfer-route__back-button {
+        font-size: 0.92rem;
+    }
+
+
+    /* =====================================================
+       Events Page
+       ===================================================== */
+
+    .event-card__summary-content {
+        padding: var(--space-6);
+    }
+
+
+    .event-card__expanded {
+        padding:
+            0
+            var(--space-6)
+            var(--space-6);
+    }
+
+
+    .event-card__information {
+        padding: var(--space-5);
+    }
+
+
+    .event-card__gallery-grid {
+        gap: var(--space-5);
     }
 
 }
 
 
-/* ---------- Laptop / Desktop ---------- */
+/* =========================================================
+   Laptop / Desktop
+   ========================================================= */
 
 @media (min-width: 1024px) {
 
     .grid--cards {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
     }
+
 
     .site-header__inner {
         grid-template-columns:
@@ -57,6 +1100,7 @@
             1fr
             auto;
     }
+
 
     .site-nav {
         display: block;
@@ -66,13 +1110,16 @@
         padding-bottom: 0;
     }
 
+
     .site-nav__list {
         display: flex;
+
         align-items: center;
         justify-content: center;
 
         gap: var(--space-1);
     }
+
 
     .site-nav__link {
         padding:
@@ -80,9 +1127,11 @@
             var(--space-3);
     }
 
+
     .nav-toggle {
         display: none;
     }
+
 
     .site-footer__grid {
         grid-template-columns:
@@ -92,15 +1141,108 @@
             1fr;
     }
 
+
+    /* =====================================================
+       Give Page
+       ===================================================== */
+
+    .give-bank-card {
+        --give-bank-card-height: 520px;
+    }
+
+
+    .give-bank-detail__value--account-number {
+        font-size: 2.35rem;
+
+        letter-spacing: 0.08em;
+    }
+
+
+    .give-transfer-route__navigation {
+        gap: var(--space-4);
+    }
+
+
+    .give-transfer-route__nav-button {
+        padding:
+            0.75rem
+            1rem;
+
+        font-size: 0.92rem;
+    }
+
+
+    .give-transfer-route__back-button {
+        font-size: 0.95rem;
+    }
+
+
+    /* =====================================================
+       Events Page
+       ===================================================== */
+
+    .events-grid {
+        max-width: 760px;
+    }
+
+
+    .event-card__image {
+        max-height: 760px;
+    }
+
+
+    .event-card__gallery-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+
+    .event-card__actions {
+        gap: var(--space-3);
+    }
+
 }
 
 
-/* ---------- Large Desktop ---------- */
+/* =========================================================
+   Large Desktop
+   ========================================================= */
 
 @media (min-width: 1280px) {
 
     .section {
-        padding-block: var(--space-9);
+        padding-block:
+            var(--space-9);
+    }
+
+
+    /* =====================================================
+       Give Page
+       ===================================================== */
+
+    .give-bank-detail__value--account-number {
+        font-size: 2.45rem;
+
+        letter-spacing: 0.09em;
+    }
+
+
+    .give-transfer-route__nav-button {
+        font-size: 0.95rem;
+    }
+
+
+    .give-transfer-route__back-button {
+        font-size: 0.95rem;
+    }
+
+
+    /* =====================================================
+       Events Page
+       ===================================================== */
+
+    .events-grid {
+        max-width: 760px;
     }
 
 }

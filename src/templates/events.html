@@ -2,13 +2,19 @@
 
 {% block content %}
 
+
 <!-- =======================================================
      Stage 9.7 - Events Page
+     Expandable Event Cards
      ======================================================= -->
 
 
-<!-- Page Introduction -->
+<!-- =======================================================
+     Page Introduction
+     ======================================================= -->
+
 <section class="events-hero">
+
     <div class="container">
 
         <div class="events-hero__content">
@@ -20,14 +26,25 @@
         </div>
 
     </div>
+
 </section>
 
 
-<!-- Events -->
+<!-- =======================================================
+     Events
+     ======================================================= -->
+
 <section class="section events-section">
+
     <div class="container">
 
+
         {% if events %}
+
+
+        <!-- ===================================================
+             Section Header
+             =================================================== -->
 
         <div class="events-section__header">
 
@@ -38,21 +55,42 @@
         </div>
 
 
+        <!-- ===================================================
+             Events Grid
+             =================================================== -->
+
         <div class="events-grid">
+
 
             {% for event in events %}
 
-            <article class="event-card">
 
-                {% if event.image %}
+            <article
+                class="event-card"
+                id="{{ event.id }}"
+            >
+
+
+                <!-- ===================================================
+                     Main Event Poster
+
+                     The main event poster remains separate from the
+                     Featured Guests gallery.
+
+                     Current His Touch poster:
+                     assets/images/events/2026-10-19 20.36.21.jpeg
+                     =================================================== -->
+
+                {% if event.media and event.media.poster %}
 
                 <div class="event-card__media">
 
                     <img
                         class="event-card__image"
-                        src="/{{ event.image }}"
-                        alt="{{ event.name }}"
+                        src="/{{ event.media.poster }}"
+                        alt="{{ event.media.poster_alt or event.title }}"
                         loading="lazy"
+                        decoding="async"
                     >
 
                 </div>
@@ -60,98 +98,508 @@
                 {% endif %}
 
 
-                <div class="event-card__content">
+                <!-- ===================================================
+                     Expandable Event Content
+                     =================================================== -->
 
-                    {% if event.date %}
-
-                    <p class="event-card__date">
-                        {{ event.date }}
-                    </p>
-
-                    {% endif %}
+                <details class="event-card__details">
 
 
-                    <h2 class="event-card__name">
-                        {{ event.name }}
-                    </h2>
+                    <!-- ===================================================
+                         Collapsed Card
+                         =================================================== -->
+
+                    <summary class="event-card__summary">
+
+                        <div class="event-card__summary-content">
 
 
-                    {% if event.description %}
+                            <!-- Event Title -->
 
-                    <p class="event-card__description">
-                        {{ event.description }}
-                    </p>
-
-                    {% endif %}
+                            <h2 class="event-card__title">
+                                {{ event.title }}
+                            </h2>
 
 
-                    {% if event.time %}
+                            <!-- Short Description -->
 
-                    <div class="event-card__detail">
+                            {% if event.summary %}
 
-                        <span class="event-card__label">
-                            Time
-                        </span>
+                            <p class="event-card__summary-text">
+                                {{ event.summary }}
+                            </p>
 
-                        <span>
-                            {{ event.time }}
-                        </span>
+                            {% endif %}
+
+
+                            <!-- Date and Time -->
+
+                            {% if event.display_date or event.display_time %}
+
+                            <p class="event-card__primary-meta">
+
+                                {% if event.display_date %}
+
+                                <span>
+                                    {{ event.display_date }}
+                                </span>
+
+                                {% endif %}
+
+
+                                {% if event.display_date and event.display_time %}
+
+                                <span
+                                    class="event-card__meta-separator"
+                                    aria-hidden="true"
+                                >
+                                    |
+                                </span>
+
+                                {% endif %}
+
+
+                                {% if event.display_time %}
+
+                                <span>
+                                    {{ event.display_time }}
+                                </span>
+
+                                {% endif %}
+
+                            </p>
+
+                            {% endif %}
+
+
+                            <!-- Short Venue -->
+
+                            {% if event.venue_short %}
+
+                            <p class="event-card__venue-short">
+                                {{ event.venue_short }}
+                            </p>
+
+                            {% endif %}
+
+
+                            <!-- Admission -->
+
+                            {% if event.admission %}
+
+                            <p class="event-card__admission">
+                                {{ event.admission }} entrance
+                            </p>
+
+                            {% endif %}
+
+
+                            <!-- Native Details Toggle -->
+
+                            <span class="event-card__toggle">
+
+                                <span class="event-card__toggle-open">
+                                    View details
+                                </span>
+
+                                <span class="event-card__toggle-close">
+                                    Show less
+                                </span>
+
+                            </span>
+
+
+                        </div>
+
+                    </summary>
+
+
+                    <!-- ===================================================
+                         Expanded Content
+                         =================================================== -->
+
+                    <div class="event-card__expanded">
+
+
+                        <!-- ===================================================
+                             Full Description
+                             =================================================== -->
+
+                        {% if event.description %}
+
+                        <div class="event-card__description">
+
+                            {% for paragraph in event.description %}
+
+                            <p>
+                                {{ paragraph }}
+                            </p>
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- ===================================================
+                             Event Details
+                             =================================================== -->
+
+                        <section class="event-card__information">
+
+                            <h3 class="event-card__information-title">
+                                Event Details
+                            </h3>
+
+
+                            <dl class="event-card__information-list">
+
+
+                                {% if event.display_date %}
+
+                                <div class="event-card__information-row">
+
+                                    <dt>
+                                        Date
+                                    </dt>
+
+                                    <dd>
+                                        {{ event.display_date }}
+                                    </dd>
+
+                                </div>
+
+                                {% endif %}
+
+
+                                {% if event.display_time %}
+
+                                <div class="event-card__information-row">
+
+                                    <dt>
+                                        Time
+                                    </dt>
+
+                                    <dd>
+                                        {{ event.display_time }}
+                                    </dd>
+
+                                </div>
+
+                                {% endif %}
+
+
+                                {% if event.venue %}
+
+                                <div class="event-card__information-row">
+
+                                    <dt>
+                                        Venue
+                                    </dt>
+
+                                    <dd>
+                                        {{ event.venue }}
+                                    </dd>
+
+                                </div>
+
+                                {% endif %}
+
+
+                                {% if event.admission %}
+
+                                <div class="event-card__information-row">
+
+                                    <dt>
+                                        Admission
+                                    </dt>
+
+                                    <dd>
+                                        {{ event.admission }}
+                                    </dd>
+
+                                </div>
+
+                                {% endif %}
+
+
+                                {% if event.featuring %}
+
+                                <div class="event-card__information-row">
+
+                                    <dt>
+                                        Featuring
+                                    </dt>
+
+                                    <dd>
+                                        {{ event.featuring | join(", ") }}
+                                    </dd>
+
+                                </div>
+
+                                {% endif %}
+
+
+                            </dl>
+
+                        </section>
+
+
+                        <!-- ===================================================
+                             Featured Guests
+
+                             The gallery contains:
+                             - Five portrait promotional cards
+                             - One wide landscape promotional banner
+
+                             Layout is controlled by the "layout" field
+                             in events.json.
+
+                             layout: "portrait"
+                                 Standard promotional guest card.
+
+                             layout: "wide"
+                                 Full-width landscape banner.
+                             =================================================== -->
+
+                        {% if
+                            event.media
+                            and event.media.gallery
+                        %}
+
+                        <section class="event-card__gallery">
+
+                            <h3 class="event-card__gallery-title">
+                                Featured Guests
+                            </h3>
+
+
+                            <div class="event-card__gallery-grid">
+
+
+                                {% for gallery_item in event.media.gallery %}
+
+
+                                {% set gallery_layout =
+                                    gallery_item.layout
+                                    if gallery_item.layout is defined
+                                    and gallery_item.layout
+                                    else "portrait"
+                                %}
+
+
+                                <figure
+                                    class="
+                                        event-card__gallery-item
+                                        event-card__gallery-item--{{ gallery_layout }}
+                                    "
+                                >
+
+                                    <img
+                                        class="
+                                            event-card__gallery-image
+                                            event-card__gallery-image--{{ gallery_layout }}
+                                        "
+                                        src="/{{ gallery_item.image }}"
+                                        alt="{{ gallery_item.alt }}"
+                                        loading="lazy"
+                                        decoding="async"
+                                    >
+
+                                </figure>
+
+
+                                {% endfor %}
+
+
+                            </div>
+
+                        </section>
+
+                        {% endif %}
+
+
+                        <!-- ===================================================
+                             Event Actions
+                             =================================================== -->
+
+                        <div class="event-card__actions">
+
+
+                            <!-- YouTube -->
+
+                            {% if
+                                event.use_site_youtube
+                                and livestream
+                                and livestream.youtube_channel_url
+                            %}
+
+                            <a
+                                class="
+                                    button
+                                    button--primary
+                                    event-card__action
+                                "
+                                href="{{ livestream.youtube_channel_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Watch on YouTube
+                            </a>
+
+                            {% endif %}
+
+
+                            <!-- Event-Specific External Links -->
+
+                            {% if event.external_links %}
+
+
+                                {% if event.external_links.tiktok %}
+
+                                <a
+                                    class="
+                                        button
+                                        button--secondary
+                                        event-card__action
+                                    "
+                                    href="{{ event.external_links.tiktok.url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {{
+                                        event.external_links.tiktok.label
+                                        or "Follow on TikTok"
+                                    }}
+                                </a>
+
+                                {% endif %}
+
+
+                            {% endif %}
+
+
+                            <!-- Facebook -->
+
+                            {% if event.use_site_facebook %}
+
+                                {% for social_link in social_links %}
+
+                                    {% if social_link.platform == "facebook" %}
+
+                                    <a
+                                        class="
+                                            button
+                                            button--secondary
+                                            event-card__action
+                                        "
+                                        href="{{ social_link.url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Facebook
+                                    </a>
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            {% endif %}
+
+
+                            <!-- Directions -->
+
+                            {% if
+                                event.use_site_directions
+                                and location
+                                and (
+                                    location.directions_url
+                                    or location.google_maps_url
+                                )
+                            %}
+
+                            <a
+                                class="
+                                    button
+                                    button--secondary
+                                    event-card__action
+                                "
+                                href="{{
+                                    location.directions_url
+                                    or location.google_maps_url
+                                }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Get Directions
+                            </a>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <!-- ===================================================
+                             Bottom Show Less Control
+                             =================================================== -->
+
+                        <div class="event-card__show-less">
+
+                            <button
+                                class="
+                                    button
+                                    button--secondary
+                                    event-card__show-less-button
+                                "
+                                type="button"
+                                onclick="
+                                    this.closest('details').removeAttribute('open');
+                                    this.closest('.event-card').scrollIntoView({
+                                        behavior: 'smooth',
+                                        block: 'start'
+                                    });
+                                "
+                            >
+                                Show less
+                            </button>
+
+                        </div>
+
 
                     </div>
 
-                    {% endif %}
+                </details>
 
-
-                    {% if event.venue %}
-
-                    <div class="event-card__detail">
-
-                        <span class="event-card__label">
-                            Venue
-                        </span>
-
-                        <span>
-                            {{ event.venue }}
-                        </span>
-
-                    </div>
-
-                    {% endif %}
-
-
-                    {% if event.url %}
-
-                    <div class="event-card__actions">
-
-                        <a
-                            class="button button--secondary"
-                            href="{{ event.url }}"
-                        >
-                            Event Details
-                        </a>
-
-                    </div>
-
-                    {% endif %}
-
-                </div>
 
             </article>
 
+
             {% endfor %}
+
 
         </div>
 
 
         {% else %}
 
-        <!-- Empty State -->
+
+        <!-- ===================================================
+             Empty State
+             =================================================== -->
+
         <div class="events-coming-soon">
 
-            <div class="events-coming-soon__symbol" aria-hidden="true">
+            <div
+                class="events-coming-soon__symbol"
+                aria-hidden="true"
+            >
+
                 <span></span>
                 <span></span>
                 <span></span>
+
             </div>
 
 
@@ -159,9 +607,11 @@
                 Stay Connected
             </p>
 
+
             <h2 class="events-coming-soon__title">
                 What's Coming Up
             </h2>
+
 
             <p class="events-coming-soon__text">
                 New church events and special programmes will be shared here
@@ -190,9 +640,12 @@
 
         </div>
 
+
         {% endif %}
 
+
     </div>
+
 </section>
 
 

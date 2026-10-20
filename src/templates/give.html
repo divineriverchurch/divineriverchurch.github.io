@@ -4,7 +4,7 @@
 
 
 <!-- =======================================================
-     Prototype 2 - Give Page
+     Version 1 - Give Page
      ======================================================= -->
 
 
@@ -22,6 +22,7 @@
                 Giving to Divine River Church
             </h2>
 
+
             {% if giving.introduction %}
 
             <p class="give-section__intro">
@@ -33,14 +34,28 @@
         </div>
 
 
+        <!-- ===================================================
+             Prepare Published Giving Methods
+             =================================================== -->
+
         {% set published_methods =
             giving.methods
+            | default([], true)
             | selectattr("published", "equalto", true)
             | list
         %}
 
 
-        {% if published_methods %}
+        {% set published_bank_accounts =
+            giving.bank_accounts
+            | default([], true)
+            | selectattr("published", "equalto", true)
+            | list
+        %}
+
+
+        {% if published_methods or published_bank_accounts %}
+
 
         <!-- ===================================================
              Ways to Give
@@ -59,6 +74,11 @@
 
             <div class="give-methods">
 
+
+                <!-- ===================================================
+                     Mobile Money Merchant Methods
+                     =================================================== -->
+
                 {% for method in published_methods %}
 
                 <article class="give-method-card">
@@ -76,6 +96,7 @@
 
                     <div class="give-method-card__details">
 
+
                         {% if method.merchant_code %}
 
                         <div class="give-payment-detail">
@@ -84,7 +105,12 @@
                                 Merchant Code
                             </span>
 
-                            <strong class="give-payment-detail__value give-payment-detail__value--code">
+                            <strong
+                                class="
+                                    give-payment-detail__value
+                                    give-payment-detail__value--code
+                                "
+                            >
                                 {{ method.merchant_code }}
                             </strong>
 
@@ -109,6 +135,7 @@
 
                         {% endif %}
 
+
                     </div>
 
 
@@ -119,8 +146,9 @@
                     <div class="give-method-card__instructions">
 
                         <h4>
-                            How to Give
+                            {{ method.how_to_give_title or "How to Give" }}
                         </h4>
+
 
                         <ol class="give-instructions">
 
@@ -141,6 +169,404 @@
                 </article>
 
                 {% endfor %}
+
+
+                <!-- ===================================================
+                     Bank Accounts
+                     =================================================== -->
+
+                {% for bank in published_bank_accounts %}
+
+                {% if
+                    bank.transfer_options
+                    and bank.transfer_options.routes
+                %}
+
+                {% set transfer_routes =
+                    bank.transfer_options.routes
+                    | sort(attribute="sort_order")
+                %}
+
+
+                <!-- ===================================================
+                     Two-Sided Bank Card
+                     =================================================== -->
+
+                <article
+                    class="give-method-card give-bank-card"
+                    id="{{ bank.id }}"
+                    data-give-flip-card
+                >
+
+                    <div
+                        class="give-bank-card__inner"
+                        data-give-card-inner
+                    >
+
+
+                        <!-- ===================================================
+                             Front Face
+                             =================================================== -->
+
+                        <section
+                            class="
+                                give-bank-card__face
+                                give-bank-card__face--front
+                            "
+                            data-give-card-front
+                        >
+
+                            <div class="give-method-card__header">
+
+                                <h3 class="give-method-card__name">
+                                    {{ bank.name }}
+                                </h3>
+
+                            </div>
+
+
+                            <!-- Account Details -->
+
+                            <div class="give-bank-card__account-details">
+
+
+                                {% if bank.account_name %}
+
+                                <div class="give-bank-detail">
+
+                                    <span class="give-bank-detail__label">
+                                        Account Name
+                                    </span>
+
+                                    <strong class="give-bank-detail__value">
+                                        {{ bank.account_name }}
+                                    </strong>
+
+                                </div>
+
+                                {% endif %}
+
+
+                                {% if bank.account_number %}
+
+                                <div class="give-bank-detail">
+
+                                    <span class="give-bank-detail__label">
+                                        Account Number
+                                    </span>
+
+                                    <strong
+                                        class="
+                                            give-bank-detail__value
+                                            give-bank-detail__value--account-number
+                                        "
+                                    >
+                                        {{ bank.account_number }}
+                                    </strong>
+
+                                </div>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                            <!-- View Transfer Options -->
+
+                            <div class="give-bank-card__front-action">
+
+                                <button
+                                    class="
+                                        button
+                                        button--secondary
+                                        give-bank-card__flip-button
+                                    "
+                                    type="button"
+                                    data-give-flip-open
+                                >
+                                    {{
+                                        bank.transfer_options.expand_label
+                                        or "View transfer options"
+                                    }}
+                                </button>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- ===================================================
+                             Back Face
+                             =================================================== -->
+
+                        <section
+                            class="
+                                give-bank-card__face
+                                give-bank-card__face--back
+                            "
+                            data-give-card-back
+                            aria-hidden="true"
+                        >
+
+
+                            {% for route in transfer_routes %}
+
+                            {% set previous_nav =
+                                route.navigation.get("previous")
+                                if route.navigation
+                                else none
+                            %}
+
+                            {% set next_nav =
+                                route.navigation.get("next")
+                                if route.navigation
+                                else none
+                            %}
+
+
+                            <section
+                                class="
+                                    give-transfer-route
+                                    {% if loop.first %}is-active{% endif %}
+                                "
+                                data-give-route="{{ route.id }}"
+                                tabindex="-1"
+                                {% if not loop.first %}hidden{% endif %}
+                            >
+
+
+                                <!-- ===================================================
+                                     Fixed Route Header
+                                     =================================================== -->
+
+                                <header class="give-transfer-route__header">
+
+
+                                    {% if bank.transfer_options.show_progress %}
+
+                                    <p class="give-transfer-route__progress">
+                                        {{ loop.index }} of {{ loop.length }}
+                                    </p>
+
+                                    {% endif %}
+
+
+                                    <h4 class="give-transfer-route__title">
+                                        {{ route.name }}
+                                    </h4>
+
+                                </header>
+
+
+                                <!-- ===================================================
+                                     Scrollable Instruction Area
+                                     =================================================== -->
+
+                                <div class="give-transfer-route__body">
+
+                                    {% if route.instructions %}
+
+                                    <div class="give-transfer-route__instructions">
+
+                                        <h5 class="give-transfer-route__instructions-title">
+                                            {{
+                                                route.how_to_give_title
+                                                or "How to Give"
+                                            }}
+                                        </h5>
+
+
+                                        <div class="give-transfer-route__instructions-scroll">
+
+                                            <ol class="give-instructions">
+
+                                                {% for instruction in route.instructions %}
+
+                                                <li>
+                                                    {{ instruction }}
+                                                </li>
+
+                                                {% endfor %}
+
+                                            </ol>
+
+                                        </div>
+
+                                    </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <!-- ===================================================
+                                     Fixed Navigation Footer
+                                     =================================================== -->
+
+                                <footer class="give-transfer-route__footer">
+
+
+                                    <!-- Left / Right Navigation -->
+
+                                    <div class="give-transfer-route__navigation">
+
+
+                                        <div class="give-transfer-route__nav-left">
+
+                                            {% if previous_nav %}
+
+                                            <button
+                                                class="
+                                                    button
+                                                    button--secondary
+                                                    give-transfer-route__nav-button
+                                                "
+                                                type="button"
+                                                data-give-route-target="{{ previous_nav.route_id }}"
+                                            >
+                                                {{ previous_nav.label }}
+                                            </button>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="give-transfer-route__nav-right">
+
+                                            {% if next_nav %}
+
+                                            <button
+                                                class="
+                                                    button
+                                                    button--primary
+                                                    give-transfer-route__nav-button
+                                                "
+                                                type="button"
+                                                data-give-route-target="{{ next_nav.route_id }}"
+                                            >
+                                                {{ next_nav.label }}
+                                            </button>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <!-- Back to Account -->
+
+                                    <div class="give-transfer-route__back">
+
+                                        <button
+                                            class="
+                                                button
+                                                button--secondary
+                                                give-transfer-route__back-button
+                                            "
+                                            type="button"
+                                            data-give-back-account
+                                        >
+                                            {{
+                                                bank.transfer_options.collapse_label
+                                                or "Back to account"
+                                            }}
+                                        </button>
+
+                                    </div>
+
+
+                                </footer>
+
+
+                            </section>
+
+                            {% endfor %}
+
+
+                        </section>
+
+
+                    </div>
+
+                </article>
+
+
+                {% else %}
+
+
+                <!-- ===================================================
+                     Bank Account Without Transfer Routes
+                     =================================================== -->
+
+                <article
+                    class="give-method-card give-bank-card"
+                    id="{{ bank.id }}"
+                >
+
+                    <div class="give-method-card__header">
+
+                        <h3 class="give-method-card__name">
+                            {{ bank.name }}
+                        </h3>
+
+                    </div>
+
+
+                    <div class="give-bank-card__account-details">
+
+
+                        {% if bank.account_name %}
+
+                        <div class="give-bank-detail">
+
+                            <span class="give-bank-detail__label">
+                                Account Name
+                            </span>
+
+                            <strong class="give-bank-detail__value">
+                                {{ bank.account_name }}
+                            </strong>
+
+                        </div>
+
+                        {% endif %}
+
+
+                        {% if bank.account_number %}
+
+                        <div class="give-bank-detail">
+
+                            <span class="give-bank-detail__label">
+                                Account Number
+                            </span>
+
+                            <strong
+                                class="
+                                    give-bank-detail__value
+                                    give-bank-detail__value--account-number
+                                "
+                            >
+                                {{ bank.account_number }}
+                            </strong>
+
+                        </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+                </article>
+
+
+                {% endif %}
+
+                {% endfor %}
+
 
             </div>
 
@@ -187,7 +613,6 @@
 
         <!-- ===================================================
              Giving Enquiries
-             Only displayed once an official contact is supplied.
              =================================================== -->
 
         {% if giving.enquiry_contact %}
@@ -209,8 +634,9 @@
 
         {% else %}
 
+
         <!-- ===================================================
-             Fallback - No approved giving method
+             Fallback - No Approved Giving Method
              =================================================== -->
 
         <div class="give-coming-soon">
@@ -231,9 +657,11 @@
                 Giving
             </p>
 
+
             <h2 class="give-coming-soon__title">
                 Giving Details Coming Soon
             </h2>
+
 
             <p class="give-coming-soon__text">
                 Verified giving methods and instructions will be
@@ -241,6 +669,7 @@
             </p>
 
         </div>
+
 
         {% endif %}
 

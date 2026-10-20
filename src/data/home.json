@@ -1,0 +1,86 @@
+{
+  "home": {
+    "hero": {
+      "published": true,
+      "show_site_name": true,
+      "show_site_description": true,
+      "primary_action": {
+        "label": "Contact",
+        "url": "/contact/"
+      }
+    },
+
+    "vision_mission": {
+      "published": true,
+      "show_vision": true,
+      "show_mission": true
+    },
+
+    "services": {
+      "published": true,
+      "eyebrow": "Worship With Us",
+      "title": "Sunday Services",
+      "show_published_services": true
+    },
+
+    "sermons": {
+      "published": true,
+      "eyebrow": "Sermons",
+      "title": "Watch and Listen",
+      "description": "Watch sermon videos and explore available audio from Divine River Church.",
+      "action": {
+        "label": "Explore Sermons",
+        "url": "/sermons/"
+      }
+    },
+
+    "livestream": {
+      "published": true,
+      "eyebrow": "Live",
+      "title": "Watch Live",
+      "description": "Follow Divine River Church services and broadcasts through our official YouTube channel.",
+      "use_site_livestream": true
+    },
+
+    "events": {
+      "published": true,
+      "eyebrow": "What's Happening",
+      "title": "Upcoming Events",
+      "empty_message": "Upcoming events will appear here when they are published.",
+      "action": {
+        "label": "View Events",
+        "url": "/events/"
+      },
+      "show_published_events": true
+    },
+
+    "giving": {
+      "published": true,
+      "eyebrow": "Give",
+      "title": "Giving",
+      "description": "Church giving information will be available through the Give page.",
+      "action": {
+        "label": "Give",
+        "url": "/give/"
+      }
+    },
+
+    "visit": {
+      "published": true,
+      "eyebrow": "Visit",
+      "title": "Visit Divine River Church",
+      "show_site_description": true,
+      "action": {
+        "label": "Get Directions",
+        "use_site_directions_url": true
+      }
+    },
+
+    "social": {
+      "published": true,
+      "eyebrow": "Connect",
+      "title": "Follow Us",
+      "show_published_social_links": true
+    }
+  }
+}

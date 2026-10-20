@@ -1,0 +1,80 @@
+{
+  "about": {
+    "vision": {
+      "title": "Our Vision",
+      "text": "To bring people back into the family of God, disciple them, and develop them into ministers for the magnification of God.",
+      "scriptures": [
+        "Matthew 28:19-20"
+      ]
+      },
+
+    "mission": {
+      "title": "Our Mission",
+      "text": "To cause people to be born again into the family of God as members, nurture them to Christ-like maturity, and equip them for ministry to the glory of God.",
+      "scriptures": [
+        "Matthew 28:19-20",
+        "Ezekiel 47:9"
+      ]
+    },
+
+    "history": {
+      "title": "Our History",
+      "text": "Divine River Church was founded in 2007 by a group of elders headed by Pastor Pasteur Kavuma. The inaugural Sunday service was held on 16 September 2007 at Nabweru Community Hall and was attended by 45 members and visitors. Since then, the church has grown physically and spiritually. By October 2023, the church had established its own premises and reported about 200 members, excluding children."
+    },
+
+    "statement_of_faith": {
+      "eyebrow": "Statement of faith",
+      "title": "Our Belief",
+      "text": "We believe in God the Father Almighty, Creator of heaven and earth. We believe in Jesus Christ His only Son, our Lord, conceived by the Holy Spirit, born of the Virgin Mary, crucified, died, buried, rose on the third day, ascended to heaven, seated at the Father's right hand, and coming again to judge the living and the dead. We believe in the Holy Spirit, water baptism by immersion, communion of saints, forgiveness of sins, resurrection of the dead, and life everlasting. Amen."
+    },
+
+    "teams_section": {
+      "eyebrow": "Serving Together",
+      "title": "Our Teams"
+    },
+
+    "values": []
+  },
+
+  "leadership": [],
+
+  "teams": [
+    {
+      "id": "pastoral-team",
+      "name": "Pastoral Team",
+      "description": "Provides spiritual leadership and pastoral care for Divine River Church through preaching, counselling, mentoring ministers and pastoral visits. The team is led by the Senior Pastor and supported by other pastors in caring for the congregation and strengthening the church in faith.",
+      "published": true,
+      "sort_order": 1
+    },
+    {
+      "id": "elders-council",
+      "name": "Elders' Council",
+      "description": "Supports the spiritual governance and oversight of the church alongside the pastoral leadership. The Council is involved in approving key leadership appointments and providing oversight to important areas of church administration and ministry structure.",
+      "published": true,
+      "sort_order": 2
+    },
+    {
+      "id": "ministry-patrons",
+      "name": "Ministry Patrons",
+      "description": "Provide oversight to the different church ministries and support their leadership in carrying out their responsibilities. Patrons serve as a link between ministry leadership and the wider pastoral and governance structure of the church.",
+      "published": true,
+      "sort_order": 3
+    },
+    {
+      "id": "department-and-committee-leaders",
+      "name": "Department and Committee Leaders",
+      "description": "Chairpersons, coordinators and other appointed leaders help organize the work of departments and church-wide committees. They support the orderly implementation of church activities, programmes and responsibilities under the wider leadership structure.",
+      "published": true,
+      "sort_order": 4
+    },
+    {
+      "id": "church-service-coordination-team",
+      "name": "Church Service Coordination Team",
+      "description": "Supports the planning and orderly running of church services, fellowships, seminars and conferences. This includes coordinating service leaders and other supporting roles required for church gatherings.",
+      "published": true,
+      "sort_order": 5
+    }
+  ],
+
+  "branches": []
+}

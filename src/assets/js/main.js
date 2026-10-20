@@ -7,8 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // MOBILE NAVIGATION
     // ========================================================
 
-    const navToggle = document.querySelector("[data-nav-toggle]");
-    const navigation = document.querySelector("[data-navigation]");
+    const navToggle = document.querySelector(
+        "[data-nav-toggle]"
+    );
+
+    const navigation = document.querySelector(
+        "[data-navigation]"
+    );
 
 
     function setNavigationState(open) {
@@ -29,65 +34,92 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (label) {
+
             label.textContent = open
                 ? "Close navigation"
                 : "Open navigation";
+
         }
+
     }
 
 
     if (navToggle && navigation) {
 
-        navToggle.addEventListener("click", () => {
+        navToggle.addEventListener(
+            "click",
+            () => {
 
-            const isOpen =
-                navigation.dataset.open === "true";
+                const isOpen =
+                    navigation.dataset.open === "true";
 
-            setNavigationState(!isOpen);
+                setNavigationState(
+                    !isOpen
+                );
 
-        });
+            }
+        );
 
 
         navigation
             .querySelectorAll("a")
             .forEach((link) => {
 
-                link.addEventListener("click", () => {
-                    setNavigationState(false);
-                });
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        setNavigationState(
+                            false
+                        );
+
+                    }
+                );
 
             });
 
 
-        document.addEventListener("keydown", (event) => {
+        document.addEventListener(
+            "keydown",
+            (event) => {
 
-            if (
-                event.key === "Escape" &&
-                navigation.dataset.open === "true"
-            ) {
+                if (
+                    event.key === "Escape" &&
+                    navigation.dataset.open === "true"
+                ) {
 
-                setNavigationState(false);
+                    setNavigationState(
+                        false
+                    );
 
-                navToggle.focus();
+                    navToggle.focus();
+
+                }
+
             }
-
-        });
+        );
 
 
         const desktopQuery = window.matchMedia(
             "(min-width: 1024px)"
         );
 
+
         desktopQuery.addEventListener(
             "change",
             (event) => {
 
                 if (event.matches) {
-                    setNavigationState(false);
+
+                    setNavigationState(
+                        false
+                    );
+
                 }
 
             }
         );
+
     }
 
 
@@ -107,9 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getTheme() {
 
-        return document.documentElement.dataset.theme === "dark"
-            ? "dark"
-            : "light";
+        return (
+            document.documentElement.dataset.theme === "dark"
+                ? "dark"
+                : "light"
+        );
+
     }
 
 
@@ -125,6 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
             theme === "dark"
                 ? "light"
                 : "dark";
+
 
         themeToggle.setAttribute(
             "aria-label",
@@ -143,11 +179,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 theme === "dark"
                     ? "☀"
                     : "☾";
+
         }
+
     }
 
 
-    function setTheme(theme, persist = true) {
+    function setTheme(
+        theme,
+        persist = true
+    ) {
 
         if (
             theme !== "light" &&
@@ -156,21 +197,30 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.theme =
+            theme;
+
 
         if (persist) {
 
             try {
+
                 localStorage.setItem(
                     "drc-theme",
                     theme
                 );
+
             } catch (error) {
-                // Theme still works for current page.
+
+                // Theme still works for the current page.
+
             }
+
         }
 
+
         updateThemeControl();
+
     }
 
 
@@ -178,17 +228,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateThemeControl();
 
-        themeToggle.addEventListener("click", () => {
 
-            const currentTheme = getTheme();
+        themeToggle.addEventListener(
+            "click",
+            () => {
 
-            setTheme(
-                currentTheme === "dark"
-                    ? "light"
-                    : "dark"
-            );
+                const currentTheme =
+                    getTheme();
 
-        });
+                setTheme(
+                    currentTheme === "dark"
+                        ? "light"
+                        : "dark"
+                );
+
+            }
+        );
+
     }
 
 
@@ -203,12 +259,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let storedTheme = null;
 
+
             try {
-                storedTheme = localStorage.getItem(
-                    "drc-theme"
-                );
+
+                storedTheme =
+                    localStorage.getItem(
+                        "drc-theme"
+                    );
+
             } catch (error) {
+
                 storedTheme = null;
+
             }
 
 
@@ -229,17 +291,394 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ========================================================
-    // PROTOTYPE 2 - SERMON MEDIA CARDS
+    // GIVE PAGE - CENTENARY BANK FLIP CARD
     // ========================================================
 
-    const sermonCards = Array.from(
-        document.querySelectorAll("[data-sermon-card]")
+    const giveFlipCards = Array.from(
+        document.querySelectorAll(
+            "[data-give-flip-card]"
+        )
     );
 
 
-    /*
-    * Reset one card to its initial thumbnail-only state.
-    */
+    giveFlipCards.forEach((card) => {
+
+        const frontFace = card.querySelector(
+            "[data-give-card-front]"
+        );
+
+        const backFace = card.querySelector(
+            "[data-give-card-back]"
+        );
+
+        const openButton = card.querySelector(
+            "[data-give-flip-open]"
+        );
+
+        const routes = Array.from(
+            card.querySelectorAll(
+                "[data-give-route]"
+            )
+        );
+
+        const routeButtons = Array.from(
+            card.querySelectorAll(
+                "[data-give-route-target]"
+            )
+        );
+
+        const backToAccountButtons =
+            Array.from(
+                card.querySelectorAll(
+                    "[data-give-back-account]"
+                )
+            );
+
+
+        if (
+            !frontFace ||
+            !backFace ||
+            !openButton ||
+            !routes.length
+        ) {
+            return;
+        }
+
+
+        const firstRoute =
+            routes[0];
+
+        const firstRouteId =
+            firstRoute.dataset.giveRoute;
+
+
+        // ----------------------------------------------------
+        // Face Accessibility State
+        // ----------------------------------------------------
+
+        function setFaceState(flipped) {
+
+            frontFace.setAttribute(
+                "aria-hidden",
+                String(flipped)
+            );
+
+            backFace.setAttribute(
+                "aria-hidden",
+                String(!flipped)
+            );
+
+
+            if ("inert" in frontFace) {
+
+                frontFace.inert =
+                    flipped;
+
+                backFace.inert =
+                    !flipped;
+
+            } else {
+
+                if (flipped) {
+
+                    frontFace.setAttribute(
+                        "inert",
+                        ""
+                    );
+
+                    backFace.removeAttribute(
+                        "inert"
+                    );
+
+                } else {
+
+                    backFace.setAttribute(
+                        "inert",
+                        ""
+                    );
+
+                    frontFace.removeAttribute(
+                        "inert"
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        // ----------------------------------------------------
+        // Show One Transfer Route
+        // ----------------------------------------------------
+
+        function showRoute(
+            routeId,
+            moveFocus = false
+        ) {
+
+            let activeRoute = null;
+
+
+            routes.forEach((route) => {
+
+                const isActive =
+                    route.dataset.giveRoute ===
+                    routeId;
+
+
+                route.hidden =
+                    !isActive;
+
+                route.classList.toggle(
+                    "is-active",
+                    isActive
+                );
+
+
+                if (isActive) {
+
+                    activeRoute =
+                        route;
+
+
+                    const scrollArea =
+                        route.querySelector(
+                            ".give-transfer-route__instructions-scroll"
+                        );
+
+
+                    if (scrollArea) {
+
+                        scrollArea.scrollTop =
+                            0;
+
+                    }
+
+                }
+
+            });
+
+
+            if (
+                moveFocus &&
+                activeRoute
+            ) {
+
+                activeRoute.focus();
+
+            }
+
+        }
+
+
+        // ----------------------------------------------------
+        // Reset Card Route
+        // ----------------------------------------------------
+
+        function resetGiveCardRoute() {
+
+            showRoute(
+                firstRouteId,
+                false
+            );
+
+        }
+
+
+        // ----------------------------------------------------
+        // Open Transfer Options
+        // ----------------------------------------------------
+
+        function openTransferOptions() {
+
+            resetGiveCardRoute();
+
+            card.classList.add(
+                "is-flipped"
+            );
+
+            setFaceState(
+                true
+            );
+
+
+            window.requestAnimationFrame(
+                () => {
+
+                    firstRoute.focus();
+
+                }
+            );
+
+        }
+
+
+        // ----------------------------------------------------
+        // Return to Account
+        // ----------------------------------------------------
+
+        function returnToAccount() {
+
+            card.classList.remove(
+                "is-flipped"
+            );
+
+            setFaceState(
+                false
+            );
+
+            resetGiveCardRoute();
+
+
+            window.requestAnimationFrame(
+                () => {
+
+                    openButton.focus();
+
+                }
+            );
+
+        }
+
+
+        // ----------------------------------------------------
+        // Initial State
+        // ----------------------------------------------------
+
+        card.classList.remove(
+            "is-flipped"
+        );
+
+        setFaceState(
+            false
+        );
+
+        resetGiveCardRoute();
+
+
+        // ----------------------------------------------------
+        // View Transfer Options
+        // ----------------------------------------------------
+
+        openButton.addEventListener(
+            "click",
+            () => {
+
+                openTransferOptions();
+
+            }
+        );
+
+
+        // ----------------------------------------------------
+        // Transfer Route Navigation
+        // ----------------------------------------------------
+
+        routeButtons.forEach(
+            (button) => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const targetRouteId =
+                            button.dataset
+                                .giveRouteTarget;
+
+
+                        if (!targetRouteId) {
+                            return;
+                        }
+
+
+                        const targetExists =
+                            routes.some(
+                                (route) =>
+                                    route.dataset.giveRoute ===
+                                    targetRouteId
+                            );
+
+
+                        if (!targetExists) {
+                            return;
+                        }
+
+
+                        showRoute(
+                            targetRouteId,
+                            true
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        // ----------------------------------------------------
+        // Back to Account
+        // ----------------------------------------------------
+
+        backToAccountButtons.forEach(
+            (button) => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        returnToAccount();
+
+                    }
+                );
+
+            }
+        );
+
+
+        // ----------------------------------------------------
+        // Escape Key
+        // ----------------------------------------------------
+
+        document.addEventListener(
+            "keydown",
+            (event) => {
+
+                if (
+                    event.key !== "Escape" ||
+                    !card.classList.contains(
+                        "is-flipped"
+                    )
+                ) {
+                    return;
+                }
+
+
+                returnToAccount();
+
+            }
+        );
+
+    });
+
+
+
+    // ========================================================
+    // SERMONS GALLERY - MEDIA CARDS
+    // ========================================================
+
+    const sermonCards = Array.from(
+        document.querySelectorAll(
+            "[data-sermon-card]"
+        )
+    );
+
+
+    // --------------------------------------------------------
+    // Reset Sermon Card
+    // --------------------------------------------------------
+
     function resetSermonCard(card) {
 
         const cardTrigger = card.querySelector(
@@ -258,30 +697,29 @@ document.addEventListener("DOMContentLoaded", () => {
             "[data-sermon-audio]"
         );
 
-        const audioPlayer = audioArea
-            ? audioArea.querySelector("audio")
-            : null;
+        const audioPlayer =
+            audioArea
+                ? audioArea.querySelector(
+                    "audio"
+                )
+                : null;
 
 
-        /*
-        * Pause audio if this card was playing.
-        */
         if (audioPlayer) {
+
             audioPlayer.pause();
+
         }
 
 
-        /*
-        * Hide audio player.
-        */
         if (audioArea) {
-            audioArea.hidden = true;
+
+            audioArea.hidden =
+                true;
+
         }
 
 
-        /*
-        * Reset Listen button.
-        */
         if (audioTrigger) {
 
             audioTrigger.setAttribute(
@@ -291,20 +729,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             audioTrigger.textContent =
                 "Listen";
+
         }
 
 
-        /*
-        * Hide action panel.
-        */
         if (options) {
-            options.hidden = true;
+
+            options.hidden =
+                true;
+
         }
 
 
-        /*
-        * Reset thumbnail trigger.
-        */
         if (cardTrigger) {
 
             cardTrigger.setAttribute(
@@ -315,9 +751,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /*
-        * Restore default card state.
-        */
         card.classList.remove(
             "is-open",
             "is-audio-open"
@@ -326,24 +759,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /*
-    * Return the currently open sermon card.
-    *
-    * Only one card can be open at a time.
-    */
+    // --------------------------------------------------------
+    // Find Open Sermon Card
+    // --------------------------------------------------------
+
     function getOpenSermonCard() {
 
-        return sermonCards.find(
-            (card) =>
-                card.classList.contains("is-open")
-        ) || null;
+        return (
+            sermonCards.find(
+                (card) =>
+                    card.classList.contains(
+                        "is-open"
+                    )
+            ) || null
+        );
 
     }
 
 
-    /*
-    * Initialise each sermon card.
-    */
+    // --------------------------------------------------------
+    // Initialise Sermon Cards
+    // --------------------------------------------------------
+
     sermonCards.forEach((card) => {
 
         const cardTrigger = card.querySelector(
@@ -362,19 +799,22 @@ document.addEventListener("DOMContentLoaded", () => {
             "[data-sermon-audio]"
         );
 
-        const audioPlayer = audioArea
-            ? audioArea.querySelector("audio")
-            : null;
+        const audioPlayer =
+            audioArea
+                ? audioArea.querySelector(
+                    "audio"
+                )
+                : null;
 
 
-        /*
-        * Thumbnail/card click.
-        *
-        * - Closed card -> open.
-        * - Open card -> close.
-        * - Opening one card closes every other card.
-        */
-        if (cardTrigger && options) {
+        // ----------------------------------------------------
+        // View Options
+        // ----------------------------------------------------
+
+        if (
+            cardTrigger &&
+            options
+        ) {
 
             cardTrigger.addEventListener(
                 "click",
@@ -386,28 +826,27 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
 
 
-                    /*
-                    * Clicking the currently open
-                    * thumbnail closes that card.
-                    */
                     if (isOpen) {
 
-                        resetSermonCard(card);
+                        resetSermonCard(
+                            card
+                        );
 
                         return;
+
                     }
 
 
                     /*
-                    * Close every other card first.
-                    *
-                    * This also pauses audio on any
-                    * previously active card.
-                    */
+                     * Opening a sermon closes any other
+                     * currently open sermon.
+                     */
                     sermonCards.forEach(
                         (otherCard) => {
 
-                            if (otherCard !== card) {
+                            if (
+                                otherCard !== card
+                            ) {
 
                                 resetSermonCard(
                                     otherCard
@@ -419,10 +858,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
 
-                    /*
-                    * Open the selected card.
-                    */
-                    options.hidden = false;
+                    options.hidden =
+                        false;
 
                     cardTrigger.setAttribute(
                         "aria-expanded",
@@ -439,9 +876,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /*
-        * Listen / Hide Audio.
-        */
+        // ----------------------------------------------------
+        // Optional Future Audio
+        // ----------------------------------------------------
+
         if (
             audioTrigger &&
             audioArea &&
@@ -458,15 +896,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
 
 
-                    /*
-                    * Hide audio but keep the
-                    * card options open.
-                    */
                     if (isAudioOpen) {
 
                         audioPlayer.pause();
 
-                        audioArea.hidden = true;
+                        audioArea.hidden =
+                            true;
 
                         card.classList.remove(
                             "is-audio-open"
@@ -481,13 +916,12 @@ document.addEventListener("DOMContentLoaded", () => {
                             "Listen";
 
                         return;
+
                     }
 
 
-                    /*
-                    * Show audio player.
-                    */
-                    audioArea.hidden = false;
+                    audioArea.hidden =
+                        false;
 
                     card.classList.add(
                         "is-audio-open"
@@ -502,20 +936,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Hide Audio";
 
 
-                    /*
-                    * User explicitly selected Listen,
-                    * so playback may start here.
-                    */
                     try {
 
                         await audioPlayer.play();
 
                     } catch (error) {
 
-                        /*
-                        * Keep the player visible if
-                        * automatic playback is blocked.
-                        */
                         console.warn(
                             "Audio playback could not start automatically.",
                             error
@@ -531,17 +957,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /*
-    * --------------------------------------------------------
-    * CLOSE ACTIVE CARD WHEN CLICKING OUTSIDE IT
-    * --------------------------------------------------------
-    *
-    * Clicking anywhere inside the active sermon card does
-    * nothing here.
-    *
-    * This means YouTube, Listen, Hide Audio, Download Audio
-    * and the audio controls continue to work normally.
-    */
+
+    // ========================================================
+    // SERMON CARD - CLICK OUTSIDE
+    // ========================================================
+
     document.addEventListener(
         "click",
         (event) => {
@@ -550,42 +970,62 @@ document.addEventListener("DOMContentLoaded", () => {
                 getOpenSermonCard();
 
 
-            /*
-            * Nothing is currently open.
-            */
             if (!openCard) {
                 return;
             }
 
 
             /*
-            * Click happened somewhere inside the
-            * active card, so leave it alone.
-            */
-            if (openCard.contains(event.target)) {
+             * Clicking anywhere inside the currently open
+             * sermon card should leave it open.
+             */
+            if (
+                openCard.contains(
+                    event.target
+                )
+            ) {
                 return;
             }
 
 
             /*
-            * Click happened outside the active card.
-            */
-            resetSermonCard(openCard);
+             * Load More is deliberately excluded here.
+             *
+             * If a sermon card is open and the visitor
+             * selects Load More, the open sermon should
+             * remain open while the next sermons appear.
+             */
+            const loadMoreControl =
+                event.target.closest(
+                    "[data-sermons-load-more]"
+                );
+
+
+            if (loadMoreControl) {
+                return;
+            }
+
+
+            resetSermonCard(
+                openCard
+            );
 
         }
     );
 
 
-    /*
-    * --------------------------------------------------------
-    * CLOSE ACTIVE CARD WITH ESCAPE
-    * --------------------------------------------------------
-    */
+
+    // ========================================================
+    // SERMON CARD - ESCAPE
+    // ========================================================
+
     document.addEventListener(
         "keydown",
         (event) => {
 
-            if (event.key !== "Escape") {
+            if (
+                event.key !== "Escape"
+            ) {
                 return;
             }
 
@@ -599,62 +1039,64 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            resetSermonCard(openCard);
+            resetSermonCard(
+                openCard
+            );
 
         }
     );
 
 
-    /*
-    * --------------------------------------------------------
-    * CLOSE ACTIVE CARD WHEN IT LEAVES THE VIEWPORT
-    * --------------------------------------------------------
-    *
-    * Partial visibility does NOT close the card.
-    *
-    * The card resets only when none of it remains visible.
-    * If audio is playing, resetSermonCard() pauses it.
-    */
-    if ("IntersectionObserver" in window) {
+
+    // ========================================================
+    // SERMON CARD - VIEWPORT VISIBILITY
+    // ========================================================
+
+    if (
+        "IntersectionObserver" in window
+    ) {
 
         const sermonVisibilityObserver =
             new IntersectionObserver(
                 (entries) => {
 
-                    entries.forEach((entry) => {
+                    entries.forEach(
+                        (entry) => {
 
-                        const card =
-                            entry.target;
+                            const card =
+                                entry.target;
 
 
-                        /*
-                        * Ignore closed cards.
-                        */
-                        if (
-                            !card.classList.contains(
-                                "is-open"
-                            )
-                        ) {
-                            return;
+                            if (
+                                !card.classList.contains(
+                                    "is-open"
+                                )
+                            ) {
+                                return;
+                            }
+
+
+                            /*
+                             * Keep the card open while any
+                             * part of it remains visible.
+                             */
+                            if (
+                                entry.isIntersecting
+                            ) {
+                                return;
+                            }
+
+
+                            /*
+                             * Card has fully left the
+                             * viewport.
+                             */
+                            resetSermonCard(
+                                card
+                            );
+
                         }
-
-
-                        /*
-                        * Keep the card open while any
-                        * part of it remains visible.
-                        */
-                        if (entry.isIntersecting) {
-                            return;
-                        }
-
-
-                        /*
-                        * Card has completely left
-                        * the viewport.
-                        */
-                        resetSermonCard(card);
-
-                    });
+                    );
 
                 },
                 {
@@ -663,13 +1105,166 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-        sermonCards.forEach((card) => {
+        sermonCards.forEach(
+            (card) => {
 
-            sermonVisibilityObserver.observe(
-                card
+                sermonVisibilityObserver.observe(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+
+
+    // ========================================================
+    // SERMONS GALLERY - LOAD MORE
+    // ========================================================
+
+    const sermonsGallery =
+        document.querySelector(
+            "[data-sermons-gallery]"
+        );
+
+
+    if (sermonsGallery) {
+
+        const galleryItems = Array.from(
+            sermonsGallery.querySelectorAll(
+                "[data-sermons-gallery-item]"
+            )
+        );
+
+        const loadMoreButton =
+            sermonsGallery.querySelector(
+                "[data-sermons-load-more]"
             );
 
-        });
+
+        /*
+         * Read the page size defined in sermons.html.
+         *
+         * Current value:
+         *
+         * data-sermons-page-size="12"
+         *
+         * If it is missing or invalid, use 12.
+         */
+        const configuredPageSize =
+            Number.parseInt(
+                sermonsGallery.dataset
+                    .sermonsPageSize,
+                10
+            );
+
+
+        const pageSize =
+            Number.isInteger(
+                configuredPageSize
+            ) &&
+            configuredPageSize > 0
+                ? configuredPageSize
+                : 12;
+
+
+        /*
+         * Initial gallery:
+         *
+         * 12 sermons maximum.
+         */
+        let visibleCount =
+            Math.min(
+                pageSize,
+                galleryItems.length
+            );
+
+
+        // ----------------------------------------------------
+        // Apply Gallery Visibility
+        // ----------------------------------------------------
+
+        function updateSermonGalleryVisibility() {
+
+            galleryItems.forEach(
+                (item, index) => {
+
+                    item.hidden =
+                        index >= visibleCount;
+
+                }
+            );
+
+
+            /*
+             * Hide the Load More control once every
+             * sermon has been revealed.
+             */
+            if (loadMoreButton) {
+
+                const allVisible =
+                    visibleCount >=
+                    galleryItems.length;
+
+
+                loadMoreButton.hidden =
+                    allVisible;
+
+                loadMoreButton.disabled =
+                    allVisible;
+
+            }
+
+        }
+
+
+        /*
+         * Establish initial state:
+         *
+         * Sermons 1-12 visible.
+         * Sermons 13+ hidden.
+         */
+        updateSermonGalleryVisibility();
+
+
+        // ----------------------------------------------------
+        // Load More
+        // ----------------------------------------------------
+
+        if (loadMoreButton) {
+
+            loadMoreButton.addEventListener(
+                "click",
+                () => {
+
+                    /*
+                     * Reveal another group of 12.
+                     *
+                     * 56 sermons:
+                     *
+                     * Initial  1-12
+                     * Click 1  13-24
+                     * Click 2  25-36
+                     * Click 3  37-48
+                     * Click 4  49-56
+                     *
+                     * The button then disappears.
+                     */
+                    visibleCount =
+                        Math.min(
+                            visibleCount +
+                            pageSize,
+                            galleryItems.length
+                        );
+
+
+                    updateSermonGalleryVisibility();
+
+                }
+            );
+
+        }
 
     }
 
